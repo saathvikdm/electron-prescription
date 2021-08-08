@@ -1,6 +1,6 @@
-<p>
+<h2>
   A prescription PDF generator and viewer built with ElectronJs, NodeJs and ReactJs as a Windows native application
-</p>
+</h2>
 
 ## Install
 
