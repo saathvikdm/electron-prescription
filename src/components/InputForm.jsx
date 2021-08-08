@@ -14,6 +14,14 @@ const InputForm = () => {
     { chiefComplaints: '' },
   ]);
 
+  const [treatmentGiven, setTreatmentGiven] = useState([
+    { treatmentGiven: '' },
+  ]);
+
+  const [treatmentAdviced, setTreatmentAdviced] = useState([
+    { treatmentAdviced: '' },
+  ]);
+
   const [data, setData] = useState();
 
   // Handling Diagnosis form inputs
@@ -80,6 +88,50 @@ const InputForm = () => {
     const values = [...problemsFields];
     values.splice(index, 1);
     setProblemsFields(values);
+  };
+
+  // handling treatment given field
+
+  const handleTreatmentGivenChange = (index, event) => {
+    const values = [...treatmentGiven];
+    if (event.target.name === 'treatmentGiven') {
+      values[index].treatmentGiven = event.target.value;
+    }
+    setTreatmentGiven(values);
+  };
+
+  const handleAddTreatmentGiven = () => {
+    const values = [...treatmentGiven];
+    values.push({ knownProblem: '' });
+    setTreatmentGiven(values);
+  };
+
+  const handleRemoveTreatmentGiven = (index) => {
+    const values = [...treatmentGiven];
+    values.splice(index, 1);
+    setTreatmentGiven(values);
+  };
+
+  // handling treatment adviced
+
+  const handletreatmentAdvicedChange = (index, event) => {
+    const values = [...treatmentAdviced];
+    if (event.target.name === 'treatmentAdviced') {
+      values[index].treatmentGiven = event.target.value;
+    }
+    setTreatmentAdviced(values);
+  };
+
+  const handleAddtreatmentAdviced = () => {
+    const values = [...treatmentAdviced];
+    values.push({ knownProblem: '' });
+    setTreatmentAdviced(values);
+  };
+
+  const handleRemovetreatmentAdviced = (index) => {
+    const values = [...treatmentAdviced];
+    values.splice(index, 1);
+    setTreatmentAdviced(values);
   };
 
   const handleSubmit = (e) => {
@@ -450,6 +502,122 @@ const InputForm = () => {
             />
           </label>
         </div>
+
+        <div className="mb-2 mx-1">
+          <p className="pt-2 mb-0">Treatment Given:</p>
+          {treatmentGiven.map((inputField, index) => (
+            <div key={`${index}-${inputField}`} className="mb-2">
+              <div className="row form-group">
+                <div className="col-md-8">
+                  <input
+                    type="text"
+                    className="form-control "
+                    id="treatmentGiven"
+                    name="treatmentGiven"
+                    value={treatmentGiven.treatmentGiven}
+                    onChange={(event) =>
+                      handleTreatmentGivenChange(index, event)
+                    }
+                  />
+                </div>
+                <div className="col-md-4 d-flex align-items-end">
+                  {treatmentGiven.length > 1 ? (
+                    <>
+                      <button
+                        className="btn btn-outline-secondary btn-sm m-1"
+                        type="button"
+                        onClick={() => handleRemoveTreatmentGiven(index)}
+                      >
+                        -
+                      </button>
+                      <button
+                        className="btn btn-outline-secondary btn-sm m-1"
+                        type="button"
+                        onClick={() => handleAddTreatmentGiven()}
+                      >
+                        +
+                      </button>
+                    </>
+                  ) : (
+                    <button
+                      className="btn btn-outline-secondary btn-sm m-1"
+                      type="button"
+                      onClick={() => handleAddTreatmentGiven()}
+                    >
+                      +
+                    </button>
+                  )}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="mb-2 mx-1">
+          <p className="pt-2 mb-0">Treatment Adviced:</p>
+          {treatmentAdviced.map((advice, index) => (
+            <div key={`${index}-${advice}`} className="mb-2">
+              <div className="row form-group">
+                <div className="col-md-8">
+                  <input
+                    type="text"
+                    className="form-control "
+                    id="treatmentAdviced"
+                    name="treatmentAdviced"
+                    value={treatmentAdviced.treatmentAdviced}
+                    onChange={(event) =>
+                      handletreatmentAdvicedChange(index, event)
+                    }
+                  />
+                </div>
+                <div className="col-md-4 d-flex align-items-end">
+                  {treatmentAdviced.length > 1 ? (
+                    <>
+                      <button
+                        className="btn btn-outline-secondary btn-sm m-1"
+                        type="button"
+                        onClick={() => handleRemovetreatmentAdviced(index)}
+                      >
+                        -
+                      </button>
+                      <button
+                        className="btn btn-outline-secondary btn-sm m-1"
+                        type="button"
+                        onClick={() => handleAddtreatmentAdviced()}
+                      >
+                        +
+                      </button>
+                    </>
+                  ) : (
+                    <button
+                      className="btn btn-outline-secondary btn-sm m-1"
+                      type="button"
+                      onClick={() => handleAddtreatmentAdviced()}
+                    >
+                      +
+                    </button>
+                  )}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div className="col-md-12 my-1">
+        <label
+          htmlFor="FollowUp"
+          className="form-label mx-1"
+          style={{ width: '100%' }}
+        >
+          Follow Up:
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Dr.'s Recomendation"
+            // value={age}
+            // onChange={(e) => setAge(e.target.value)}
+          />
+        </label>
       </div>
       <button
         type="submit"
