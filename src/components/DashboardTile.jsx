@@ -1,6 +1,13 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-export default function DashboardTile({ bgCol, tileText, tileNumber }) {
+export default function DashboardTile({
+  bgCol,
+  tileText,
+  tileNumber,
+  tileIcon,
+  tileType,
+}) {
   return (
     <div className="col-md-4 col-xl-3">
       <div
@@ -19,11 +26,21 @@ export default function DashboardTile({ bgCol, tileText, tileNumber }) {
         <div className="card-block">
           <h6 className="m-b-20">{tileText}</h6>
           <h2 className="text-right">
-            <i
-              className="fa fa-cart-plus f-left "
-              style={{ fontSize: '26px', marginRight: '1em' }}
-            />
-            <span>{tileNumber}</span>
+            {tileType ? (
+              <Link to="/issue">
+                <button className="btn btn-light btn-sm" type="button">
+                  Generate Report
+                </button>
+              </Link>
+            ) : (
+              <div>
+                <i
+                  className={`${tileIcon} f-left`}
+                  style={{ fontSize: '26px', marginRight: '1em' }}
+                />
+                <span>{tileNumber}</span>
+              </div>
+            )}
           </h2>
         </div>
       </div>
