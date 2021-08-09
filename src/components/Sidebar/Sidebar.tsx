@@ -1,19 +1,7 @@
-import { bottom } from '@popperjs/core';
-import React, { useState } from 'react';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
-import sidebarStyles from './sidebar.module.css';
 
 export default function SideBarAlt() {
-  const sidebar = document.querySelector('.sidebar');
-  const closeBtn = document.querySelector('#btn');
-
-  const [toggle, settoggle] = useState(false);
-
-  // following are the code to change sidebar button(optional)
-  function menuBtnChange() {
-    settoggle(!toggle);
-  }
-
   return (
     <div
       className="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark"

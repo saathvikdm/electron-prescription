@@ -80,19 +80,26 @@ export default function Template({
             <h5 className="border-bottom border-dark">
               Previous Known Problems:
             </h5>
-
             <ol>
-              <li>problem1</li>
-              <li>problem2</li>
-              <li>problem3</li>
+              {problems ? (
+                problems.map((prob) => {
+                  return <li>{prob.problems}</li>;
+                })
+              ) : (
+                <p>N/A</p>
+              )}
             </ol>
           </div>
           <div className="m-2 pt-2">
             <h5 className="border-bottom border-dark">Chief Complaints: </h5>
             <ol>
-              <li>problem1</li>
-              <li>problem2</li>
-              <li>problem3</li>
+              {complaints ? (
+                complaints.map((complaint) => {
+                  return <li>{complaint.chiefComplaints}</li>;
+                })
+              ) : (
+                <p>N/A</p>
+              )}
             </ol>
           </div>
           <div className="m-2 pt-2">
@@ -100,42 +107,65 @@ export default function Template({
               Clinical / Provisional / Differential Diagnosis:{' '}
             </h5>
             <ol>
-              <li>problem1</li>
-              <li>problem2</li>
-              <li>problem3</li>
+              {diagnosis ? (
+                diagnosis.map((diag) => {
+                  return <li>{diag.diagnosis}</li>;
+                })
+              ) : (
+                <p>N/A</p>
+              )}
             </ol>
           </div>
           <div className="m-2 pt-2">
             <h4 className="border-bottom border-dark">Examination: </h4>
             <h5 className="border-bottom border-dark">Vitals: </h5>
-            <ol>
-              <li>problem1</li>
-              <li>problem2</li>
-              <li>problem3</li>
-            </ol>
+            <div className="row ps-1">
+              <div className="col-3">BP: {vitals ? vitals.bp : '50'}mmHg</div>
+              <div className="col-3">PR: {vitals ? vitals.pr : '50'}bpm</div>
+              <div className="col-3">SpO2: {vitals ? vitals.spo2 : '50'}%</div>
+              <div className="col-3">
+                Temp: {vitals ? vitals.temp : '50'}&#8457;
+              </div>
+            </div>
+            <p className="mb-0 ps-1">GPE - {vitals ? vitals.gpe : '50'}</p>
+            <p className="mb-0 ps-1">CVS - {vitals ? vitals.cvs : '50'}</p>
+            <p className="mb-0 ps-1">RS - {vitals ? vitals.rs : '50'}</p>
+            <p className="mb-0 ps-1">P/A - {vitals ? vitals.pa : '50'}</p>
+            <p className="mb-0 ps-1">CNS - {vitals ? vitals.cns : '50'}</p>
+            <p className="mb-0 ps-1">L/E - {vitals ? vitals.le : '50'}</p>
           </div>
           <div className="m-2 pt-2">
             <h5 className="border-bottom border-dark">Treatment Given:</h5>
 
             <ol>
-              <li>problem1</li>
-              <li>problem2</li>
-              <li>problem3</li>
+              {treatment ? (
+                treatment.map((treat) => {
+                  return <li>{treat.treatmentGiven}</li>;
+                })
+              ) : (
+                <p>N/A</p>
+              )}
             </ol>
           </div>
           <div className="m-2 pt-2">
             <h5 className="border-bottom border-dark">Treatment Adviced:</h5>
 
             <ol>
-              <li>problem1</li>
-              <li>problem2</li>
-              <li>problem3</li>
+              {advice ? (
+                advice.map((adv) => {
+                  return <li>{adv.treatmentAdviced}</li>;
+                })
+              ) : (
+                <p>N/A</p>
+              )}
             </ol>
           </div>
           <div className="m-2 pt-2 mb-5">
             <h5 className="border-bottom border-dark">Follow Up:</h5>
 
-            <p>{followUp ? followUp : 'Review after 3 days.'}</p>
+            <p className="ps-1">
+              {followUp ? followUp : 'Review after 3 days.'}
+            </p>
           </div>
           <div
             className="details d-flex text-center flex-column justify-content-between px-3 pt-1"

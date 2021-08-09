@@ -8,7 +8,7 @@ const InputForm = () => {
   const [age, setAge] = useState();
   const [sex, setSex] = useState('M');
   const [opNumber, setOpNumber] = useState();
-  const [inputFields, setInputFields] = useState([{ diagnosis: '' }]);
+  const [diagnosis, setDiagnosis] = useState([{ diagnosis: '' }]);
   const [problemsFields, setProblemsFields] = useState([{ knownProblem: '' }]);
   const [chiefComplaints, setChiefComplaints] = useState([
     { chiefComplaints: '' },
@@ -22,28 +22,43 @@ const InputForm = () => {
     { treatmentAdviced: '' },
   ]);
 
+  const [vitals, setVitals] = useState({
+    bp: '',
+    pr: '',
+    sp02: '',
+    temp: '',
+    gpe: '',
+    cvs: '',
+    rs: '',
+    pa: '',
+    cns: '',
+    le: '',
+  });
+
+  const [followUp, setFollowUp] = useState('');
+
   const [data, setData] = useState();
 
   // Handling Diagnosis form inputs
 
   const handleInputChange = (index, event) => {
-    const values = [...inputFields];
+    const values = [...diagnosis];
     if (event.target.name === 'diagnosis') {
       values[index].diagnosis = event.target.value;
     }
-    setInputFields(values);
+    setDiagnosis(values);
   };
 
   const handleAddFields = () => {
-    const values = [...inputFields];
+    const values = [...diagnosis];
     values.push({ diagnosis: '' });
-    setInputFields(values);
+    setDiagnosis(values);
   };
 
   const handleRemoveFields = (index) => {
-    const values = [...inputFields];
+    const values = [...diagnosis];
     values.splice(index, 1);
-    setInputFields(values);
+    setDiagnosis(values);
   };
 
   // Handling Chief Complaints form inputs
@@ -102,7 +117,7 @@ const InputForm = () => {
 
   const handleAddTreatmentGiven = () => {
     const values = [...treatmentGiven];
-    values.push({ knownProblem: '' });
+    values.push({ treatmentGiven: '' });
     setTreatmentGiven(values);
   };
 
@@ -117,14 +132,14 @@ const InputForm = () => {
   const handletreatmentAdvicedChange = (index, event) => {
     const values = [...treatmentAdviced];
     if (event.target.name === 'treatmentAdviced') {
-      values[index].treatmentGiven = event.target.value;
+      values[index].treatmentAdviced = event.target.value;
     }
     setTreatmentAdviced(values);
   };
 
   const handleAddtreatmentAdviced = () => {
     const values = [...treatmentAdviced];
-    values.push({ knownProblem: '' });
+    values.push({ treatmentAdviced: '' });
     setTreatmentAdviced(values);
   };
 
@@ -143,7 +158,11 @@ const InputForm = () => {
       opNumber,
       problemsFields,
       chiefComplaints,
-      inputFields,
+      diagnosis,
+      vitals,
+      treatmentGiven,
+      treatmentAdviced,
+      followUp,
     };
 
     setData(inputData);
@@ -306,8 +325,8 @@ const InputForm = () => {
         <p className="pt-2 mb-0">
           Clinical / Provisional / Differential Diagnosis:
         </p>
-        {inputFields.map((inputField, index) => (
-          <div key={`${index}-${inputField}`} className="mb-2">
+        {diagnosis.map((inputField, index) => (
+          <div key={`${index}-${diagnosis}`} className="mb-2">
             <div className="row form-group">
               <div className="col-md-8">
                 <input
@@ -315,12 +334,12 @@ const InputForm = () => {
                   className="form-control "
                   id="diagnosis"
                   name="diagnosis"
-                  value={inputField.diagnosis}
+                  value={diagnosis.diagnosis}
                   onChange={(event) => handleInputChange(index, event)}
                 />
               </div>
               <div className="col-md-4 d-flex align-items-end">
-                {inputFields.length > 1 ? (
+                {diagnosis.length > 1 ? (
                   <>
                     <button
                       className="btn btn-outline-secondary btn-sm m-1"
@@ -362,6 +381,8 @@ const InputForm = () => {
               placeholder="BP"
               aria-label="Paitents BP"
               aria-describedby="basic-addon2"
+              value={vitals.bp}
+              onChange={(e) => setVitals({ ...vitals, bp: e.target.value })}
             />
             <span className="input-group-text" id="basic-addon2">
               mmHg
@@ -376,6 +397,8 @@ const InputForm = () => {
               placeholder="PR"
               aria-label="Paitents PR"
               aria-describedby="basic-addon2"
+              value={vitals.pr}
+              onChange={(e) => setVitals({ ...vitals, pr: e.target.value })}
             />
             <span className="input-group-text" id="basic-addon2">
               bpm
@@ -390,6 +413,8 @@ const InputForm = () => {
               placeholder="SpO2"
               aria-label="Paitents SpO2"
               aria-describedby="basic-addon2"
+              value={vitals.sp02}
+              onChange={(e) => setVitals({ ...vitals, sp02: e.target.value })}
             />
             <span className="input-group-text" id="basic-addon2">
               %
@@ -404,6 +429,8 @@ const InputForm = () => {
               placeholder="Temp"
               aria-label="Paitents Temp"
               aria-describedby="basic-addon2"
+              value={vitals.temp}
+              onChange={(e) => setVitals({ ...vitals, temp: e.target.value })}
             />
             <span className="input-group-text" id="basic-addon2">
               &#8457;
@@ -422,8 +449,8 @@ const InputForm = () => {
             <input
               type="text"
               className="form-control"
-              // value={age}
-              // onChange={(e) => setAge(e.target.value)}
+              value={vitals.gpe}
+              onChange={(e) => setVitals({ ...vitals, gpe: e.target.value })}
             />
           </label>
         </div>
@@ -437,8 +464,8 @@ const InputForm = () => {
             <input
               type="text"
               className="form-control"
-              // value={age}
-              // onChange={(e) => setAge(e.target.value)}
+              value={vitals.cvs}
+              onChange={(e) => setVitals({ ...vitals, cvs: e.target.value })}
             />
           </label>
         </div>
@@ -452,8 +479,8 @@ const InputForm = () => {
             <input
               type="text"
               className="form-control"
-              // value={age}
-              // onChange={(e) => setAge(e.target.value)}
+              value={vitals.rs}
+              onChange={(e) => setVitals({ ...vitals, rs: e.target.value })}
             />
           </label>
         </div>
@@ -467,8 +494,8 @@ const InputForm = () => {
             <input
               type="text"
               className="form-control"
-              // value={age}
-              // onChange={(e) => setAge(e.target.value)}
+              value={vitals.pa}
+              onChange={(e) => setVitals({ ...vitals, pa: e.target.value })}
             />
           </label>
         </div>
@@ -482,8 +509,8 @@ const InputForm = () => {
             <input
               type="text"
               className="form-control"
-              // value={age}
-              // onChange={(e) => setAge(e.target.value)}
+              value={vitals.cns}
+              onChange={(e) => setVitals({ ...vitals, cns: e.target.value })}
             />
           </label>
         </div>
@@ -497,8 +524,8 @@ const InputForm = () => {
             <input
               type="text"
               className="form-control"
-              // value={age}
-              // onChange={(e) => setAge(e.target.value)}
+              value={vitals.le}
+              onChange={(e) => setVitals({ ...vitals, le: e.target.value })}
             />
           </label>
         </div>
@@ -614,8 +641,8 @@ const InputForm = () => {
             type="text"
             className="form-control"
             placeholder="Dr.'s Recomendation"
-            // value={age}
-            // onChange={(e) => setAge(e.target.value)}
+            value={followUp}
+            onChange={(e) => setFollowUp(e.target.value)}
           />
         </label>
       </div>
