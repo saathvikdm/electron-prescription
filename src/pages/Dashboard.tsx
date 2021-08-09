@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import DashboardTile from '../components/DashboardTile';
 import Header from '../components/Header';
-import './dashboard.module.css';
 
 const Dashboard = () => {
   // bgCol, tileText, tileNumber

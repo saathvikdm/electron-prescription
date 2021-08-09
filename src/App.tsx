@@ -7,6 +7,7 @@ import Issued from './pages/Issued';
 import Settings from './pages/Settings';
 
 import './App.global.css';
+import Template from './pages/Template';
 
 export default function App() {
   return (
@@ -14,6 +15,7 @@ export default function App() {
       <Router>
         <Sidebar />
         <Switch>
+          <Route path="/template" component={Template} />
           <Route path="/issue" component={Issue} />
           <Route path="/issued" component={Issued} />
           <Route path="/settings" component={Settings} />
