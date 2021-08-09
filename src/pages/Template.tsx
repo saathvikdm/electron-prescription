@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from '../components/Header';
 import footerLogo from '../../assets/footerlogo.png';
+
 export default function Template({
   paitentName,
   idNumber,
