@@ -42,13 +42,13 @@ export default function SideBarAlt() {
           Settings
           <i className="fas fa-cog mt-1" />
         </NavLink>
-        <NavLink
+        {/* <NavLink
           to="/template"
           className="nav-item nav-link d-flex justify-content-between text-white"
         >
           Template
           <i className="fas fa-bulb mt-1" />
-        </NavLink>
+        </NavLink> */}
         <li
           className="nav-link text-muted text-white"
           style={{ position: 'absolute', bottom: '10px' }}

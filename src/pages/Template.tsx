@@ -1,27 +1,28 @@
 import React from 'react';
+import Pdf from 'react-to-pdf';
 import Header from '../components/Header';
 import footerLogo from '../../assets/footerlogo.png';
 
-export default function Template({
-  paitentName,
-  idNumber,
-  age,
-  sex,
-  opNumber,
-  problems,
-  complaints,
-  diagnosis,
-  vitals,
-  treatment,
-  advice,
-  followUp,
-}) {
-  return (
-    <div
-      className="container d-flex align-items-center flex-column mb-3"
-      style={{ paddingLeft: '200px' }}
-    >
+const ref = React.createRef();
+
+export default function Template({ data }) {
+  console.log(data);
+  return data ? (
+    <div className="container d-flex align-items-center flex-column mb-3">
+      <Pdf targetRef={ref} filename={`${Date.now()}`}>
+        {({ toPdf }) => (
+          <button
+            className="btn btn-success mx-1 my-3"
+            // onClick={(e) => e.preventDefault()}
+            type="button"
+            onClick={toPdf}
+          >
+            Download PDF
+          </button>
+        )}
+      </Pdf>
       <div
+        ref={ref}
         className="prescription-container"
         style={{ width: '21cm', border: '1px solid black', padding: '2em' }}
       >
@@ -29,9 +30,13 @@ export default function Template({
           <Header />
           <div className="details d-flex justify-content-between px-3 pt-1">
             <div className="d-flex-flex-column">
-              <h6>
-                <b>Dr. CHETHAN NAIK (M.B.B.S.,)</b>
-              </h6>
+              <h5>
+                <b>
+                  <i>
+                    Dr. CHETHAN NAIK <sub>M.B.B.S.,</sub>
+                  </i>
+                </b>
+              </h5>
               <p>
                 General Practitioner,
                 <br />
@@ -41,9 +46,13 @@ export default function Template({
               </p>
             </div>
             <div className="d-flex-flex-column">
-              <h6>
-                <b>ಡಾ. ಚೇತನ್ ನಾಯ್ಕ್ (ಎಮ್‌.ಬಿ.ಬಿ.ಎಸ್.,)</b>
-              </h6>
+              <h5>
+                <b>
+                  <i>
+                    ಡಾ. ಚೇತನ್ ನಾಯ್ಕ್ <sub>ಎಎಂ‌.ಬಿ.ಬಿ.ಎಸ್.,</sub>
+                  </i>
+                </b>
+              </h5>
               <p>
                 ಜನರಲ್ ಪ್ರಾಕ್ಟೀಷನರ್,
                 <br />
@@ -64,16 +73,18 @@ export default function Template({
           >
             <div className="d-flex-flex-column">
               <p className="mb-0">
-                Patient Name: {paitentName ? paitentname : 'Mr. Chethan'}
+                Patient Name:{' '}
+                {data.paitentName ? data.paitentName : 'Mr. Chethan'}
                 <br />
-                ID No: {idNumber ? idNumber : '20210801'}
+                ID No: {data.idNumber ? data.idNumber : '20210801'}
               </p>
             </div>
             <div className="d-flex-flex-column">
               <p className="mb-0">
-                Age / Sex : {age && sex ? `${age}y/${sex}` : '43y/M'}
+                Age / Sex :{' '}
+                {data.age && data.sex ? `${data.age}y/${data.sex}` : '43y/M'}
                 <br />
-                OP No.: {opNumber ? opNumber : '01'}
+                OP No.: {data.opNumber ? data.opNumber : '01'}
               </p>
             </div>
           </div>
@@ -82,9 +93,9 @@ export default function Template({
               Previous Known Problems:
             </h5>
             <ol>
-              {problems ? (
-                problems.map((prob) => {
-                  return <li>{prob.problems}</li>;
+              {data.problems ? (
+                data.problems.map((prob) => {
+                  return <li>{prob.knownProblem}</li>;
                 })
               ) : (
                 <p>N/A</p>
@@ -94,8 +105,8 @@ export default function Template({
           <div className="m-2 pt-2">
             <h5 className="border-bottom border-dark">Chief Complaints: </h5>
             <ol>
-              {complaints ? (
-                complaints.map((complaint) => {
+              {data.complaints ? (
+                data.complaints.map((complaint) => {
                   return <li>{complaint.chiefComplaints}</li>;
                 })
               ) : (
@@ -108,8 +119,8 @@ export default function Template({
               Clinical / Provisional / Differential Diagnosis:{' '}
             </h5>
             <ol>
-              {diagnosis ? (
-                diagnosis.map((diag) => {
+              {data.diagnosis ? (
+                data.diagnosis.map((diag) => {
                   return <li>{diag.diagnosis}</li>;
                 })
               ) : (
@@ -121,26 +132,44 @@ export default function Template({
             <h4 className="border-bottom border-dark">Examination: </h4>
             <h5 className="border-bottom border-dark">Vitals: </h5>
             <div className="row ps-1">
-              <div className="col-3">BP: {vitals ? vitals.bp : '50'}mmHg</div>
-              <div className="col-3">PR: {vitals ? vitals.pr : '50'}bpm</div>
-              <div className="col-3">SpO2: {vitals ? vitals.spo2 : '50'}%</div>
               <div className="col-3">
-                Temp: {vitals ? vitals.temp : '50'}&#8457;
+                BP: {data.vitals ? data.vitals.bp : '50'}mmHg
+              </div>
+              <div className="col-3">
+                PR: {data.vitals ? data.vitals.pr : '50'}bpm
+              </div>
+              <div className="col-3">
+                SpO2: {data.vitals ? data.vitals.spo2 : '50'}%
+              </div>
+              <div className="col-3">
+                Temp: {data.vitals ? data.vitals.temp : '50'}&#8457;
               </div>
             </div>
-            <p className="mb-0 ps-1">GPE - {vitals ? vitals.gpe : '50'}</p>
-            <p className="mb-0 ps-1">CVS - {vitals ? vitals.cvs : '50'}</p>
-            <p className="mb-0 ps-1">RS - {vitals ? vitals.rs : '50'}</p>
-            <p className="mb-0 ps-1">P/A - {vitals ? vitals.pa : '50'}</p>
-            <p className="mb-0 ps-1">CNS - {vitals ? vitals.cns : '50'}</p>
-            <p className="mb-0 ps-1">L/E - {vitals ? vitals.le : '50'}</p>
+            <p className="mb-0 ps-1">
+              GPE - {data.vitals ? data.vitals.gpe : '50'}
+            </p>
+            <p className="mb-0 ps-1">
+              CVS - {data.vitals ? data.vitals.cvs : '50'}
+            </p>
+            <p className="mb-0 ps-1">
+              RS - {data.vitals ? data.vitals.rs : '50'}
+            </p>
+            <p className="mb-0 ps-1">
+              P/A - {data.vitals ? data.vitals.pa : '50'}
+            </p>
+            <p className="mb-0 ps-1">
+              CNS - {data.vitals ? data.vitals.cns : '50'}
+            </p>
+            <p className="mb-0 ps-1">
+              L/E - {data.vitals ? data.vitals.le : '50'}
+            </p>
           </div>
           <div className="m-2 pt-2">
             <h5 className="border-bottom border-dark">Treatment Given:</h5>
 
             <ol>
-              {treatment ? (
-                treatment.map((treat) => {
+              {data.treatment ? (
+                data.treatment.map((treat) => {
                   return <li>{treat.treatmentGiven}</li>;
                 })
               ) : (
@@ -152,8 +181,8 @@ export default function Template({
             <h5 className="border-bottom border-dark">Treatment Adviced:</h5>
 
             <ol>
-              {advice ? (
-                advice.map((adv) => {
+              {data.advice ? (
+                data.advice.map((adv) => {
                   return <li>{adv.treatmentAdviced}</li>;
                 })
               ) : (
@@ -165,7 +194,7 @@ export default function Template({
             <h5 className="border-bottom border-dark">Follow Up:</h5>
 
             <p className="ps-1">
-              {followUp ? followUp : 'Review after 3 days.'}
+              {data.followUp ? data.followUp : 'Review after 3 days.'}
             </p>
           </div>
           <div
@@ -242,5 +271,7 @@ export default function Template({
         </div>
       </div>
     </div>
+  ) : (
+    ''
   );
 }

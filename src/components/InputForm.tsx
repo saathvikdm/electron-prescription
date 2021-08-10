@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-// import ReactPDF from '@react-pdf/renderer';
-// import Pdf from 'react-to-pdf';
+import ReactPDF from '@react-pdf/renderer';
+import Pdf from 'react-to-pdf';
+import Template from '../pages/Template';
 // import Issued from '../Pages/Issued';
 
 const InputForm = () => {
@@ -38,6 +39,8 @@ const InputForm = () => {
   const [followUp, setFollowUp] = useState('');
 
   const [data, setData] = useState();
+
+  const [toggle, setToggle] = useState(false);
 
   // Handling Diagnosis form inputs
 
@@ -152,24 +155,27 @@ const InputForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const inputData = {
-      name,
+      paitentName: name,
       age,
       sex,
       opNumber,
-      problemsFields,
-      chiefComplaints,
+      problems: problemsFields,
+      complaints: chiefComplaints,
       diagnosis,
       vitals,
-      treatmentGiven,
-      treatmentAdviced,
+      treatment: treatmentGiven,
+      advice: treatmentAdviced,
       followUp,
     };
 
     setData(inputData);
-    console.log(inputData);
+    setToggle(!toggle);
+    // console.log(inputData);
   };
 
-  return (
+  return toggle ? (
+    <Template data={data} />
+  ) : (
     <form onSubmit={handleSubmit}>
       <div className="row g-3 mb-2">
         <div className="col-md-6">
@@ -653,8 +659,6 @@ const InputForm = () => {
       >
         Generate Prescription
       </button>
-
-      {/* <Issued data={data} /> */}
     </form>
   );
 };
