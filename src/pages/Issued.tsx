@@ -1,13 +1,32 @@
 import React from 'react';
 import Header from '../components/Header';
 
+const storage = require('electron-json-storage');
+
 export default function Issue() {
+  function getAll() {
+    //13082021_01
+    storage.get('13082021_01', function (error, data) {
+      if (error) throw error;
+
+      console.log(data);
+    });
+  }
+
+  getAll();
+
   return (
     <div
       className="container justify-content-center flex-column"
       style={{ paddingLeft: '200px' }}
     >
       <Header />
+      <input
+        type="search"
+        className="form-control my-4"
+        id="exampleFormControlInput1"
+        placeholder="Search Records"
+      />
       <table className="table table-striped ">
         <thead>
           <tr>

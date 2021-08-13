@@ -1,10 +1,39 @@
 import React, { useState } from 'react';
-import ReactPDF from '@react-pdf/renderer';
-import Pdf from 'react-to-pdf';
+
 import Template from '../pages/Template';
+import GetDate from '../utils/GetDate';
 // import Issued from '../Pages/Issued';
 
+const path = require('path');
+
 const InputForm = () => {
+  const storage = require('electron-json-storage');
+
+  storage.setDataPath(path.join(__dirname, 'temp'));
+
+  const date = GetDate();
+
+  const saveData = (inputData) => {
+    storage.set(`${date}_${opNumber}_prescription`, { inputData }, function (
+      error
+    ) {
+      if (error) throw error;
+    });
+  };
+
+  function getAll() {
+    storage.get('13082021_01', function (error, data) {
+      if (error) throw error;
+
+      console.log(data);
+    });
+  }
+
+  getAll();
+
+  const dataPath = storage.getDataPath();
+  console.log(dataPath);
+
   const [name, setName] = useState('');
   const [age, setAge] = useState();
   const [sex, setSex] = useState('M');
@@ -166,15 +195,22 @@ const InputForm = () => {
       treatment: treatmentGiven,
       advice: treatmentAdviced,
       followUp,
+      idNumber: `${date}_${opNumber}`,
     };
 
     setData(inputData);
+
+    saveData(inputData);
     setToggle(!toggle);
     // console.log(inputData);
   };
 
+  function handleGoBack() {
+    setToggle(!toggle);
+  }
+
   return toggle ? (
-    <Template data={data} />
+    <Template data={data} back={handleGoBack} />
   ) : (
     <form onSubmit={handleSubmit}>
       <div className="row g-3 mb-2">
@@ -254,16 +290,16 @@ const InputForm = () => {
                     <button
                       className="btn btn-outline-secondary btn-sm m-1"
                       type="button"
-                      onClick={() => handleRemoveProblemsFields(index)}
+                      onClick={() => handleAddProblems()}
                     >
-                      -
+                      +
                     </button>
                     <button
                       className="btn btn-outline-secondary btn-sm m-1"
                       type="button"
-                      onClick={() => handleAddProblems()}
+                      onClick={() => handleRemoveProblemsFields(index)}
                     >
-                      +
+                      -
                     </button>
                   </>
                 ) : (
@@ -301,16 +337,16 @@ const InputForm = () => {
                     <button
                       className="btn btn-outline-secondary btn-sm m-1"
                       type="button"
-                      onClick={() => handleRemoveComplaintsFields(index)}
+                      onClick={() => handleAddComplaints()}
                     >
-                      -
+                      +
                     </button>
                     <button
                       className="btn btn-outline-secondary btn-sm m-1"
                       type="button"
-                      onClick={() => handleAddComplaints()}
+                      onClick={() => handleRemoveComplaintsFields(index)}
                     >
-                      +
+                      -
                     </button>
                   </>
                 ) : (
@@ -331,7 +367,7 @@ const InputForm = () => {
         <p className="pt-2 mb-0">
           Clinical / Provisional / Differential Diagnosis:
         </p>
-        {diagnosis.map((inputField, index) => (
+        {diagnosis.map((diag, index) => (
           <div key={`${index}-${diagnosis}`} className="mb-2">
             <div className="row form-group">
               <div className="col-md-8">
@@ -340,7 +376,7 @@ const InputForm = () => {
                   className="form-control "
                   id="diagnosis"
                   name="diagnosis"
-                  value={diagnosis.diagnosis}
+                  value={diag.diagnosis}
                   onChange={(event) => handleInputChange(index, event)}
                 />
               </div>
@@ -350,16 +386,16 @@ const InputForm = () => {
                     <button
                       className="btn btn-outline-secondary btn-sm m-1"
                       type="button"
-                      onClick={() => handleRemoveFields(index)}
+                      onClick={() => handleAddFields()}
                     >
-                      -
+                      +
                     </button>
                     <button
                       className="btn btn-outline-secondary btn-sm m-1"
                       type="button"
-                      onClick={() => handleAddFields()}
+                      onClick={() => handleRemoveFields(index)}
                     >
-                      +
+                      -
                     </button>
                   </>
                 ) : (
@@ -538,8 +574,8 @@ const InputForm = () => {
 
         <div className="mb-2 mx-1">
           <p className="pt-2 mb-0">Treatment Given:</p>
-          {treatmentGiven.map((inputField, index) => (
-            <div key={`${index}-${inputField}`} className="mb-2">
+          {treatmentGiven.map((given, index) => (
+            <div key={`${index}-${given}`} className="mb-2">
               <div className="row form-group">
                 <div className="col-md-8">
                   <input
@@ -547,7 +583,7 @@ const InputForm = () => {
                     className="form-control "
                     id="treatmentGiven"
                     name="treatmentGiven"
-                    value={treatmentGiven.treatmentGiven}
+                    value={given.treatmentGiven}
                     onChange={(event) =>
                       handleTreatmentGivenChange(index, event)
                     }
@@ -559,16 +595,16 @@ const InputForm = () => {
                       <button
                         className="btn btn-outline-secondary btn-sm m-1"
                         type="button"
-                        onClick={() => handleRemoveTreatmentGiven(index)}
+                        onClick={() => handleAddTreatmentGiven()}
                       >
-                        -
+                        +
                       </button>
                       <button
                         className="btn btn-outline-secondary btn-sm m-1"
                         type="button"
-                        onClick={() => handleAddTreatmentGiven()}
+                        onClick={() => handleRemoveTreatmentGiven(index)}
                       >
-                        +
+                        -
                       </button>
                     </>
                   ) : (
@@ -597,7 +633,7 @@ const InputForm = () => {
                     className="form-control "
                     id="treatmentAdviced"
                     name="treatmentAdviced"
-                    value={treatmentAdviced.treatmentAdviced}
+                    value={advice.treatmentAdviced}
                     onChange={(event) =>
                       handletreatmentAdvicedChange(index, event)
                     }
@@ -609,16 +645,16 @@ const InputForm = () => {
                       <button
                         className="btn btn-outline-secondary btn-sm m-1"
                         type="button"
-                        onClick={() => handleRemovetreatmentAdviced(index)}
+                        onClick={() => handleAddtreatmentAdviced()}
                       >
-                        -
+                        +
                       </button>
                       <button
                         className="btn btn-outline-secondary btn-sm m-1"
                         type="button"
-                        onClick={() => handleAddtreatmentAdviced()}
+                        onClick={() => handleRemovetreatmentAdviced(index)}
                       >
-                        +
+                        -
                       </button>
                     </>
                   ) : (

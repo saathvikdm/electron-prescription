@@ -11,7 +11,7 @@ import Template from './pages/Template';
 
 export default function App() {
   return (
-    <div className="d-flex flex-row">
+    <div className="d-flex flex-row bg-light">
       <Router>
         <Sidebar />
         <Switch>

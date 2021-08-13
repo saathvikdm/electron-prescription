@@ -27,13 +27,38 @@ const Dashboard = () => {
         />
         <DashboardTile
           bgCol="#198754"
-          tileText="Issue New Report"
-          // tileNumber="96"
+          tileText="Issue Prescription"
+          tileBtnText="Generate Prescription"
           tileType
           tileIcon="fas fa-marker"
         />
+        <DashboardTile
+          bgCol="#219ebc"
+          tileText="Issue Bill"
+          tileBtnText="Generate Bill"
+          tileType
+        />
+        <DashboardTile
+          bgCol="#023047"
+          tileText="Issue Medical Certificate"
+          tileBtnText="Generate MC"
+          tileType
+        />
         <div className="container">
-          <h3>Recently Issued Reports</h3> <hr />
+          <div className="row">
+            <div className="col-6">
+              <h3>Recently Issued Reports</h3>
+            </div>
+            <div className="col-6">
+              <input
+                type="search"
+                class="form-control"
+                id="exampleFormControlInput1"
+                placeholder="Search Records"
+              />
+            </div>
+          </div>
+          <hr />
           <table className="table table-striped ">
             <thead>
               <tr>

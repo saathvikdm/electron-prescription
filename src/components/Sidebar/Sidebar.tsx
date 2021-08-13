@@ -16,28 +16,42 @@ export default function SideBarAlt() {
           exact
           to="/"
           activeClassName="active"
-          className="nav-item nav-link d-flex justify-content-between text-white"
+          className="nav-item nav-link d-flex align-items-center justify-content-between text-white"
         >
           Dashboard
           <i className="fas fa-tachometer-alt mt-1" />
         </NavLink>
         <NavLink
           to="/issue"
-          className="nav-item nav-link d-flex justify-content-between text-white"
+          className="nav-item nav-link d-flex align-items-center justify-content-between text-white"
         >
-          Issue
+          Prescription
           <i className="fas fa-file mt-1" />
         </NavLink>
         <NavLink
+          to="/billing"
+          className="nav-item nav-link d-flex align-items-center justify-content-between text-white"
+        >
+          Billing
+          <i className="fas fa-file-invoice mt-1" />
+        </NavLink>
+        <NavLink
+          to="/certificate"
+          className="nav-item nav-link d-flex align-items-center justify-content-between text-white"
+        >
+          Medical Certificate
+          <i className="fas fa-certificate mt-1" />
+        </NavLink>
+        <NavLink
           to="/issued"
-          className="nav-item nav-link d-flex justify-content-between text-white"
+          className="nav-item nav-link d-flex align-items-center justify-content-between text-white"
         >
           View Issued
           <i className="far fa-copy mt-1" />
         </NavLink>
         <NavLink
           to="/settings"
-          className="nav-item nav-link d-flex justify-content-between text-white"
+          className="nav-item nav-link d-flex align-items-center justify-content-between text-white"
         >
           Settings
           <i className="fas fa-cog mt-1" />

@@ -4,7 +4,7 @@ import clinicLogo from '../../assets/cliniclogo.png';
 
 export default function Header() {
   return (
-    <div className="d-flex justify-content-between bg-light shadow-sm p-3 mb-2 rounded">
+    <div className="d-flex justify-content-between bg-light shadow-sm p-3 my-2 rounded">
       <img src={drLogo} alt="" />
       <div className="d-flex flex-column justify-content-center align-items-center">
         <p className="h5 text-center px-1">
