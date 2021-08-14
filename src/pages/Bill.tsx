@@ -1,9 +1,13 @@
 import React from 'react';
+
+import Billing from '../templates/Billing';
+
 import Header from '../components/Header';
-import InputForm from '../components/InputForm';
+import BillingForm from '../components/BillingForm';
+
 import GetDate from '../utils/GetDate';
 
-export default function Issue() {
+export default function Bill() {
   const date = GetDate();
   console.log(`Date: ${date}`);
 
@@ -13,10 +17,10 @@ export default function Issue() {
       style={{ paddingLeft: '200px' }}
     >
       <Header />
-      <div className="alert alert-success mb-4" role="alert">
-        <i className="fas fa-marker me-2" /> Generate Prescription
+      <div className="alert billing-color mb-4" role="alert">
+        <i className="fas fa-marker me-2 " /> Generate Bill
       </div>
-      <InputForm />
+      <BillingForm />
     </div>
   );
 }

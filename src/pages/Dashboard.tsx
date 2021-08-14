@@ -31,18 +31,21 @@ const Dashboard = () => {
           tileBtnText="Generate Prescription"
           tileType
           tileIcon="fas fa-marker"
+          tileLink="/issue"
         />
         <DashboardTile
           bgCol="#219ebc"
           tileText="Issue Bill"
           tileBtnText="Generate Bill"
           tileType
+          tileLink="/billing"
         />
         <DashboardTile
           bgCol="#023047"
           tileText="Issue Medical Certificate"
           tileBtnText="Generate MC"
           tileType
+          tileLink="/certificate"
         />
         <div className="container">
           <div className="row">

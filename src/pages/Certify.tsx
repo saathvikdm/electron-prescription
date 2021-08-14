@@ -1,9 +1,11 @@
 import React from 'react';
 import Header from '../components/Header';
-import InputForm from '../components/InputForm';
+
+import Certificate from '../templates/Certificate';
+
 import GetDate from '../utils/GetDate';
 
-export default function Issue() {
+export default function Certify() {
   const date = GetDate();
   console.log(`Date: ${date}`);
 
@@ -13,10 +15,7 @@ export default function Issue() {
       style={{ paddingLeft: '200px' }}
     >
       <Header />
-      <div className="alert alert-success mb-4" role="alert">
-        <i className="fas fa-marker me-2" /> Generate Prescription
-      </div>
-      <InputForm />
+      <Certificate />
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import Template from '../pages/Template';
+import Template from '../templates/Template';
 import GetDate from '../utils/GetDate';
 // import Issued from '../Pages/Issued';
 
@@ -200,7 +200,7 @@ const InputForm = () => {
 
     setData(inputData);
 
-    saveData(inputData);
+    // saveData(inputData);
     setToggle(!toggle);
     // console.log(inputData);
   };
@@ -210,7 +210,7 @@ const InputForm = () => {
   }
 
   return toggle ? (
-    <Template data={data} back={handleGoBack} />
+    <Template data={data} back={handleGoBack} saveData={saveData} />
   ) : (
     <form onSubmit={handleSubmit}>
       <div className="row g-3 mb-2">

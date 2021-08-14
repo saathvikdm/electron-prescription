@@ -8,6 +8,7 @@ export default function DashboardTile({
   tileIcon,
   tileType,
   tileBtnText,
+  tileLink,
 }) {
   return (
     <div className="col-md-4 col-xl-3">
@@ -28,7 +29,7 @@ export default function DashboardTile({
           <h6 className="m-b-20">{tileText}</h6>
           <h2 className="text-right">
             {tileType ? (
-              <Link to="/issue">
+              <Link to={tileLink}>
                 <button className="btn btn-light btn-sm" type="button">
                   {tileBtnText}
                 </button>

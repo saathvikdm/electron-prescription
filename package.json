@@ -260,6 +260,7 @@
     "history": "^5.0.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-height": "^3.0.1",
     "react-router-dom": "^5.2.0",
     "react-to-pdf": "^0.0.14",
     "react-to-print": "^2.13.0",
