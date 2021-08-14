@@ -7,7 +7,7 @@ import Issue from './pages/Issue';
 import Issued from './pages/Issued';
 import Settings from './pages/Settings';
 import Bill from './pages/Bill';
-import Certify from './pages/Certify';
+import CertificatePage from './pages/Certificate';
 
 import Template from './templates/Template';
 
@@ -19,7 +19,7 @@ export default function App() {
       <Router>
         <Sidebar />
         <Switch>
-          <Route path="/certificate" component={Certify} />
+          <Route path="/certificate" component={CertificatePage} />
           <Route path="/billing" component={Bill} />
           <Route path="/template" component={Template} />
           <Route path="/issue" component={Issue} />

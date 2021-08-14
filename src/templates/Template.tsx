@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { useReactToPrint } from 'react-to-print';
 import { ReactHeight } from 'react-height';
@@ -9,13 +9,14 @@ import Footer from '../components/Footer';
 
 const ref = React.createRef();
 
-/*
-  .page-footer {
-    padding-top: 5cm;
-  }
-*/
-
 export default function Template({ data, back, saveData }) {
+  const DEFAULT_PAGE_HEIGHT = 717; // 19cm Page Height in pixels
+  const FOOTER_HEIGHT = 337; //height of footer in px
+
+  let pageHeight = 0;
+
+  const [pgHeight, setpgHeight] = useState(330);
+
   const printFunc = useReactToPrint({
     pageStyle: () => 'size: 14.8cm 21cm',
     content: () => ref.current,
@@ -56,7 +57,21 @@ export default function Template({ data, back, saveData }) {
           <div style={{ height: '19cm' }}></div>
         </ReactHeight> */}
         <div className="prescription" style={{ border: '2px solid black' }}>
-          <ReactHeight onHeightReady={(height) => console.log(height)}>
+          <ReactHeight
+            onHeightReady={(height) => {
+              console.log('height', height);
+              console.log('Calc', height - DEFAULT_PAGE_HEIGHT);
+              pageHeight = height;
+              let calc = (
+                (height + FOOTER_HEIGHT) /
+                DEFAULT_PAGE_HEIGHT
+              ).toFixed(0);
+              console.log('No. of pages: ', calc);
+
+              setpgHeight(pgHeight - (height - DEFAULT_PAGE_HEIGHT));
+              console.log(pgHeight - (pageHeight - DEFAULT_PAGE_HEIGHT));
+            }}
+          >
             <PrintHeader />
             <HeaderNames />
 
@@ -252,10 +267,13 @@ export default function Template({ data, back, saveData }) {
                 {data.followUp ? data.followUp : 'Review after 3 days.'}
               </p>
             </div>
-
-            <Footer sign />
-            {/* <div className="credsfooter">Wishing you a speedy recovery!</div> */}
           </ReactHeight>
+          <div>
+            {/* Footer with sign is of 337px Height */}
+            <Footer sign mrgn={pgHeight} />
+          </div>
+
+          {/* <div className="credsfooter">Wishing you a speedy recovery!</div> */}
         </div>
       </div>
     </div>

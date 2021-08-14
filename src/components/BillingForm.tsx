@@ -14,15 +14,10 @@ const BillingForm = () => {
   const date = GetDate();
 
   const saveData = (inputData) => {
-    storage.set(`${date}_${opNumber}_prescription`, { inputData }, function (
-      error
-    ) {
+    storage.set(`${date}_${opNumber}_bill`, { inputData }, function (error) {
       if (error) throw error;
     });
   };
-
-  const dataPath = storage.getDataPath();
-  console.log(dataPath);
 
   const [name, setName] = useState('');
   const [age, setAge] = useState();
@@ -80,7 +75,7 @@ const BillingForm = () => {
     meds.forEach((med) => {
       total += med.total;
     });
-    //c
+
     const inputData = {
       paitentName: name,
       age,

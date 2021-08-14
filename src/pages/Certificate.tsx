@@ -1,11 +1,11 @@
 import React from 'react';
 
 import Header from '../components/Header';
-import BillingForm from '../components/BillingForm';
+import CertificateForm from '../components/CertificateForm';
 
 import GetDate from '../utils/GetDate';
 
-export default function Bill() {
+export default function CertificatePage() {
   const date = GetDate();
   console.log(`Date: ${date}`);
 
@@ -15,10 +15,10 @@ export default function Bill() {
       style={{ paddingLeft: '200px' }}
     >
       <Header />
-      <div className="alert billing-color mb-4" role="alert">
-        <i className="fas fa-marker me-2 " /> Generate Bill
+      <div className="alert certificate-color mb-4" role="alert">
+        <i className="fas fa-marker me-2 " /> Generate Certificate
       </div>
-      <BillingForm />
+      <CertificateForm />
     </div>
   );
 }

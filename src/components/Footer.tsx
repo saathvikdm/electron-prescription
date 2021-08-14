@@ -3,9 +3,9 @@ import React from 'react';
 import footerLogo from '../../assets/footerlogo.png';
 import Sign from '../../assets/sign.png';
 
-export default function Footer({ sign, facilities }) {
+export default function Footer({ sign, facilities, mrgn }) {
   return (
-    <div>
+    <div style={{ marginTop: `${mrgn}px` }}>
       <div className="page-footer">
         {sign ? (
           <div className="d-flex justify-content-end">

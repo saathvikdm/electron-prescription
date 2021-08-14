@@ -96,3 +96,9 @@ body {
   background-color: rgb(175, 201, 207);
   border-color: rgb(151, 175, 180);
 }
+
+.certificate-color {
+  color: #00145d;
+  background-color: rgb(49 118 152 / 55%);
+  border-color: rgb(92 147 175);
+}
