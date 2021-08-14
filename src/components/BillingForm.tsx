@@ -80,7 +80,7 @@ const BillingForm = () => {
     meds.forEach((med) => {
       total += med.total;
     });
-
+    //c
     const inputData = {
       paitentName: name,
       age,
