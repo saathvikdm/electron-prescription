@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Billing from '../templates/Billing';
 
@@ -7,7 +7,7 @@ import GetDate from '../utils/GetDate';
 const path = require('path');
 const storage = require('electron-json-storage');
 
-const BillingForm = () => {
+const BillingForm = ({ passedData }) => {
   storage.setDataPath(path.join(__dirname, 'temp'));
 
   const date = GetDate();
@@ -19,17 +19,25 @@ const BillingForm = () => {
   };
 
   const [name, setName] = useState('');
-  const [age, setAge] = useState();
+  const [age, setAge] = useState('');
   const [sex, setSex] = useState('M');
-  const [opNumber, setOpNumber] = useState();
+  const [opNumber, setOpNumber] = useState('');
   const [medicine, setMedicine] = useState([
-    { med: '', quantity: null, rate: null, total: 0 },
+    { med: '', quantity: '', rate: '', total: 0 },
   ]);
   const [grandTotal, setGrandTotal] = useState(0);
 
   const [data, setData] = useState();
 
   const [toggle, setToggle] = useState(false);
+
+  useEffect(() => {
+    if (passedData) {
+      setToggle(!toggle);
+      setData(passedData.inputData);
+      // console.log(passedData);
+    }
+  }, [passedData]);
 
   // handling medicine fields
 

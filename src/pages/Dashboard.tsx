@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 
 import DashboardTile from '../components/DashboardTile';
 import Header from '../components/Header';
+import TableRow from '../components/TableRow';
 
 import GetDate from '../utils/GetDate';
 import separateObject from '../utils/SeperateObject';
-import getPath from '../utils/GetPath';
 
 const path = require('path');
 const storage = require('electron-json-storage');
@@ -16,7 +16,10 @@ const Dashboard = () => {
   const [issuedToday, setissuedToday] = useState(0);
   const [data, setData] = useState([]);
   const [listData, setlistData] = useState();
+  const [search, setsearch] = useState('');
   const date = GetDate();
+
+  let setFilteredList;
 
   storage.setDataPath(path.join(__dirname, 'temp'));
 
@@ -46,9 +49,20 @@ const Dashboard = () => {
   }, [issuedToday]);
 
   useEffect(() => {
-    let list = [...separateObject(data)];
-    setlistData(list.sort().reverse().slice(0, 4));
+    const list = [...separateObject(data)];
+    setlistData(list.reverse().slice(0, 4));
   }, [data]);
+
+  if (listData && search !== '') {
+    const list = [...separateObject(data)];
+    const re = new RegExp(search, 'i');
+    const filtered = list.filter((entry) =>
+      Object.values(entry).some(
+        (val) => typeof val === 'string' && val.match(re)
+      )
+    );
+    setFilteredList = filtered;
+  }
 
   return (
     <div
@@ -102,6 +116,8 @@ const Dashboard = () => {
                 className="form-control"
                 id="exampleFormControlInput1"
                 placeholder="Search Records"
+                value={search}
+                onChange={(e) => setsearch(e.target.value)}
               />
             </div>
           </div>
@@ -117,37 +133,14 @@ const Dashboard = () => {
               </tr>
             </thead>
             <tbody>
-              {listData &&
-                listData.map((item, index) => {
-                  console.log(item);
-                  return (
-                    <tr key={index}>
-                      <th scope="row">{index + 1}</th>
-                      <td>{item.data.inputData.paitentName}</td>
-                      <td>{item.date}</td>
-                      <td>
-                        <span className={`badge bg-${item.type}`}>
-                          {item.type}
-                        </span>
-                      </td>
-                      <td>
-                        <Link
-                          to={{
-                            pathname: getPath(item),
-                            state: { data: item.data },
-                          }}
-                        >
-                          <button
-                            type="button"
-                            className="btn btn-sm btn-primary"
-                          >
-                            View
-                          </button>
-                        </Link>
-                      </td>
-                    </tr>
-                  );
-                })}
+              {setFilteredList === undefined
+                ? listData &&
+                  listData.map((item, index) => {
+                    return <TableRow key={index} item={item} index={index} />;
+                  })
+                : setFilteredList.map((item, index) => {
+                    return <TableRow key={index} item={item} index={index} />;
+                  })}
             </tbody>
           </table>
         </div>

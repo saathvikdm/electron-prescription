@@ -76,6 +76,7 @@ const createWindow = async () => {
       nodeIntegration: true,
       enableRemoteModule: true,
     },
+    autoHideMenuBar: true,
   });
 
   mainWindow.loadURL(`file://${__dirname}/index.html`);

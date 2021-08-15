@@ -10,6 +10,7 @@ const separateObject = (obj) => {
       )}/${subKeys[0].slice(4, 8)}`,
       type: subKeys[2],
       data: obj[key],
+      name: obj[key].inputData.paitentName,
     });
   });
   return res;

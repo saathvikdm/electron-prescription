@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import Header from '../components/Header';
+import TableRow from '../components/TableRow';
 
 import separateObject from '../utils/SeperateObject';
-import getPath from '../utils/GetPath';
 
 const path = require('path');
 const storage = require('electron-json-storage');
@@ -11,6 +10,9 @@ const storage = require('electron-json-storage');
 export default function Issue() {
   const [data, setData] = useState([]);
   const [listData, setlistData] = useState();
+  const [search, setsearch] = useState('');
+
+  let setFilteredList;
 
   storage.setDataPath(path.join(__dirname, 'temp'));
 
@@ -23,10 +25,19 @@ export default function Issue() {
 
   useEffect(() => {
     let list = [...separateObject(data)];
-    setlistData(list.sort().reverse());
+    setlistData(list.sort().reverse().slice(0, 25));
   }, [data]);
 
-  console.log(data);
+  if (listData && search !== '') {
+    const list = [...separateObject(data)];
+    const re = new RegExp(search, 'i');
+    const filtered = list.filter((entry) =>
+      Object.values(entry).some(
+        (val) => typeof val === 'string' && val.match(re)
+      )
+    );
+    setFilteredList = filtered;
+  }
 
   return (
     <div
@@ -39,6 +50,8 @@ export default function Issue() {
         className="form-control my-4"
         id="exampleFormControlInput1"
         placeholder="Search Records"
+        value={search}
+        onChange={(e) => setsearch(e.target.value)}
       />
       <table className="table table-striped ">
         <thead>
@@ -51,32 +64,14 @@ export default function Issue() {
           </tr>
         </thead>
         <tbody>
-          {listData &&
-            listData.map((item, index) => {
-              console.log(item);
-              return (
-                <tr key={index}>
-                  <th scope="row">{index + 1}</th>
-                  <td>{item.data.inputData.paitentName}</td>
-                  <td>{item.date}</td>
-                  <td>
-                    <span className={`badge bg-${item.type}`}>{item.type}</span>
-                  </td>
-                  <td>
-                    <Link
-                      to={{
-                        pathname: getPath(item),
-                        state: { data: item.data },
-                      }}
-                    >
-                      <button type="button" className="btn btn-sm btn-primary">
-                        View
-                      </button>
-                    </Link>
-                  </td>
-                </tr>
-              );
-            })}
+          {setFilteredList === undefined
+            ? listData &&
+              listData.map((item, index) => {
+                return <TableRow key={index} item={item} index={index} />;
+              })
+            : setFilteredList.map((item, index) => {
+                return <TableRow key={index} item={item} index={index} />;
+              })}
         </tbody>
       </table>
     </div>

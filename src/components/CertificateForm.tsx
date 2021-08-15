@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Certificate from '../templates/Certificate';
 
@@ -7,7 +7,7 @@ import GetDate from '../utils/GetDate';
 const storage = require('electron-json-storage');
 const path = require('path');
 
-const CertificateForm = () => {
+const CertificateForm = ({ passedData }) => {
   storage.setDataPath(path.join(__dirname, 'temp'));
 
   const date = GetDate();
@@ -20,9 +20,6 @@ const CertificateForm = () => {
     });
   };
 
-  const dataPath = storage.getDataPath();
-  console.log(dataPath);
-
   const [paitentName, setname] = useState('');
   const [title, setTitle] = useState('');
   const [refNo, setrefNo] = useState('');
@@ -31,6 +28,13 @@ const CertificateForm = () => {
   const [data, setData] = useState();
 
   const [toggle, setToggle] = useState(false);
+
+  useEffect(() => {
+    if (passedData) {
+      setToggle(!toggle);
+      setData(passedData.inputData);
+    }
+  }, [passedData]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
