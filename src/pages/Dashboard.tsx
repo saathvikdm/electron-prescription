@@ -1,10 +1,55 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+
 import DashboardTile from '../components/DashboardTile';
 import Header from '../components/Header';
 
+import GetDate from '../utils/GetDate';
+
+const path = require('path');
+const storage = require('electron-json-storage');
+
 const Dashboard = () => {
-  // bgCol, tileText, tileNumber
+  const [totalIssued, settotalIssued] = useState(0);
+  const [issuedToday, setissuedToday] = useState(0);
+  const [data, setData] = useState();
+  const date = GetDate();
+
+  storage.setDataPath(path.join(__dirname, 'temp'));
+
+  storage.keys(function (error, keys) {
+    if (error) throw error;
+    settotalIssued(keys.length);
+  });
+
+  useEffect(() => {
+    storage.keys(function (error, keys) {
+      if (error) throw error;
+      let count = 0;
+      keys.forEach((key) => {
+        if (key.split('_')[0] === date) {
+          count += 1;
+        }
+      });
+      setissuedToday(count);
+    });
+  });
+
+  useEffect(() => {
+    storage.getAll(function (error, data) {
+      if (error) throw error;
+      setData(data);
+    });
+  }, [totalIssued]);
+
+  useEffect(() => {
+    if (data) {
+      Object.keys(data).forEach((key) => {
+        console.log(data[key]);
+      });
+    }
+    console.log(data);
+  }, [data]);
 
   return (
     <div
@@ -16,13 +61,13 @@ const Dashboard = () => {
         <DashboardTile
           bgCol="#0d6efd"
           tileText="Issued today"
-          tileNumber="4"
+          tileNumber={issuedToday}
           tileIcon="fas fa-file"
         />
         <DashboardTile
           bgCol="#dc3545"
           tileText="Issued Reports"
-          tileNumber="69"
+          tileNumber={totalIssued}
           tileIcon="far fa-copy"
         />
         <DashboardTile

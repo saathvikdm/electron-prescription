@@ -4,11 +4,10 @@ import Certificate from '../templates/Certificate';
 
 import GetDate from '../utils/GetDate';
 
+const storage = require('electron-json-storage');
 const path = require('path');
 
 const CertificateForm = () => {
-  const storage = require('electron-json-storage');
-
   storage.setDataPath(path.join(__dirname, 'temp'));
 
   const date = GetDate();

@@ -5,10 +5,9 @@ import Billing from '../templates/Billing';
 import GetDate from '../utils/GetDate';
 
 const path = require('path');
+const storage = require('electron-json-storage');
 
 const BillingForm = () => {
-  const storage = require('electron-json-storage');
-
   storage.setDataPath(path.join(__dirname, 'temp'));
 
   const date = GetDate();

@@ -2,13 +2,11 @@ import React, { useState } from 'react';
 
 import Template from '../templates/Template';
 import GetDate from '../utils/GetDate';
-// import Issued from '../Pages/Issued';
 
+const storage = require('electron-json-storage');
 const path = require('path');
 
 const InputForm = () => {
-  const storage = require('electron-json-storage');
-
   storage.setDataPath(path.join(__dirname, 'temp'));
 
   const date = GetDate();
@@ -20,19 +18,6 @@ const InputForm = () => {
       if (error) throw error;
     });
   };
-
-  function getAll() {
-    storage.get('13082021_01', function (error, data) {
-      if (error) throw error;
-
-      console.log(data);
-    });
-  }
-
-  getAll();
-
-  const dataPath = storage.getDataPath();
-  console.log(dataPath);
 
   const [name, setName] = useState('');
   const [age, setAge] = useState();

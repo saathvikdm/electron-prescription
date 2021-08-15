@@ -25,7 +25,6 @@ export default function Certificate({ data, back, saveData }) {
   });
 
   const date = GetDate();
-  console.log(date);
 
   return (
     <div className="container d-flex align-items-center flex-column mb-3">
@@ -87,7 +86,7 @@ export default function Certificate({ data, back, saveData }) {
               </div>
               <div className="d-flex-flex-column">
                 <p className="mb-1" style={{ fontSize: '0.8rem' }}>
-                  Ref. No.: {data ? data.refNo : ''}
+                  Ref. No.: {data ? `${date}_${data.refNo}` : date}
                 </p>
               </div>
             </div>
