@@ -8,7 +8,7 @@ const path = require('path');
 const storage = require('electron-json-storage');
 
 const BillingForm = ({ passedData }) => {
-  storage.setDataPath(path.join(__dirname, 'temp'));
+  storage.setDataPath();
 
   const date = GetDate();
 

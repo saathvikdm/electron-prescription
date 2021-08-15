@@ -8,7 +8,8 @@ const storage = require('electron-json-storage');
 const path = require('path');
 
 const CertificateForm = ({ passedData }) => {
-  storage.setDataPath(path.join(__dirname, 'temp'));
+  storage.setDataPath();
+  console.log(storage.getDefaultDataPath());
 
   const date = GetDate();
 

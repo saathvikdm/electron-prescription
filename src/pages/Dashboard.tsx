@@ -21,7 +21,7 @@ const Dashboard = () => {
 
   let setFilteredList;
 
-  storage.setDataPath(path.join(__dirname, 'temp'));
+  storage.setDataPath();
 
   storage.keys(function (error, keys) {
     if (error) throw error;

@@ -14,7 +14,7 @@ export default function Issue() {
 
   let setFilteredList;
 
-  storage.setDataPath(path.join(__dirname, 'temp'));
+  storage.setDataPath();
 
   useEffect(() => {
     storage.getAll(function (error, data) {
