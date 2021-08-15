@@ -9,8 +9,6 @@ import Settings from './pages/Settings';
 import Bill from './pages/Bill';
 import CertificatePage from './pages/Certificate';
 
-import Template from './templates/Template';
-
 import './App.global.css';
 
 export default function App() {
@@ -21,7 +19,6 @@ export default function App() {
         <Switch>
           <Route path="/certificate" component={CertificatePage} />
           <Route path="/billing" component={Bill} />
-          <Route path="/template" component={Template} />
           <Route path="/issue" component={Issue} />
           <Route path="/issued" component={Issued} />
           <Route path="/settings" component={Settings} />

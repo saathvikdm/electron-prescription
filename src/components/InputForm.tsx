@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Template from '../templates/Template';
 import GetDate from '../utils/GetDate';
@@ -6,7 +6,7 @@ import GetDate from '../utils/GetDate';
 const storage = require('electron-json-storage');
 const path = require('path');
 
-const InputForm = () => {
+const InputForm = ({ passedData }) => {
   storage.setDataPath(path.join(__dirname, 'temp'));
 
   const date = GetDate();
@@ -55,6 +55,13 @@ const InputForm = () => {
   const [data, setData] = useState();
 
   const [toggle, setToggle] = useState(false);
+
+  useEffect(() => {
+    if (passedData) {
+      setToggle(!toggle);
+      setData(passedData.inputData);
+    }
+  }, [passedData]);
 
   // Handling Diagnosis form inputs
 

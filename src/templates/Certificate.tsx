@@ -82,6 +82,8 @@ export default function Certificate({ data, back, saveData }) {
                     4,
                     8
                   )}`}
+                  <br />
+                  Paitent Name: {data.name ? data.name : 'name'}
                 </p>
               </div>
               <div className="d-flex-flex-column">

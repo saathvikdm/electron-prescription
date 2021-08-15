@@ -102,3 +102,15 @@ body {
   background-color: rgb(49 118 152 / 55%);
   border-color: rgb(92 147 175);
 }
+
+.bg-bill {
+  background: rgb(33, 158, 188);
+}
+
+.bg-certificate {
+  background: rgb(2, 48, 71);
+}
+
+.bg-prescription {
+  background: rgb(25, 135, 84);
+}

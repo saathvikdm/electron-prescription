@@ -1,11 +1,11 @@
 import React from 'react';
+import { useLocation } from 'react-router-dom';
+
 import Header from '../components/Header';
 import InputForm from '../components/InputForm';
-import GetDate from '../utils/GetDate';
 
 export default function Issue() {
-  const date = GetDate();
-  console.log(`Date: ${date}`);
+  const location = useLocation();
 
   return (
     <div
@@ -16,7 +16,11 @@ export default function Issue() {
       <div className="alert alert-success mb-4" role="alert">
         <i className="fas fa-marker me-2" /> Generate Prescription
       </div>
-      <InputForm />
+      {location.state ? (
+        <InputForm passedData={location.state.data} />
+      ) : (
+        <InputForm />
+      )}
     </div>
   );
 }

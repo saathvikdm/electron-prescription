@@ -198,7 +198,7 @@ const BillingForm = () => {
                     value={med.rate}
                     onChange={(event) => handleMedicineChange(index, event)}
                   />
-                  <span class="input-group-text" id="basic-addon2">
+                  <span className="input-group-text" id="basic-addon2">
                     ₹
                   </span>
                 </div>

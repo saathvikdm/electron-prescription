@@ -23,6 +23,7 @@ const CertificateForm = () => {
   const dataPath = storage.getDataPath();
   console.log(dataPath);
 
+  const [name, setname] = useState('');
   const [title, setTitle] = useState('');
   const [refNo, setrefNo] = useState('');
   const [content, setcontent] = useState('');
@@ -37,6 +38,7 @@ const CertificateForm = () => {
       title,
       refNo,
       content,
+      name,
     };
 
     setData(inputData);
@@ -55,7 +57,7 @@ const CertificateForm = () => {
   ) : (
     <form onSubmit={handleSubmit}>
       <div className="row g-3 mb-2">
-        <div className="col-md-10">
+        <div className="col-md-12">
           <label
             htmlFor="PaitentName"
             className="form-label mx-1"
@@ -67,6 +69,17 @@ const CertificateForm = () => {
               className="form-control"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
+            />
+          </label>
+        </div>
+        <div className="col-md-10">
+          <label htmlFor="opNumber" className="form-label mx-1 col-md-10">
+            Paitent Name
+            <input
+              type="text"
+              className="form-control"
+              value={name}
+              onChange={(e) => setname(e.target.value)}
             />
           </label>
         </div>

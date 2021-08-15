@@ -1,19 +1,27 @@
 import React from 'react';
 import Header from '../components/Header';
 
+const path = require('path');
 const storage = require('electron-json-storage');
 
 export default function Issue() {
-  function getAll() {
-    //13082021_01
-    storage.get('13082021_01', function (error, data) {
-      if (error) throw error;
+  storage.setDataPath(path.join(__dirname, 'temp'));
 
-      console.log(data);
-    });
-  }
+  // storage.keys(function (error, keys) {
+  //   if (error) throw error;
+  //   keys.forEach((key) => {
+  //     storage.get(key, function (error, data) {
+  //       if (error) throw error;
+  //       console.log(data);
+  //     });
+  //   });
+  // });
 
-  getAll();
+  storage.getAll(function (error, data) {
+    if (error) throw error;
+
+    console.log(data);
+  });
 
   return (
     <div
