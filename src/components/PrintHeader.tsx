@@ -4,13 +4,32 @@ import clinicLogo from '../../assets/cliniclogo.png';
 
 export default function PrintHeader() {
   return (
-    <div className="d-flex justify-content-between p-3">
+    <div
+      style={{
+        padding: '1em',
+        justifyContent: 'space-between',
+        display: 'flex',
+      }}
+    >
       <img src={drLogo} alt="" height="100px" width="auto" />
-      <div className="d-flex flex-column justify-content-center align-items-center">
-        <p className="text-center px-1" style={{ fontSize: '1rem' }}>
+      <div
+        style={{
+          alignItems: 'center',
+          justifyContent: 'center',
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
+        <p
+          style={{
+            fontSize: '1.2em',
+            padding: '0 0.25em ',
+            textAlign: 'center',
+          }}
+        >
           <b>Vijayalaxmi Clinic, Diagnostics And Counseling Centre.</b>
         </p>
-        <p className="text-center" style={{ fontSize: '0.6em' }}>
+        <p style={{ fontSize: '0.8em', textAlign: 'center' }}>
           Near Raghu Stickers, Dr.B.R.Ambedkar Road(Market Road),
           <br />
           Chikkamagaluru – 577101.
@@ -18,7 +37,7 @@ export default function PrintHeader() {
       </div>
       <img
         src={clinicLogo}
-        className="mt-2"
+        style={{ marginTop: '0.5em ' }}
         height="70px"
         width="100px"
         alt=""

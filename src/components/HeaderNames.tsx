@@ -2,8 +2,20 @@ import React from 'react';
 
 export default function HeaderNames() {
   return (
-    <div className="details d-flex justify-content-between px-3">
-      <div className="d-flex-flex-column">
+    <div
+      style={{
+        display: 'flex',
+        justifyContent: 'space-between',
+        paddingLeft: '1rem',
+        paddingRight: '1rem',
+      }}
+    >
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
         <h6 style={{ fontSize: '0.9rem' }}>
           <b>
             <i>
@@ -19,7 +31,12 @@ export default function HeaderNames() {
           E-mail: drchethannaik@gmail.com
         </p>
       </div>
-      <div className="d-flex-flex-column">
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+        }}
+      >
         <h6 style={{ fontSize: '0.9rem' }}>
           <b>
             <i>

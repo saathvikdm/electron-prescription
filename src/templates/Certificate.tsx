@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useReactToPrint } from 'react-to-print';
+import ReactToPrint from 'react-to-print';
 import { ReactHeight } from 'react-height';
 
 import Footer from '../components/Footer';
@@ -10,19 +10,11 @@ const ref = React.createRef();
 
 export default function Certificate({ data, back, saveData }) {
   const DEFAULT_PAGE_HEIGHT = 717; // 19cm Page Height in pixels
-  const FOOTER_HEIGHT = 250; //height of footer in px
+  const FOOTER_HEIGHT = 140; //height of footer in px
 
   let pageHeight = 0;
 
   const [pgHeight, setpgHeight] = useState(330);
-
-  const printFunc = useReactToPrint({
-    pageStyle: () => 'size: 14.8cm 21cm',
-    content: () => ref.current,
-    onAfterPrint: () => {
-      saveData(data);
-    },
-  });
 
   const date = GetDate();
 
@@ -36,14 +28,16 @@ export default function Certificate({ data, back, saveData }) {
       >
         Go Back
       </button>
-      <button
-        className="btn btn-success mx-1 my-3"
-        // onClick={(e) => e.preventDefault()}
-        type="button"
-        onClick={(e) => printFunc(e)}
-      >
-        Print Certificate
-      </button>
+      <ReactToPrint
+        trigger={() => (
+          <button className="btn btn-success mx-1 my-3" type="button">
+            Print Certificate
+          </button>
+        )}
+        content={() => ref.current}
+        onAfterPrint={() => saveData(data)}
+      />
+
       <div
         className="prescription-container bg-white"
         ref={ref}
@@ -52,9 +46,14 @@ export default function Certificate({ data, back, saveData }) {
           padding: '2em',
           margin: '0',
           width: '14.8cm',
+          height: '21cm',
+          position: 'relative',
         }}
       >
-        <div className="prescription" style={{ border: '2px solid black' }}>
+        <div
+          className="prescription"
+          style={{ height: '20.5cm', border: '2px solid black' }}
+        >
           <ReactHeight
             onHeightReady={(height) => {
               console.log('height', height);
@@ -68,43 +67,56 @@ export default function Certificate({ data, back, saveData }) {
             <PrintHeader />
 
             <div
-              className="details d-flex justify-content-between px-3 pt-1 pe-5"
               style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                paddingLeft: '1rem',
+                paddingRight: '3rem',
+                paddingTop: '0.25em',
                 margin: '5px',
                 border: '1px solid black',
                 borderRadius: '8px',
               }}
             >
-              <div className="d-flex-flex-column">
-                <p className="mb-1" style={{ fontSize: '0.8rem' }}>
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <p style={{ marginBottom: '0.5em', fontSize: '0.8rem' }}>
+                  Ref. No.: {data ? `${date}_${data.refNo}` : date}
+                </p>
+              </div>
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <p style={{ marginBottom: '0.5em', fontSize: '0.8rem' }}>
                   Date:{' '}
                   {`${date.slice(0, 2)}/${date.slice(2, 4)}/${date.slice(
                     4,
                     8
                   )}`}
-                  <br />
-                  Paitent Name: {data.paitentName ? data.paitentName : 'name'}
-                </p>
-              </div>
-              <div className="d-flex-flex-column">
-                <p className="mb-1" style={{ fontSize: '0.8rem' }}>
-                  Ref. No.: {data ? `${date}_${data.refNo}` : date}
+                  {/* <br />
+                  Paitent Name: {data.paitentName ? data.paitentName : 'name'} */}
                 </p>
               </div>
             </div>
-            <div className="text-center">
-              <h1 className="my-4 " style={{ fontSize: '1.2rem' }}>
-                {data.title ? data.title : 'Medical Certificate'}
+            <div style={{ textAlign: 'center' }}>
+              <h1
+                style={{
+                  fontSize: '1.2rem',
+                  marginTop: '1.5em',
+                  marginBottom: '1.5em',
+                }}
+              >
+                {data.title ? data.title : ''}
               </h1>
               <p
-                className="my-4 mx-3"
-                style={{ fontSize: '12pt', textAlign: 'justify' }}
+                style={{
+                  margin: '1.5em 1em',
+                  fontSize: '12pt',
+                  textAlign: 'justify',
+                }}
               >
                 {data.content ? data.content : 'Certificate content here'}
               </p>
             </div>
           </ReactHeight>
-          <Footer mrgn={pgHeight} />
+          <Footer recovery mrgn={pgHeight} />
         </div>
       </div>
     </div>

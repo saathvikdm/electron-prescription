@@ -664,7 +664,7 @@ const InputForm = ({ passedData }) => {
           ))}
         </div>
       </div>
-      <div className="col-md-12 my-1">
+      {/* <div className="col-md-12 my-1">
         <label
           htmlFor="FollowUp"
           className="form-label mx-1"
@@ -676,6 +676,18 @@ const InputForm = ({ passedData }) => {
             className="form-control"
             placeholder="Dr.'s Recomendation"
             value={followUp}
+            onChange={(e) => setFollowUp(e.target.value)}
+          />
+        </label>
+      </div> */}
+      <div className="input-group" style={{ maxWidth: '100%' }}>
+        <label htmlFor="FollowUp" className="col-md-12 form-label">
+          Follow Up:
+          <textarea
+            className="form-control"
+            aria-label="With textarea"
+            value={followUp}
+            placeholder="Dr.'s Recomendation"
             onChange={(e) => setFollowUp(e.target.value)}
           />
         </label>

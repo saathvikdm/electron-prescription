@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { useReactToPrint } from 'react-to-print';
+import ReactToPrint from 'react-to-print';
 import { ReactHeight } from 'react-height';
 
 import PrintHeader from '../components/PrintHeader';
@@ -17,13 +17,14 @@ export default function Template({ data, back, saveData }) {
 
   const [pgHeight, setpgHeight] = useState(330);
 
-  const printFunc = useReactToPrint({
-    pageStyle: () => 'size: 14.8cm 21cm',
-    content: () => ref.current,
-    onAfterPrint: () => {
-      saveData(data);
-    },
-  });
+  // const printFunc = useReactToPrint({
+  //   copyStyles: true,
+  //   pageStyle: () => 'size: 14.8cm 21cm',
+  //   content: () => ref.current,
+  //   onAfterPrint: () => {
+  //     saveData(data);
+  //   },
+  // });
 
   return data ? (
     <div className="container d-flex align-items-center flex-column mb-3">
@@ -35,28 +36,35 @@ export default function Template({ data, back, saveData }) {
       >
         Go Back
       </button>
-      <button
-        className="btn btn-success mx-1 my-3"
-        // onClick={(e) => e.preventDefault()}
-        type="button"
-        onClick={(e) => printFunc(e)}
-      >
-        Print Prescription
-      </button>
+      <ReactToPrint
+        trigger={() => (
+          <button className="btn btn-success mx-1 my-3" type="button">
+            Print Prescription
+          </button>
+        )}
+        content={() => ref.current}
+        onAfterPrint={() => saveData(data)}
+      />
+
       <div
-        className="prescription-container bg-white "
+        className="prescription-container bg-white"
         ref={ref}
         style={{
           border: '1px solid black',
           padding: '2em',
           margin: '0',
           width: '14.8cm',
+          height: '45cm',
+          position: 'relative',
         }}
       >
         {/* <ReactHeight onHeightReady={(height) => console.log(height)}>
           <div style={{ height: '19cm' }}></div>
         </ReactHeight> */}
-        <div className="prescription" style={{ border: '2px solid black' }}>
+        <div
+          className="prescription"
+          style={{ height: '44.5cm', border: '2px solid black' }}
+        >
           <ReactHeight
             onHeightReady={(height) => {
               console.log('height', height);
@@ -76,23 +84,27 @@ export default function Template({ data, back, saveData }) {
             <HeaderNames />
 
             <div
-              className="details d-flex justify-content-between px-3 pt-1 pe-5"
               style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                paddingLeft: '1rem',
+                paddingRight: '3rem',
+                paddingTop: '0.25em',
                 margin: '5px',
                 border: '1px solid black',
                 borderRadius: '8px',
               }}
             >
-              <div className="d-flex-flex-column">
-                <p className="mb-0" style={{ fontSize: '0.8rem' }}>
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <p style={{ marginBottom: '0', fontSize: '0.8rem' }}>
                   Patient Name:{' '}
                   {data.paitentName ? data.paitentName : 'Mr. Chethan'}
                   <br />
                   ID No: {data.idNumber ? data.idNumber : '20210801'}
                 </p>
               </div>
-              <div className="d-flex-flex-column">
-                <p className="mb-0" style={{ fontSize: '0.8rem' }}>
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <p style={{ marginBottom: '0', fontSize: '0.8rem' }}>
                   Age / Sex :{' '}
                   {data.age && data.sex ? `${data.age}y/${data.sex}` : '43y/M'}
                   <br />
@@ -100,18 +112,20 @@ export default function Template({ data, back, saveData }) {
                 </p>
               </div>
             </div>
-            <div className="mx-2">
+            <div style={{ marginLeft: '0.5rem', marginRight: '0.5rem' }}>
               <h5
-                className="border-bottom border-dark"
-                style={{ fontSize: '0.9rem' }}
+                style={{
+                  fontSize: '0.9rem',
+                  textDecoration: 'underline',
+                }}
               >
                 Previous Known Problems:
               </h5>
               <ol>
                 {data.problems ? (
-                  data.problems.map((prob) => {
+                  data.problems.map((prob, i) => {
                     return (
-                      <li style={{ fontSize: '0.8rem' }}>
+                      <li key={i} style={{ fontSize: '0.8rem' }}>
                         {prob.knownProblem}
                       </li>
                     );
@@ -121,18 +135,20 @@ export default function Template({ data, back, saveData }) {
                 )}
               </ol>
             </div>
-            <div className="mx-2">
+            <div style={{ marginLeft: '0.5rem', marginRight: '0.5rem' }}>
               <h5
-                className="border-bottom border-dark"
-                style={{ fontSize: '0.9rem' }}
+                style={{
+                  fontSize: '0.9rem',
+                  textDecoration: 'underline',
+                }}
               >
                 Chief Complaints:{' '}
               </h5>
               <ol>
                 {data.complaints ? (
-                  data.complaints.map((complaint) => {
+                  data.complaints.map((complaint, i) => {
                     return (
-                      <li style={{ fontSize: '0.8rem' }}>
+                      <li key={i} style={{ fontSize: '0.8rem' }}>
                         {complaint.chiefComplaints}
                       </li>
                     );
@@ -142,18 +158,22 @@ export default function Template({ data, back, saveData }) {
                 )}
               </ol>
             </div>
-            <div className="mx-2">
+            <div style={{ marginLeft: '0.5rem', marginRight: '0.5rem' }}>
               <h5
-                className="border-bottom border-dark"
-                style={{ fontSize: '0.9rem' }}
+                style={{
+                  fontSize: '0.9rem',
+                  textDecoration: 'underline',
+                }}
               >
                 Clinical / Provisional / Differential Diagnosis:{' '}
               </h5>
               <ol>
                 {data.diagnosis ? (
-                  data.diagnosis.map((diag) => {
+                  data.diagnosis.map((diag, i) => {
                     return (
-                      <li style={{ fontSize: '0.8rem' }}>{diag.diagnosis}</li>
+                      <li key={i} style={{ fontSize: '0.8rem' }}>
+                        {diag.diagnosis}
+                      </li>
                     );
                   })
                 ) : (
@@ -161,61 +181,115 @@ export default function Template({ data, back, saveData }) {
                 )}
               </ol>
             </div>
-            <div className="mx-2">
+            <div style={{ marginLeft: '0.5rem', marginRight: '0.5rem' }}>
               <h4
-                className="border-bottom border-dark"
-                style={{ fontSize: '0.9rem' }}
+                style={{
+                  fontSize: '0.9rem',
+                  textDecoration: 'underline',
+                }}
               >
                 Examination:{' '}
               </h4>
               <h5
-                className="border-bottom border-dark"
-                style={{ fontSize: '0.9rem' }}
+                style={{
+                  fontSize: '0.9rem',
+                  textDecoration: 'underline',
+                }}
               >
                 Vitals:{' '}
               </h5>
-              <div className="row ps-1 vitals-block">
+              <div
+                className="vitals-block"
+                style={{
+                  display: 'flex',
+                  flexWrap: 'wrap',
+                  paddingLeft: '0.25rem',
+                  paddingRight: '0.25rem',
+                }}
+              >
                 <div
-                  className="col-3"
-                  style={{ fontSize: '0.8rem' }}
-                  style={{ fontSize: '0.8rem' }}
+                  style={{ flex: '0 0 auto', width: '25%', fontSize: '0.8rem' }}
                 >
                   BP: {data.vitals ? data.vitals.bp : '50'}mmHg
                 </div>
-                <div className="col-3" style={{ fontSize: '0.8rem' }}>
+                <div
+                  style={{ flex: '0 0 auto', width: '25%', fontSize: '0.8rem' }}
+                >
                   PR: {data.vitals ? data.vitals.pr : '50'}bpm
                 </div>
-                <div className="col-3" style={{ fontSize: '0.8rem' }}>
+                <div
+                  style={{ flex: '0 0 auto', width: '25%', fontSize: '0.8rem' }}
+                >
                   SpO2: {data.vitals ? data.vitals.spo2 : '50'}%
                 </div>
-                <div className="col-3" style={{ fontSize: '0.8rem' }}>
+                <div
+                  style={{ flex: '0 0 auto', width: '25%', fontSize: '0.8rem' }}
+                >
                   Temp: {data.vitals ? data.vitals.temp : '50'}&#8457;
                 </div>
               </div>
-              <p className="mb-0 ps-1" style={{ fontSize: '0.8rem' }}>
+              <p
+                style={{
+                  paddingLeft: '0.25rem',
+                  marginBottom: '0',
+                  fontSize: '0.8rem',
+                }}
+              >
                 GPE - {data.vitals ? data.vitals.gpe : '50'}
               </p>
-              <p className="mb-0 ps-1" style={{ fontSize: '0.8rem' }}>
+              <p
+                style={{
+                  paddingLeft: '0.25rem',
+                  marginBottom: '0',
+                  fontSize: '0.8rem',
+                }}
+              >
                 CVS - {data.vitals ? data.vitals.cvs : '50'}
               </p>
-              <p className="mb-0 ps-1" style={{ fontSize: '0.8rem' }}>
+              <p
+                style={{
+                  paddingLeft: '0.25rem',
+                  marginBottom: '0',
+                  fontSize: '0.8rem',
+                }}
+              >
                 RS - {data.vitals ? data.vitals.rs : '50'}
               </p>
-              <p className="mb-0 ps-1" style={{ fontSize: '0.8rem' }}>
+              <p
+                style={{
+                  paddingLeft: '0.25rem',
+                  marginBottom: '0',
+                  fontSize: '0.8rem',
+                }}
+              >
                 P/A - {data.vitals ? data.vitals.pa : '50'}
               </p>
-              <p className="mb-0 ps-1" style={{ fontSize: '0.8rem' }}>
+              <p
+                style={{
+                  paddingLeft: '0.25rem',
+                  marginBottom: '0',
+                  fontSize: '0.8rem',
+                }}
+              >
                 CNS - {data.vitals ? data.vitals.cns : '50'}
               </p>
-              <p className="mb-0 ps-1" style={{ fontSize: '0.8rem' }}>
+              <p
+                style={{
+                  paddingLeft: '0.25rem',
+                  marginBottom: '0',
+                  fontSize: '0.8rem',
+                }}
+              >
                 L/E - {data.vitals ? data.vitals.le : '50'}
               </p>
             </div>
 
-            <div className="mx-2">
+            <div style={{ marginLeft: '0.5rem', marginRight: '0.5rem' }}>
               <h5
-                className="border-bottom border-dark"
-                style={{ fontSize: '0.8rem' }}
+                style={{
+                  fontSize: '0.8rem',
+                  textDecoration: 'underline',
+                }}
               >
                 Treatment Given:
               </h5>
@@ -234,10 +308,12 @@ export default function Template({ data, back, saveData }) {
                 )}
               </ol>
             </div>
-            <div className="mx-2">
+            <div style={{ marginLeft: '0.5rem', marginRight: '0.5rem' }}>
               <h5
-                className="border-bottom border-dark"
-                style={{ fontSize: '0.9rem' }}
+                style={{
+                  fontSize: '0.9rem',
+                  textDecoration: 'underline',
+                }}
               >
                 Treatment Adviced:
               </h5>
@@ -255,15 +331,24 @@ export default function Template({ data, back, saveData }) {
                 )}
               </ol>
             </div>
-            <div className="mx-2 mb-5">
+            <div
+              style={{
+                marginBottom: '3rem',
+                marginRight: '0.5rem',
+                marginLeft: '0.5rem',
+              }}
+            >
               <h5
-                className="border-bottom border-dark"
-                style={{ fontSize: '0.8rem' }}
+                style={{
+                  fontSize: '0.8rem',
+                  textDecoration: 'underline',
+                  wordWrap: 'break-word',
+                }}
               >
                 Follow Up:
               </h5>
 
-              <p className="ps-1" style={{ fontSize: '0.8rem' }}>
+              <p style={{ paddingLeft: '0.5rem', fontSize: '0.8rem' }}>
                 {data.followUp ? data.followUp : 'Review after 3 days.'}
               </p>
             </div>

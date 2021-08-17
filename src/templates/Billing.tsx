@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useReactToPrint } from 'react-to-print';
+import ReactToPrint from 'react-to-print';
 import { ReactHeight } from 'react-height';
 
 import PrintHeader from '../components/PrintHeader';
@@ -9,19 +9,9 @@ const ref = React.createRef();
 
 export default function Billing({ data, back, saveData }) {
   const DEFAULT_PAGE_HEIGHT = 717; // 19cm Page Height in pixels
-  const FOOTER_HEIGHT = 200; //height of footer in px
+  const FOOTER_HEIGHT = 100; //height of footer in px
 
   const [pgHeight, setpgHeight] = useState(330);
-
-  const printFunc = useReactToPrint({
-    pageStyle: () => 'size: 14.8cm 21cm',
-    content: () => ref.current,
-    onAfterPrint: () => {
-      saveData(data);
-    },
-  });
-
-  console.log(data);
 
   return (
     <div className="container d-flex align-items-center flex-column mb-3">
@@ -33,14 +23,15 @@ export default function Billing({ data, back, saveData }) {
       >
         Go Back
       </button>
-      <button
-        className="btn btn-success mx-1 my-3"
-        // onClick={(e) => e.preventDefault()}
-        type="button"
-        onClick={(e) => printFunc(e)}
-      >
-        Print Bill
-      </button>
+      <ReactToPrint
+        trigger={() => (
+          <button className="btn btn-success mx-1 my-3" type="button">
+            Print Bill
+          </button>
+        )}
+        content={() => ref.current}
+        onAfterPrint={() => saveData(data)}
+      />
       <div
         className="prescription-container bg-white"
         ref={ref}
@@ -49,9 +40,14 @@ export default function Billing({ data, back, saveData }) {
           padding: '2em',
           margin: '0',
           width: '14.8cm',
+          height: '21cm',
+          position: 'relative',
         }}
       >
-        <div className="prescription" style={{ border: '2px solid black' }}>
+        <div
+          className="prescription"
+          style={{ height: '20.5cm', border: '2px solid black' }}
+        >
           <ReactHeight
             onHeightReady={(height) => {
               setpgHeight(DEFAULT_PAGE_HEIGHT - (height + FOOTER_HEIGHT) - 40);
@@ -60,23 +56,28 @@ export default function Billing({ data, back, saveData }) {
             <PrintHeader />
 
             <div
-              className="details d-flex justify-content-between px-3 pe-5"
               style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                paddingLeft: '1em',
+                paddingRight: '3em',
+                paddingTop: '0.1em',
+                paddingBottom: '0.1em',
                 margin: '5px',
                 border: '1px solid black',
                 borderRadius: '8px',
               }}
             >
-              <div className="d-flex-flex-column">
-                <p className="mb-0" style={{ fontSize: '0.8rem' }}>
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <p style={{ marginBottom: '0', fontSize: '0.8rem' }}>
                   Patient Name:{' '}
                   {data.paitentName ? data.paitentName : 'Mr. Chethan'}
                   <br />
                   ID No: {data.idNumber ? data.idNumber : '20210801'}
                 </p>
               </div>
-              <div className="d-flex-flex-column">
-                <p className="mb-0" style={{ fontSize: '0.8rem' }}>
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <p style={{ marginBottom: '0', fontSize: '0.8rem' }}>
                   Age / Sex :{' '}
                   {data.age && data.sex ? `${data.age}y/${data.sex}` : '43y/M'}
                   <br />
@@ -84,22 +85,70 @@ export default function Billing({ data, back, saveData }) {
                 </p>
               </div>
             </div>
-            <table className="table table-bordered mt-1">
-              <thead>
+            <table
+              style={{
+                border: '1px solid black',
+                margin: '1em 0',
+                width: '100%',
+                color: '#212529',
+                verticalAlign: 'top',
+                borderColor: '#dee2e6',
+                textAlign: 'center',
+                captionSide: 'bottom',
+                borderCollapse: 'collapse',
+              }}
+            >
+              <thead style={{ border: '1px solid black' }}>
                 <tr>
-                  <th scope="col" style={{ fontSize: '0.8em' }}>
+                  <th
+                    scope="col"
+                    style={{
+                      padding: '0.5em',
+                      border: '1px solid black',
+                      fontSize: '0.8em',
+                    }}
+                  >
                     Sl. No
                   </th>
-                  <th scope="col" style={{ fontSize: '0.8em' }} colSpan="2">
+                  <th
+                    scope="col"
+                    style={{
+                      padding: '0.5em',
+                      border: '1px solid black',
+                      fontSize: '0.8em',
+                    }}
+                    colSpan="2"
+                  >
                     Particulars
                   </th>
-                  <th scope="col" style={{ fontSize: '0.8em' }}>
+                  <th
+                    scope="col"
+                    style={{
+                      padding: '0.5em',
+                      border: '1px solid black',
+                      fontSize: '0.8em',
+                    }}
+                  >
                     Q No.
                   </th>
-                  <th scope="col" style={{ fontSize: '0.8em' }}>
+                  <th
+                    scope="col"
+                    style={{
+                      padding: '0.5em',
+                      border: '1px solid black',
+                      fontSize: '0.8em',
+                    }}
+                  >
                     Rate
                   </th>
-                  <th scope="col" style={{ fontSize: '0.8em' }}>
+                  <th
+                    scope="col"
+                    style={{
+                      padding: '0.5em',
+                      border: '1px solid black',
+                      fontSize: '0.8em',
+                    }}
+                  >
                     Total (₹)
                   </th>
                 </tr>
@@ -108,16 +157,60 @@ export default function Billing({ data, back, saveData }) {
                 {data
                   ? data.medicine.map((med, index) => {
                       return (
-                        <tr key={index}>
-                          <th scope="row" style={{ fontSize: '0.8em' }}>
+                        <tr
+                          key={index}
+                          style={{
+                            padding: '0.5em',
+                            border: '1px solid black',
+                          }}
+                        >
+                          <th
+                            scope="row"
+                            style={{
+                              padding: '0.5em',
+                              border: '1px solid black',
+                              fontSize: '0.8em',
+                            }}
+                          >
                             {index + 1}
                           </th>
-                          <td colSpan="2" style={{ fontSize: '0.8em' }}>
+                          <td
+                            colSpan="2"
+                            style={{
+                              padding: '0.5em',
+                              border: '1px solid black',
+                              fontSize: '0.8em',
+                            }}
+                          >
                             {med.med}
                           </td>
-                          <td style={{ fontSize: '0.8em' }}>{med.quantity}</td>
-                          <td style={{ fontSize: '0.8em' }}>₹ {med.rate}/-</td>
-                          <td style={{ fontSize: '0.8em' }}>₹ {med.total}/-</td>
+                          <td
+                            style={{
+                              padding: '0.5em',
+                              border: '1px solid black',
+                              fontSize: '0.8em',
+                            }}
+                          >
+                            {med.quantity}
+                          </td>
+                          <td
+                            style={{
+                              padding: '0.5em',
+                              border: '1px solid black',
+                              fontSize: '0.8em',
+                            }}
+                          >
+                            ₹ {med.rate}/-
+                          </td>
+                          <td
+                            style={{
+                              padding: '0.5em',
+                              border: '1px solid black',
+                              fontSize: '0.8em',
+                            }}
+                          >
+                            ₹ {med.total}/-
+                          </td>
                         </tr>
                       );
                     })
@@ -127,16 +220,29 @@ export default function Billing({ data, back, saveData }) {
                   <th
                     scope="row"
                     colSpan="5"
-                    style={{ textAlign: 'end', fontSize: '0.8em' }}
+                    style={{
+                      padding: '0.5em',
+                      border: '1px solid black',
+                      textAlign: 'end',
+                      fontSize: '0.8em',
+                    }}
                   >
                     Grand Total
                   </th>
-                  <td style={{ fontSize: '0.8em' }}>₹ {data.grandTotal}/-</td>
+                  <td
+                    style={{
+                      padding: '0.5em',
+                      border: '1px solid black',
+                      fontSize: '0.8em',
+                    }}
+                  >
+                    ₹ {data.grandTotal}/-
+                  </td>
                 </tr>
               </tbody>
             </table>
           </ReactHeight>
-          <Footer sign facilities mrgn={pgHeight} />
+          <Footer sign facilities recovery mrgn={pgHeight} />
         </div>
       </div>
     </div>

@@ -9,7 +9,7 @@ const path = require('path');
 
 const CertificateForm = ({ passedData }) => {
   storage.setDataPath();
-  console.log(storage.getDefaultDataPath());
+  // console.log(storage.getDefaultDataPath());
 
   const date = GetDate();
 
