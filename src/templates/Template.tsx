@@ -96,7 +96,14 @@ export default function Template({ data, back, saveData }) {
               }}
             >
               <div style={{ display: 'flex', flexDirection: 'column' }}>
-                <p style={{ marginBottom: '0', fontSize: '0.8rem' }}>
+                <p
+                  style={{
+                    padding: '3px',
+                    margin: '3px',
+                    marginBottom: '0',
+                    fontSize: '12pt',
+                  }}
+                >
                   Patient Name:{' '}
                   {data.paitentName ? data.paitentName : 'Mr. Chethan'}
                   <br />
@@ -104,7 +111,14 @@ export default function Template({ data, back, saveData }) {
                 </p>
               </div>
               <div style={{ display: 'flex', flexDirection: 'column' }}>
-                <p style={{ marginBottom: '0', fontSize: '0.8rem' }}>
+                <p
+                  style={{
+                    padding: '3px',
+                    margin: '3px',
+                    marginBottom: '0',
+                    fontSize: '12pt',
+                  }}
+                >
                   Age / Sex :{' '}
                   {data.age && data.sex ? `${data.age}y/${data.sex}` : '43y/M'}
                   <br />
@@ -115,6 +129,8 @@ export default function Template({ data, back, saveData }) {
             <div style={{ marginLeft: '0.5rem', marginRight: '0.5rem' }}>
               <h5
                 style={{
+                  padding: '3px',
+                  margin: '3px',
                   fontSize: '0.9rem',
                   textDecoration: 'underline',
                 }}
@@ -138,6 +154,8 @@ export default function Template({ data, back, saveData }) {
             <div style={{ marginLeft: '0.5rem', marginRight: '0.5rem' }}>
               <h5
                 style={{
+                  padding: '3px',
+                  margin: '3px',
                   fontSize: '0.9rem',
                   textDecoration: 'underline',
                 }}
@@ -161,6 +179,8 @@ export default function Template({ data, back, saveData }) {
             <div style={{ marginLeft: '0.5rem', marginRight: '0.5rem' }}>
               <h5
                 style={{
+                  padding: '3px',
+                  margin: '3px',
                   fontSize: '0.9rem',
                   textDecoration: 'underline',
                 }}
@@ -184,6 +204,8 @@ export default function Template({ data, back, saveData }) {
             <div style={{ marginLeft: '0.5rem', marginRight: '0.5rem' }}>
               <h4
                 style={{
+                  padding: '3px',
+                  margin: '3px',
                   fontSize: '0.9rem',
                   textDecoration: 'underline',
                 }}
@@ -192,6 +214,8 @@ export default function Template({ data, back, saveData }) {
               </h4>
               <h5
                 style={{
+                  padding: '3px',
+                  margin: '3px',
                   fontSize: '0.9rem',
                   textDecoration: 'underline',
                 }}
@@ -201,6 +225,8 @@ export default function Template({ data, back, saveData }) {
               <div
                 className="vitals-block"
                 style={{
+                  padding: '3px',
+                  margin: '3px',
                   display: 'flex',
                   flexWrap: 'wrap',
                   paddingLeft: '0.25rem',
@@ -208,76 +234,104 @@ export default function Template({ data, back, saveData }) {
                 }}
               >
                 <div
-                  style={{ flex: '0 0 auto', width: '25%', fontSize: '0.8rem' }}
+                  style={{
+                    flex: '0 0 auto',
+                    width: '25%',
+                    fontSize: '11pt',
+                  }}
                 >
                   BP: {data.vitals ? data.vitals.bp : '50'}mmHg
                 </div>
                 <div
-                  style={{ flex: '0 0 auto', width: '25%', fontSize: '0.8rem' }}
+                  style={{
+                    flex: '0 0 auto',
+                    width: '25%',
+                    fontSize: '11pt',
+                  }}
                 >
                   PR: {data.vitals ? data.vitals.pr : '50'}bpm
                 </div>
                 <div
-                  style={{ flex: '0 0 auto', width: '25%', fontSize: '0.8rem' }}
+                  style={{
+                    flex: '0 0 auto',
+                    width: '25%',
+                    fontSize: '11pt',
+                  }}
                 >
                   SpO2: {data.vitals ? data.vitals.spo2 : '50'}%
                 </div>
                 <div
-                  style={{ flex: '0 0 auto', width: '25%', fontSize: '0.8rem' }}
+                  style={{
+                    flex: '0 0 auto',
+                    width: '25%',
+                    fontSize: '11pt',
+                  }}
                 >
                   Temp: {data.vitals ? data.vitals.temp : '50'}&#8457;
                 </div>
               </div>
               <p
                 style={{
+                  padding: '3px',
+                  margin: '3px',
                   paddingLeft: '0.25rem',
                   marginBottom: '0',
-                  fontSize: '0.8rem',
+                  fontSize: '11pt',
                 }}
               >
                 GPE - {data.vitals ? data.vitals.gpe : '50'}
               </p>
               <p
                 style={{
+                  padding: '3px',
+                  margin: '3px',
                   paddingLeft: '0.25rem',
                   marginBottom: '0',
-                  fontSize: '0.8rem',
+                  fontSize: '11pt',
                 }}
               >
                 CVS - {data.vitals ? data.vitals.cvs : '50'}
               </p>
               <p
                 style={{
+                  padding: '3px',
+                  margin: '3px',
                   paddingLeft: '0.25rem',
                   marginBottom: '0',
-                  fontSize: '0.8rem',
+                  fontSize: '11pt',
                 }}
               >
                 RS - {data.vitals ? data.vitals.rs : '50'}
               </p>
               <p
                 style={{
+                  padding: '3px',
+                  margin: '3px',
                   paddingLeft: '0.25rem',
                   marginBottom: '0',
-                  fontSize: '0.8rem',
+                  fontSize: '11pt',
                 }}
               >
                 P/A - {data.vitals ? data.vitals.pa : '50'}
               </p>
               <p
                 style={{
+                  padding: '3px',
+                  margin: '3px',
                   paddingLeft: '0.25rem',
                   marginBottom: '0',
-                  fontSize: '0.8rem',
+                  fontSize: '11pt',
                 }}
               >
                 CNS - {data.vitals ? data.vitals.cns : '50'}
               </p>
               <p
                 style={{
+                  padding: '3px',
+                  margin: '3px',
                   paddingLeft: '0.25rem',
                   marginBottom: '0',
-                  fontSize: '0.8rem',
+                  fontSize: '11pt',
                 }}
               >
                 L/E - {data.vitals ? data.vitals.le : '50'}
@@ -287,7 +341,9 @@ export default function Template({ data, back, saveData }) {
             <div style={{ marginLeft: '0.5rem', marginRight: '0.5rem' }}>
               <h5
                 style={{
-                  fontSize: '0.8rem',
+                  padding: '3px',
+                  margin: '3px',
+                  fontSize: '12pt',
                   textDecoration: 'underline',
                 }}
               >
@@ -311,6 +367,8 @@ export default function Template({ data, back, saveData }) {
             <div style={{ marginLeft: '0.5rem', marginRight: '0.5rem' }}>
               <h5
                 style={{
+                  padding: '3px',
+                  margin: '3px',
                   fontSize: '0.9rem',
                   textDecoration: 'underline',
                 }}
@@ -340,7 +398,9 @@ export default function Template({ data, back, saveData }) {
             >
               <h5
                 style={{
-                  fontSize: '0.8rem',
+                  padding: '3px',
+                  margin: '3px',
+                  fontSize: '12pt',
                   textDecoration: 'underline',
                   wordWrap: 'break-word',
                 }}
@@ -348,7 +408,14 @@ export default function Template({ data, back, saveData }) {
                 Follow Up:
               </h5>
 
-              <p style={{ paddingLeft: '0.5rem', fontSize: '0.8rem' }}>
+              <p
+                style={{
+                  padding: '3px',
+                  margin: '3px',
+                  paddingLeft: '0.5rem',
+                  fontSize: '12pt',
+                }}
+              >
                 {data.followUp ? data.followUp : 'Review after 3 days.'}
               </p>
             </div>

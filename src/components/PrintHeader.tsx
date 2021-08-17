@@ -6,6 +6,8 @@ export default function PrintHeader() {
   return (
     <div
       style={{
+        // padding: '3px',
+        margin: '3px',
         padding: '1em',
         justifyContent: 'space-between',
         display: 'flex',
@@ -22,6 +24,8 @@ export default function PrintHeader() {
       >
         <p
           style={{
+            padding: '3px',
+            margin: '3px',
             fontSize: '1.2em',
             padding: '0 0.25em ',
             textAlign: 'center',
@@ -29,7 +33,14 @@ export default function PrintHeader() {
         >
           <b>Vijayalaxmi Clinic, Diagnostics And Counseling Centre.</b>
         </p>
-        <p style={{ fontSize: '0.8em', textAlign: 'center' }}>
+        <p
+          style={{
+            padding: '3px',
+            margin: '3px',
+            fontSize: '0.8em',
+            textAlign: 'center',
+          }}
+        >
           Near Raghu Stickers, Dr.B.R.Ambedkar Road(Market Road),
           <br />
           Chikkamagaluru – 577101.
@@ -37,7 +48,7 @@ export default function PrintHeader() {
       </div>
       <img
         src={clinicLogo}
-        style={{ marginTop: '0.5em ' }}
+        style={{ padding: '3px', margin: '3px', marginTop: '0.5em ' }}
         height="70px"
         width="100px"
         alt=""

@@ -69,7 +69,7 @@ export default function Footer({ sign, facilities, recovery, mrgn }) {
                 margin: '3px',
                 marginBottom: '0',
                 textAlign: 'center',
-                fontSize: '0.78rem',
+                fontSize: '10pt',
               }}
             >
               Wish you a speedy recovery. Please bring this prescription during
@@ -81,7 +81,7 @@ export default function Footer({ sign, facilities, recovery, mrgn }) {
                 margin: '3px',
                 marginBottom: '0',
                 textAlign: 'center',
-                fontSize: '0.8rem',
+                fontSize: '10pt',
               }}
             >
               <b>In case of emergency, contact +91-9482000390.</b>
@@ -97,9 +97,7 @@ export default function Footer({ sign, facilities, recovery, mrgn }) {
               }}
             >
               <div>
-                <h6
-                  style={{ padding: '3px', margin: '3px', fontSize: '0.8rem' }}
-                >
+                <h6 style={{ padding: '3px', margin: '3px', fontSize: '11pt' }}>
                   <b
                     style={{
                       borderBottom: '1px solid #212529',
@@ -108,18 +106,14 @@ export default function Footer({ sign, facilities, recovery, mrgn }) {
                     Visiting time:
                   </b>
                 </h6>
-                <p
-                  style={{ padding: '3px', margin: '3px', fontSize: '0.7rem' }}
-                >
+                <p style={{ padding: '3px', margin: '3px', fontSize: '10pt' }}>
                   Morning 10 AM to 2 PM
                   <br />
                   Evening 5 PM to 8 PM
                 </p>
               </div>
               <div>
-                <h6
-                  style={{ padding: '3px', margin: '3px', fontSize: '0.8rem' }}
-                >
+                <h6 style={{ padding: '3px', margin: '3px', fontSize: '11pt' }}>
                   <b
                     style={{
                       borderBottom: '1px solid #212529',
@@ -128,16 +122,12 @@ export default function Footer({ sign, facilities, recovery, mrgn }) {
                     For Appointment:
                   </b>
                 </h6>
-                <p
-                  style={{ padding: '3px', margin: '3px', fontSize: '0.7rem' }}
-                >
+                <p style={{ padding: '3px', margin: '3px', fontSize: '10pt' }}>
                   +91-7899861448
                 </p>
               </div>
               <div>
-                <h6
-                  style={{ padding: '3px', margin: '3px', fontSize: '0.8rem' }}
-                >
+                <h6 style={{ padding: '3px', margin: '3px', fontSize: '11pt' }}>
                   <b
                     style={{
                       padding: '3px',
@@ -148,9 +138,7 @@ export default function Footer({ sign, facilities, recovery, mrgn }) {
                     ಭೇಟಿ ಸಮಯ:{' '}
                   </b>
                 </h6>
-                <p
-                  style={{ padding: '3px', margin: '3px', fontSize: '0.7rem' }}
-                >
+                <p style={{ padding: '3px', margin: '3px', fontSize: '10pt' }}>
                   ಬೆಳಿಗ್ಗೆ <b>10:00</b> ರಿಂದ ಮಧ್ಯಾಹ್ನ <b>02:00</b>
                   <br />
                   ಸಂಜೆ <b>05:00</b> ರಿಂದ <b>08:00</b> ರವರೆಗೆ
