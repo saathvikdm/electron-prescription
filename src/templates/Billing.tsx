@@ -36,7 +36,6 @@ export default function Billing({ data, back, saveData }) {
         className="prescription-container bg-white"
         ref={ref}
         style={{
-          border: '1px solid black',
           padding: '2em',
           margin: '0',
           width: '14.8cm',
