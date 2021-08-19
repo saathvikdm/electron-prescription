@@ -6,6 +6,7 @@ import { ReactHeight } from 'react-height';
 import PrintHeader from '../components/PrintHeader';
 import HeaderNames from '../components/HeaderNames';
 import Footer from '../components/Footer';
+import GetDate from '../utils/GetDate';
 
 const ref = React.createRef();
 
@@ -14,6 +15,8 @@ export default function Template({ data, back, saveData }) {
   const FOOTER_HEIGHT = 337; //height of footer in px
 
   let pageHeight = 0;
+
+  const date = GetDate();
 
   const [pgHeight, setpgHeight] = useState(330);
 
@@ -125,6 +128,11 @@ export default function Template({ data, back, saveData }) {
                 </p>
               </div>
             </div>
+            <div style={{ marginLeft: '10cm', textDecoration: 'underline' }}>
+              Date:{' '}
+              {date &&
+                `${date.slice(0, 2)}/${date.slice(2, 4)}/${date.slice(4, 8)}`}
+            </div>
             <div style={{ marginLeft: '0.5rem', marginRight: '0.5rem' }}>
               <h5
                 style={{
@@ -140,7 +148,7 @@ export default function Template({ data, back, saveData }) {
                 {data.problems ? (
                   data.problems.map((prob, i) => {
                     return (
-                      <li key={i} style={{ fontSize: '0.8rem' }}>
+                      <li key={i} style={{ fontSize: '0.9em' }}>
                         {prob.knownProblem}
                       </li>
                     );
@@ -165,7 +173,7 @@ export default function Template({ data, back, saveData }) {
                 {data.complaints ? (
                   data.complaints.map((complaint, i) => {
                     return (
-                      <li key={i} style={{ fontSize: '0.8rem' }}>
+                      <li key={i} style={{ fontSize: '0.9em' }}>
                         {complaint.chiefComplaints}
                       </li>
                     );
@@ -190,7 +198,7 @@ export default function Template({ data, back, saveData }) {
                 {data.diagnosis ? (
                   data.diagnosis.map((diag, i) => {
                     return (
-                      <li key={i} style={{ fontSize: '0.8rem' }}>
+                      <li key={i} style={{ fontSize: '0.9em' }}>
                         {diag.diagnosis}
                       </li>
                     );
@@ -353,7 +361,7 @@ export default function Template({ data, back, saveData }) {
                 {data.treatment ? (
                   data.treatment.map((treat, index) => {
                     return (
-                      <li style={{ fontSize: '0.8rem' }} key={index}>
+                      <li style={{ fontSize: '0.9em' }} key={index}>
                         {treat.treatmentGiven}
                       </li>
                     );
@@ -368,7 +376,7 @@ export default function Template({ data, back, saveData }) {
                 style={{
                   padding: '3px',
                   margin: '3px',
-                  fontSize: '0.9rem',
+                  fontSize: '12pt',
                   textDecoration: 'underline',
                 }}
               >
@@ -378,7 +386,7 @@ export default function Template({ data, back, saveData }) {
                 {data.advice ? (
                   data.advice.map((adv, index) => {
                     return (
-                      <li style={{ fontSize: '0.8rem' }} key={index}>
+                      <li style={{ fontSize: '0.9em' }} key={index}>
                         {adv.treatmentAdviced}
                       </li>
                     );
@@ -421,7 +429,7 @@ export default function Template({ data, back, saveData }) {
           </ReactHeight>
           <div>
             {/* Footer with sign is of 337px Height */}
-            <Footer sign mrgn={pgHeight} />
+            <Footer mrgn={pgHeight} />
           </div>
 
           {/* <div className="credsfooter">Wishing you a speedy recovery!</div> */}

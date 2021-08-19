@@ -18,14 +18,14 @@ export default function HeaderNames() {
           flexDirection: 'column',
         }}
       >
-        <h6 style={{ padding: '3px', margin: '3px', fontSize: '0.9rem' }}>
+        <h6 style={{ padding: '3px', margin: '3px', fontSize: '1em' }}>
           <b>
             <i>
               Dr. CHETHAN NAIK <sub>M.B.B.S.,</sub>
             </i>
           </b>
         </h6>
-        <p style={{ padding: '3px', margin: '3px', fontSize: '0.8rem' }}>
+        <p style={{ padding: '3px', margin: '3px', fontSize: '0.9em' }}>
           General Practitioner,
           <br />
           KMC Reg.No: 97237
@@ -42,7 +42,7 @@ export default function HeaderNames() {
         <h6 style={{ padding: '3px', margin: '3px', fontSize: '0.9rem' }}>
           <b>
             <i>
-              ಡಾ. ಚೇತನ್ ನಾಯ್ಕ್ <sub>ಎಎಂ‌.ಬಿ.ಬಿ.ಎಸ್.,</sub>
+              ಡಾ. ಚೇತನ್ ನಾಯ್ಕ್ <sub>ಎಂ‌.ಬಿ.ಬಿ.ಎಸ್.,</sub>
             </i>
           </b>
         </h6>

@@ -1,7 +1,6 @@
 import React from 'react';
 
 import footerLogo from '../../assets/footerlogo.png';
-import Sign from '../../assets/sign.png';
 
 export default function Footer({ sign, facilities, recovery, mrgn }) {
   return (
@@ -17,8 +16,8 @@ export default function Footer({ sign, facilities, recovery, mrgn }) {
         {sign ? (
           <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
             <div style={{ flexDirection: 'column' }}>
-              <img
-                src={Sign}
+              {/* <img
+                src={footerLogo}
                 alt=""
                 height="75px"
                 width="auto"
@@ -29,7 +28,7 @@ export default function Footer({ sign, facilities, recovery, mrgn }) {
                   paddingTop: '3px',
                   marginLeft: '2.5em',
                 }}
-              />
+              /> */}
               <h6
                 style={{
                   padding: '3px',

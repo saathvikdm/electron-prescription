@@ -68,7 +68,7 @@ export default function Billing({ data, back, saveData }) {
               }}
             >
               <div style={{ display: 'flex', flexDirection: 'column' }}>
-                <p style={{ marginBottom: '0', fontSize: '0.8rem' }}>
+                <p style={{ marginBottom: '0', fontSize: '12pt' }}>
                   Patient Name:{' '}
                   {data.paitentName ? data.paitentName : 'Mr. Chethan'}
                   <br />
@@ -76,7 +76,7 @@ export default function Billing({ data, back, saveData }) {
                 </p>
               </div>
               <div style={{ display: 'flex', flexDirection: 'column' }}>
-                <p style={{ marginBottom: '0', fontSize: '0.8rem' }}>
+                <p style={{ marginBottom: '0', fontSize: '12pt' }}>
                   Age / Sex :{' '}
                   {data.age && data.sex ? `${data.age}y/${data.sex}` : '43y/M'}
                   <br />
@@ -104,7 +104,7 @@ export default function Billing({ data, back, saveData }) {
                     style={{
                       padding: '0.5em',
                       border: '1px solid black',
-                      fontSize: '0.8em',
+                      fontSize: '1em',
                     }}
                   >
                     Sl. No
@@ -114,7 +114,7 @@ export default function Billing({ data, back, saveData }) {
                     style={{
                       padding: '0.5em',
                       border: '1px solid black',
-                      fontSize: '0.8em',
+                      fontSize: '1em',
                     }}
                     colSpan="2"
                   >
@@ -125,7 +125,7 @@ export default function Billing({ data, back, saveData }) {
                     style={{
                       padding: '0.5em',
                       border: '1px solid black',
-                      fontSize: '0.8em',
+                      fontSize: '1em',
                     }}
                   >
                     Q No.
@@ -135,7 +135,7 @@ export default function Billing({ data, back, saveData }) {
                     style={{
                       padding: '0.5em',
                       border: '1px solid black',
-                      fontSize: '0.8em',
+                      fontSize: '1em',
                     }}
                   >
                     Rate
@@ -145,7 +145,7 @@ export default function Billing({ data, back, saveData }) {
                     style={{
                       padding: '0.5em',
                       border: '1px solid black',
-                      fontSize: '0.8em',
+                      fontSize: '1em',
                     }}
                   >
                     Total (₹)
@@ -168,7 +168,7 @@ export default function Billing({ data, back, saveData }) {
                             style={{
                               padding: '0.5em',
                               border: '1px solid black',
-                              fontSize: '0.8em',
+                              fontSize: '1em',
                             }}
                           >
                             {index + 1}
@@ -178,7 +178,7 @@ export default function Billing({ data, back, saveData }) {
                             style={{
                               padding: '0.5em',
                               border: '1px solid black',
-                              fontSize: '0.8em',
+                              fontSize: '1em',
                             }}
                           >
                             {med.med}
@@ -187,7 +187,7 @@ export default function Billing({ data, back, saveData }) {
                             style={{
                               padding: '0.5em',
                               border: '1px solid black',
-                              fontSize: '0.8em',
+                              fontSize: '1em',
                             }}
                           >
                             {med.quantity}
@@ -196,7 +196,7 @@ export default function Billing({ data, back, saveData }) {
                             style={{
                               padding: '0.5em',
                               border: '1px solid black',
-                              fontSize: '0.8em',
+                              fontSize: '1em',
                             }}
                           >
                             ₹ {med.rate}/-
@@ -205,7 +205,7 @@ export default function Billing({ data, back, saveData }) {
                             style={{
                               padding: '0.5em',
                               border: '1px solid black',
-                              fontSize: '0.8em',
+                              fontSize: '1em',
                             }}
                           >
                             ₹ {med.total}/-
@@ -223,7 +223,7 @@ export default function Billing({ data, back, saveData }) {
                       padding: '0.5em',
                       border: '1px solid black',
                       textAlign: 'end',
-                      fontSize: '0.8em',
+                      fontSize: '1em',
                     }}
                   >
                     Grand Total
@@ -232,7 +232,7 @@ export default function Billing({ data, back, saveData }) {
                     style={{
                       padding: '0.5em',
                       border: '1px solid black',
-                      fontSize: '0.8em',
+                      fontSize: '1em',
                     }}
                   >
                     ₹ {data.grandTotal}/-
@@ -241,7 +241,7 @@ export default function Billing({ data, back, saveData }) {
               </tbody>
             </table>
           </ReactHeight>
-          <Footer sign facilities recovery mrgn={pgHeight} />
+          <Footer facilities recovery mrgn={pgHeight} />
         </div>
       </div>
     </div>
