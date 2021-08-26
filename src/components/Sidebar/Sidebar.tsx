@@ -5,6 +5,7 @@ export default function SideBarAlt() {
   return (
     <div
       className="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark"
+      id="sidebar"
       style={{
         position: 'fixed',
         width: '200px',

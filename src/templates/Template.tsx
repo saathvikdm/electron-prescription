@@ -32,14 +32,14 @@ export default function Template({ data, back, saveData }) {
   return data ? (
     <div className="container d-flex align-items-center flex-column mb-3">
       <button
-        className="btn btn-dark mx-1 my-3"
+        className="btn btn-dark mx-1 my-3 no-print"
         // onClick={(e) => e.preventDefault()}
         type="button"
         onClick={(e) => back()}
       >
         Go Back
       </button>
-      <ReactToPrint
+      {/* <ReactToPrint
         trigger={() => (
           <button className="btn btn-success mx-1 my-3" type="button">
             Print Prescription
@@ -47,7 +47,15 @@ export default function Template({ data, back, saveData }) {
         )}
         content={() => ref.current}
         onAfterPrint={() => saveData(data)}
-      />
+      /> */}
+
+      <button
+        className="btn btn-success mx-1 my-3 no-print"
+        type="button"
+        onClick={() => window.print()}
+      >
+        Print Prescription
+      </button>
 
       <div
         className="prescription-container bg-white"
@@ -55,7 +63,7 @@ export default function Template({ data, back, saveData }) {
         style={{
           padding: '2em',
           margin: '0',
-          width: '14.8cm',
+          width: '21cm',
           height: '45cm',
           position: 'relative',
         }}

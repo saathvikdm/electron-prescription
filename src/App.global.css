@@ -61,6 +61,10 @@ body {
     float: none;
   }
 
+  #sidebar {
+    display: none !important;
+  }
+
   .prescription {
     display: flex;
     flex-direction: column;
@@ -87,6 +91,13 @@ body {
     bottom: 0;
     left: 4cm;
   }
+
+  .prescription-container {
+    position: absolute !important;
+    top: 0px !important;
+    left: 0cm !important;
+    width: 23cm !important;
+  }
 }
 
 @page :first {
@@ -94,7 +105,7 @@ body {
 }
 
 @page {
-  size: A5;
+  size: A4;
   margin: 0;
   margin-bottom: 1cm;
   margin-top: 1cm;
