@@ -6,6 +6,8 @@ import { ReactHeight } from 'react-height';
 import PrintHeader from '../components/PrintHeader';
 import HeaderNames from '../components/HeaderNames';
 import Footer from '../components/Footer';
+import DynamicFormInput from '../components/DynamicFormInput';
+
 import GetDate from '../utils/GetDate';
 
 const ref = React.createRef();
@@ -31,15 +33,16 @@ export default function Template({ data, back, saveData }) {
 
   return data ? (
     <div className="container d-flex align-items-center flex-column mb-3">
-      <button
-        className="btn btn-dark mx-1 my-3 no-print"
-        // onClick={(e) => e.preventDefault()}
-        type="button"
-        onClick={(e) => back()}
-      >
-        Go Back
-      </button>
-      {/* <ReactToPrint
+      <div id="hidden">
+        <button
+          className="btn btn-dark mx-1 my-3 no-print"
+          // onClick={(e) => e.preventDefault()}
+          type="button"
+          onClick={(e) => back()}
+        >
+          Go Back
+        </button>
+        {/* <ReactToPrint
         trigger={() => (
           <button className="btn btn-success mx-1 my-3" type="button">
             Print Prescription
@@ -49,13 +52,14 @@ export default function Template({ data, back, saveData }) {
         onAfterPrint={() => saveData(data)}
       /> */}
 
-      <button
-        className="btn btn-success mx-1 my-3 no-print"
-        type="button"
-        onClick={() => window.print()}
-      >
-        Print Prescription
-      </button>
+        <button
+          className="btn btn-success mx-1 my-3 no-print"
+          type="button"
+          onClick={() => window.print()}
+        >
+          Print Prescription
+        </button>
+      </div>
 
       <div
         className="prescription-container bg-white"
@@ -64,8 +68,9 @@ export default function Template({ data, back, saveData }) {
           padding: '2em',
           margin: '0',
           width: '21cm',
-          height: '45cm',
+          height: '62cm',
           position: 'relative',
+          zIndex: -1,
         }}
       >
         {/* <ReactHeight onHeightReady={(height) => console.log(height)}>
@@ -73,7 +78,7 @@ export default function Template({ data, back, saveData }) {
         </ReactHeight> */}
         <div
           className="prescription"
-          style={{ height: '44.5cm', border: '2px solid black' }}
+          style={{ height: '61cm', border: '2px solid black' }}
         >
           <ReactHeight
             onHeightReady={(height) => {
@@ -110,14 +115,14 @@ export default function Template({ data, back, saveData }) {
                   style={{
                     padding: '3px',
                     margin: '3px',
-                    marginBottom: '0',
+                    marginBottom: '10px',
                     fontSize: '12pt',
                   }}
                 >
-                  Patient Name:{' '}
+                  <b>Patient Name:</b>{' '}
                   {data.paitentName ? data.paitentName : 'Mr. Chethan'}
                   <br />
-                  ID No: {data.idNumber ? data.idNumber : '20210801'}
+                  <b>ID No:</b> {data.idNumber ? data.idNumber : '20210801'}
                 </p>
               </div>
               <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -125,71 +130,23 @@ export default function Template({ data, back, saveData }) {
                   style={{
                     padding: '3px',
                     margin: '3px',
-                    marginBottom: '0',
+                    marginBottom: '10px',
                     fontSize: '12pt',
                   }}
                 >
-                  Age / Sex :{' '}
-                  {data.age && data.sex ? `${data.age}y/${data.sex}` : '43y/M'}
+                  <b>Age / Sex :</b>{' '}
+                  {data.age && data.sex
+                    ? `${data.age}y/${data.sex}`
+                    : '43 years / Male'}
                   <br />
-                  OP No.: {data.opNumber ? data.opNumber : '01'}
+                  <b>Date:</b>{' '}
+                  {date &&
+                    `${date.slice(0, 2)}/${date.slice(2, 4)}/${date.slice(
+                      4,
+                      8
+                    )}`}
                 </p>
               </div>
-            </div>
-            <div style={{ marginLeft: '10cm', textDecoration: 'underline' }}>
-              Date:{' '}
-              {date &&
-                `${date.slice(0, 2)}/${date.slice(2, 4)}/${date.slice(4, 8)}`}
-            </div>
-            <div style={{ marginLeft: '0.5rem', marginRight: '0.5rem' }}>
-              <h5
-                style={{
-                  padding: '3px',
-                  margin: '3px',
-                  fontSize: '0.9rem',
-                  textDecoration: 'underline',
-                }}
-              >
-                Previous Known Problems:
-              </h5>
-              <ol>
-                {data.problems ? (
-                  data.problems.map((prob, i) => {
-                    return (
-                      <li key={i} style={{ fontSize: '0.9em' }}>
-                        {prob.knownProblem}
-                      </li>
-                    );
-                  })
-                ) : (
-                  <p>N/A</p>
-                )}
-              </ol>
-            </div>
-            <div style={{ marginLeft: '0.5rem', marginRight: '0.5rem' }}>
-              <h5
-                style={{
-                  padding: '3px',
-                  margin: '3px',
-                  fontSize: '0.9rem',
-                  textDecoration: 'underline',
-                }}
-              >
-                Chief Complaints:{' '}
-              </h5>
-              <ol>
-                {data.complaints ? (
-                  data.complaints.map((complaint, i) => {
-                    return (
-                      <li key={i} style={{ fontSize: '0.9em' }}>
-                        {complaint.chiefComplaints}
-                      </li>
-                    );
-                  })
-                ) : (
-                  <p>N/A</p>
-                )}
-              </ol>
             </div>
             <div style={{ marginLeft: '0.5rem', marginRight: '0.5rem' }}>
               <h5
@@ -216,8 +173,9 @@ export default function Template({ data, back, saveData }) {
                 )}
               </ol>
             </div>
+
             <div style={{ marginLeft: '0.5rem', marginRight: '0.5rem' }}>
-              <h4
+              <h5
                 style={{
                   padding: '3px',
                   margin: '3px',
@@ -225,8 +183,50 @@ export default function Template({ data, back, saveData }) {
                   textDecoration: 'underline',
                 }}
               >
-                Examination:{' '}
-              </h4>
+                Co-Morbidities:
+              </h5>
+              <ol>
+                {data.problems ? (
+                  data.problems.map((prob, i) => {
+                    return (
+                      <li key={i} style={{ fontSize: '0.9em' }}>
+                        {prob.knownProblem}
+                      </li>
+                    );
+                  })
+                ) : (
+                  <p>N/A</p>
+                )}
+              </ol>
+            </div>
+
+            <div style={{ marginLeft: '0.5rem', marginRight: '0.5rem' }}>
+              <h5
+                style={{
+                  padding: '3px',
+                  margin: '3px',
+                  fontSize: '0.9rem',
+                  textDecoration: 'underline',
+                }}
+              >
+                Complaints:{' '}
+              </h5>
+              <ol>
+                {data.complaints ? (
+                  data.complaints.map((complaint, i) => {
+                    return (
+                      <li key={i} style={{ fontSize: '0.9em' }}>
+                        {complaint.chiefComplaints}
+                      </li>
+                    );
+                  })
+                ) : (
+                  <p>N/A</p>
+                )}
+              </ol>
+            </div>
+
+            <div style={{ marginLeft: '0.5rem', marginRight: '0.5rem' }}>
               <h5
                 style={{
                   padding: '3px',
@@ -251,25 +251,25 @@ export default function Template({ data, back, saveData }) {
                 <div
                   style={{
                     flex: '0 0 auto',
-                    width: '25%',
+                    width: '20%',
                     fontSize: '11pt',
                   }}
                 >
-                  BP: {data.vitals ? data.vitals.bp : '50'}mmHg
+                  BP: {data.vitals ? data.vitals.bp : '50'} mmHg
                 </div>
                 <div
                   style={{
                     flex: '0 0 auto',
-                    width: '25%',
+                    width: '20%',
                     fontSize: '11pt',
                   }}
                 >
-                  PR: {data.vitals ? data.vitals.pr : '50'}bpm
+                  PR: {data.vitals ? data.vitals.pr : '50'} bpm
                 </div>
                 <div
                   style={{
                     flex: '0 0 auto',
-                    width: '25%',
+                    width: '20%',
                     fontSize: '11pt',
                   }}
                 >
@@ -278,80 +278,30 @@ export default function Template({ data, back, saveData }) {
                 <div
                   style={{
                     flex: '0 0 auto',
-                    width: '25%',
+                    width: '20%',
                     fontSize: '11pt',
                   }}
                 >
                   Temp: {data.vitals ? data.vitals.temp : '50'}&#8457;
                 </div>
+                <div
+                  style={{
+                    flex: '0 0 auto',
+                    width: '20%',
+                    fontSize: '11pt',
+                  }}
+                >
+                  GRBS: {data.vitals ? data.vitals.temp : '50'} mg/dl
+                </div>
               </div>
-              <p
-                style={{
-                  padding: '3px',
-                  margin: '3px',
-                  paddingLeft: '0.25rem',
-                  marginBottom: '0',
-                  fontSize: '11pt',
-                }}
-              >
-                GPE - {data.vitals ? data.vitals.gpe : '50'}
-              </p>
-              <p
-                style={{
-                  padding: '3px',
-                  margin: '3px',
-                  paddingLeft: '0.25rem',
-                  marginBottom: '0',
-                  fontSize: '11pt',
-                }}
-              >
-                CVS - {data.vitals ? data.vitals.cvs : '50'}
-              </p>
-              <p
-                style={{
-                  padding: '3px',
-                  margin: '3px',
-                  paddingLeft: '0.25rem',
-                  marginBottom: '0',
-                  fontSize: '11pt',
-                }}
-              >
-                RS - {data.vitals ? data.vitals.rs : '50'}
-              </p>
-              <p
-                style={{
-                  padding: '3px',
-                  margin: '3px',
-                  paddingLeft: '0.25rem',
-                  marginBottom: '0',
-                  fontSize: '11pt',
-                }}
-              >
-                P/A - {data.vitals ? data.vitals.pa : '50'}
-              </p>
-              <p
-                style={{
-                  padding: '3px',
-                  margin: '3px',
-                  paddingLeft: '0.25rem',
-                  marginBottom: '0',
-                  fontSize: '11pt',
-                }}
-              >
-                CNS - {data.vitals ? data.vitals.cns : '50'}
-              </p>
-              <p
-                style={{
-                  padding: '3px',
-                  margin: '3px',
-                  paddingLeft: '0.25rem',
-                  marginBottom: '0',
-                  fontSize: '11pt',
-                }}
-              >
-                L/E - {data.vitals ? data.vitals.le : '50'}
-              </p>
             </div>
+
+            <DynamicFormInput inputName="Findings" data={data.treatment} />
+
+            <DynamicFormInput
+              inputName="Treatment Given"
+              data={data.treatment}
+            />
 
             <div style={{ marginLeft: '0.5rem', marginRight: '0.5rem' }}>
               <h5
@@ -362,33 +312,7 @@ export default function Template({ data, back, saveData }) {
                   textDecoration: 'underline',
                 }}
               >
-                Treatment Given:
-              </h5>
-
-              <ol>
-                {data.treatment ? (
-                  data.treatment.map((treat, index) => {
-                    return (
-                      <li style={{ fontSize: '0.9em' }} key={index}>
-                        {treat.treatmentGiven}
-                      </li>
-                    );
-                  })
-                ) : (
-                  <p>N/A</p>
-                )}
-              </ol>
-            </div>
-            <div style={{ marginLeft: '0.5rem', marginRight: '0.5rem' }}>
-              <h5
-                style={{
-                  padding: '3px',
-                  margin: '3px',
-                  fontSize: '12pt',
-                  textDecoration: 'underline',
-                }}
-              >
-                Treatment Adviced:
+                Investigations Adviced:
               </h5>
               <ol>
                 {data.advice ? (
@@ -404,11 +328,16 @@ export default function Template({ data, back, saveData }) {
                 )}
               </ol>
             </div>
+
+            <DynamicFormInput inputName="Advice" data={data.treatment} />
+
             <div
               style={{
                 marginBottom: '3rem',
                 marginRight: '0.5rem',
                 marginLeft: '0.5rem',
+                position: 'absolute',
+                top: '31.5cm',
               }}
             >
               <h5

@@ -6,6 +6,10 @@
 @import './bootstrap.css';
 @import './font-awesome/css/fontawesome.css';
 
+* {
+  user-select: none;
+}
+
 body {
   background: #f8f9fa;
 }
@@ -61,6 +65,10 @@ body {
     float: none;
   }
 
+  #hidden {
+    display: none !important;
+  }
+
   #sidebar {
     display: none !important;
   }
@@ -109,7 +117,6 @@ body {
   margin: 0;
   margin-bottom: 1cm;
   margin-top: 1cm;
-  padding-bottom: 1cm;
 }
 
 .billing-color {

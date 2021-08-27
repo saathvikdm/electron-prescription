@@ -1,5 +1,5 @@
 import React from 'react';
-import drLogo from '../../assets/drlogo.png';
+import drLogo from '../../assets/drlogonew.png';
 import clinicLogo from '../../assets/cliniclogo.png';
 
 export default function PrintHeader() {
@@ -20,13 +20,14 @@ export default function PrintHeader() {
           justifyContent: 'center',
           display: 'flex',
           flexDirection: 'column',
+          marginRight: 'auto',
+          marginLeft: 'auto',
         }}
       >
         <p
           style={{
-            padding: '3px',
             margin: '3px',
-            fontSize: '1.2em',
+            fontSize: '1.4em',
             padding: '0 0.25em ',
             textAlign: 'center',
           }}
@@ -37,7 +38,7 @@ export default function PrintHeader() {
           style={{
             padding: '3px',
             margin: '3px',
-            fontSize: '0.8em',
+            fontSize: '1em',
             textAlign: 'center',
           }}
         >
@@ -46,13 +47,13 @@ export default function PrintHeader() {
           Chikkamagaluru – 577101.
         </p>
       </div>
-      <img
+      {/* <img
         src={clinicLogo}
         style={{ padding: '3px', margin: '3px', marginTop: '0.5em ' }}
         height="70px"
         width="100px"
         alt=""
-      />
+      /> */}
     </div>
   );
 }

@@ -7,7 +7,7 @@ export default function Footer({ sign, facilities, recovery, mrgn }) {
     <div
       style={{
         position: 'absolute',
-        bottom: '1.2cm',
+        top: '57cm',
         left: '0.9cm',
         right: '0.9cm',
       }}
@@ -46,7 +46,56 @@ export default function Footer({ sign, facilities, recovery, mrgn }) {
         ) : (
           ''
         )}
-        {!recovery ? (
+        <p
+          style={{
+            padding: '3px',
+            margin: '3px',
+            marginBottom: '0',
+            textAlign: 'center',
+            fontSize: '9pt',
+            fontWeight: 500,
+          }}
+        >
+          <i>
+            Wish you a speedy recovery. Please bring this prescription during
+            your clinic visit. Emergency contact +91-9482000390.
+          </i>
+        </p>
+
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
+            alignItems: 'center',
+            border: '1px solid black',
+            borderRadius: '8px',
+            paddingLeft: '1rem',
+            paddingRight: '1rem',
+            paddingTop: '0.25rem',
+            textAlign: 'center',
+            margin: '5px',
+          }}
+        >
+          <h6 style={{ padding: '3px', margin: '3px', fontSize: '11pt' }}>
+            <b>Facilities Available</b>
+          </h6>
+          <div style={{ textAlign: 'center' }}>
+            <p style={{ fontSize: '9pt', margin: '2px' }}>
+              Consultation & Counseling / ECG / Nebulization / Injections &
+              Drips / Minor Procedures & Wound Dressing / Day Care treatment /
+              Basic Laboratory.
+            </p>
+          </div>
+          <div style={{ textAlign: 'center' }}>
+            <p style={{ fontSize: '8.5pt', fontWeight: 500, margin: '2px' }}>
+              Visiting time: 10:00 AM to 02:00 PM & 05:00 PM to 08:00 PM. ಭೇಟಿ
+              ಸಮಯ: ಬೆಳಿಗ್ಗೆ 10:00 ರಿಂದ ಮಧ್ಯಾಹ್ನ 02:00 ಮತ್ತು ಸಂಜೆ 05:00 ರಿಂದ
+              08:00 ರವರೆಗೆ
+            </p>
+          </div>
+        </div>
+        {/* {!recovery ? (
           <div
             className="details"
             style={{
@@ -62,29 +111,6 @@ export default function Footer({ sign, facilities, recovery, mrgn }) {
               borderRadius: '8px',
             }}
           >
-            <p
-              style={{
-                padding: '3px',
-                margin: '3px',
-                marginBottom: '0',
-                textAlign: 'center',
-                fontSize: '10pt',
-              }}
-            >
-              Wish you a speedy recovery. Please bring this prescription during
-              your clinic visit.
-            </p>
-            <p
-              style={{
-                padding: '3px',
-                margin: '3px',
-                marginBottom: '0',
-                textAlign: 'center',
-                fontSize: '10pt',
-              }}
-            >
-              <b>In case of emergency, contact +91-9482000390.</b>
-            </p>
             <div
               className="details"
               style={{
@@ -134,14 +160,12 @@ export default function Footer({ sign, facilities, recovery, mrgn }) {
                       borderBottom: '1px solid #212529',
                     }}
                   >
-                    ಭೇಟಿ ಸಮಯ:{' '}
+                    {' '}
                   </b>
                 </h6>
-                <p style={{ padding: '3px', margin: '3px', fontSize: '10pt' }}>
-                  ಬೆಳಿಗ್ಗೆ <b>10:00</b> ರಿಂದ ಮಧ್ಯಾಹ್ನ <b>02:00</b>
-                  <br />
-                  ಸಂಜೆ <b>05:00</b> ರಿಂದ <b>08:00</b> ರವರೆಗೆ
-                </p>
+                <p
+                  style={{ padding: '3px', margin: '3px', fontSize: '10pt' }}
+                ></p>
               </div>
             </div>
           </div>
@@ -180,27 +204,11 @@ export default function Footer({ sign, facilities, recovery, mrgn }) {
               >
                 <img src={footerLogo} height="100" width="125" alt="" />
               </div>
-              <div style={{ textAlign: 'center', width: '75%' }}>
-                <h6 style={{ padding: '3px', margin: '3px', fontSize: '14pt' }}>
-                  <b
-                    style={{
-                      borderBottom: '1px solid #212529',
-                    }}
-                  >
-                    Facilities Available
-                  </b>
-                </h6>
-                <p style={{ padding: '3px', margin: '3px', fontSize: '12pt' }}>
-                  Consultation & Counseling / ECG / Nebulization / Injections &
-                  Drips / Minor Procedures & Wound Dressing / Day Care
-                  treatment.
-                </p>
-              </div>
             </div>
           </div>
         ) : (
           ''
-        )}
+        )} */}
       </div>
     </div>
   );
