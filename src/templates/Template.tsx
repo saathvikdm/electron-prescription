@@ -31,6 +31,10 @@ export default function Template({ data, back, saveData }) {
   //   },
   // });
 
+  window.onafterprint = function () {
+    saveData(data);
+  };
+
   return data ? (
     <div className="container d-flex align-items-center flex-column mb-3">
       <div id="hidden">
@@ -55,7 +59,9 @@ export default function Template({ data, back, saveData }) {
         <button
           className="btn btn-success mx-1 my-3 no-print"
           type="button"
-          onClick={() => window.print()}
+          onClick={() => {
+            window.print();
+          }}
         >
           Print Prescription
         </button>
