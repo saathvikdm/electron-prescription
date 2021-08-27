@@ -5,6 +5,14 @@
 
 @import './bootstrap.css';
 @import './font-awesome/css/fontawesome.css';
+@font-face {
+  font-family: copperplate;
+  src: url('./fonts/OPTICopperplate.otf');
+}
+@font-face {
+  font-family: brillian;
+  src: url('./fonts/BrillianCyrillicSerb-Regular.ttf');
+}
 
 * {
   user-select: none;
@@ -31,6 +39,14 @@ body {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: rgb(117, 117, 117);
+}
+
+.header-text {
+  font-family: copperplate;
+}
+
+.header-name {
+  font-family: brillian;
 }
 
 .credsfooter {

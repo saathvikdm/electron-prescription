@@ -27,10 +27,11 @@ export default function PrintHeader() {
         <p
           style={{
             margin: '3px',
-            fontSize: '1.4em',
+            fontSize: '12pt',
             padding: '0 0.25em ',
             textAlign: 'center',
           }}
+          className="header-text"
         >
           <b>Vijayalaxmi Clinic, Diagnostics And Counseling Centre.</b>
         </p>
@@ -38,9 +39,10 @@ export default function PrintHeader() {
           style={{
             padding: '3px',
             margin: '3px',
-            fontSize: '1em',
+            fontSize: '8.5pt',
             textAlign: 'center',
           }}
+          className="header-text"
         >
           Near Raghu Stickers, Dr.B.R.Ambedkar Road(Market Road),
           <br />

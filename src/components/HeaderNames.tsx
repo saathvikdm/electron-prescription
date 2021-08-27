@@ -18,14 +18,26 @@ export default function HeaderNames() {
           flexDirection: 'column',
         }}
       >
-        <h6 style={{ padding: '3px', margin: '3px', fontSize: '1em' }}>
+        <h6
+          style={{
+            padding: '3px',
+            margin: '3px',
+            fontSize: '14pt',
+            fontWeight: 100,
+          }}
+          className="header-name"
+        >
           <b>
-            <i>
-              Dr. CHETHAN NAIK <sub>M.B.B.S.,</sub>
-            </i>
+            Dr. Chethan Naik <sub>M.B.B.S.,</sub>
           </b>
         </h6>
-        <p style={{ padding: '3px', margin: '3px', fontSize: '0.9em' }}>
+        <p
+          style={{
+            padding: '3px',
+            margin: '3px',
+            fontSize: '0.9em',
+          }}
+        >
           General Practitioner,
           <br />
           KMC Reg.No: 97237
