@@ -29,12 +29,14 @@ const InputForm = ({ passedData }) => {
   const [investigations, setInvestigations] = useState('');
 
   const [treatmentGiven, setTreatmentGiven] = useState([
-    { treatmentGiven: '' },
+    { item: '', type: '' },
   ]);
 
   const [treatmentAdviced, setTreatmentAdviced] = useState([
-    { treatmentAdviced: '' },
+    { item: '', type: '', freq: '', when: false, interval: '' },
   ]);
+
+  const [findings, setFindings] = useState([{ item: '' }]);
 
   const [vitals, setVitals] = useState({
     bp: '',
@@ -51,25 +53,65 @@ const InputForm = ({ passedData }) => {
   const [toggle, setToggle] = useState(false);
 
   useEffect(() => {
+    storage.keys(function (error, keys) {
+      if (error) throw error;
+      let count = 1;
+      keys.forEach((key) => {
+        if (key.split('_')[0] === date) {
+          count += 1;
+        }
+      });
+      setOpNumber(count);
+    });
+  }, []);
+
+  useEffect(() => {
     if (passedData) {
       setToggle(!toggle);
       setData(passedData.inputData);
     }
   }, [passedData]);
 
+  // handling findings
+
+  const handleFindingsChange = (index, event) => {
+    const values = [...findings];
+    if (event.target.name === 'findings') {
+      values[index].item = event.target.value;
+    }
+    setFindings(values);
+  };
+
+  const handleAddFindings = () => {
+    const values = [...findings];
+    values.push({ item: '' });
+    setFindings(values);
+  };
+
+  const handleRemoveFindings = (index) => {
+    const values = [...findings];
+    values.splice(index, 1);
+    setFindings(values);
+  };
+
   // handling treatment given field
 
   const handleTreatmentGivenChange = (index, event) => {
     const values = [...treatmentGiven];
     if (event.target.name === 'treatmentGiven') {
-      values[index].treatmentGiven = event.target.value;
+      values[index].item = event.target.value;
     }
+
+    if (event.target.name === 'givenType') {
+      values[index].type = event.target.value;
+    }
+
     setTreatmentGiven(values);
   };
 
   const handleAddTreatmentGiven = () => {
     const values = [...treatmentGiven];
-    values.push({ treatmentGiven: '' });
+    values.push({ item: '', type: '' });
     setTreatmentGiven(values);
   };
 
@@ -84,14 +126,31 @@ const InputForm = ({ passedData }) => {
   const handletreatmentAdvicedChange = (index, event) => {
     const values = [...treatmentAdviced];
     if (event.target.name === 'treatmentAdviced') {
-      values[index].treatmentAdviced = event.target.value;
+      values[index].item = event.target.value;
     }
+
+    if (event.target.name === 'adviceType') {
+      values[index].type = event.target.value;
+    }
+
+    if (event.target.name === 'adviceFreq') {
+      values[index].freq = event.target.value;
+    }
+
+    if (event.target.name === 'adviceWhen') {
+      values[index].when = event.target.checked;
+    }
+
+    if (event.target.name === 'advicedInterval') {
+      values[index].interval = event.target.value;
+    }
+
     setTreatmentAdviced(values);
   };
 
   const handleAddtreatmentAdviced = () => {
     const values = [...treatmentAdviced];
-    values.push({ treatmentAdviced: '' });
+    values.push({ item: '', type: '', freq: '', when: false, interval: '' });
     setTreatmentAdviced(values);
   };
 
@@ -111,10 +170,12 @@ const InputForm = ({ passedData }) => {
       problems: morbidities,
       complaints,
       diagnosis,
+      investigations,
       vitals,
       treatment: treatmentGiven,
       advice: treatmentAdviced,
       followUp,
+      findings,
       idNumber: `${date}_${opNumber}`,
     };
 
@@ -172,7 +233,7 @@ const InputForm = ({ passedData }) => {
             >
               <option value="Male">Male</option>
               <option value="Female">Female</option>
-              <option value="T">Trans</option>
+              <option value="T">TG</option>
             </select>
           </label>
         </div>
@@ -328,17 +389,78 @@ const InputForm = ({ passedData }) => {
           </div>
         </div>
 
-        <p className="pt-2 mb-0">Treatment Given:</p>
-        {treatmentGiven.map((given, index) => (
-          <div key={`${index}-${given}`} className="mb-2">
+        <p className="pt-2 mb-0">Findings:</p>
+        {findings.map((item, index) => (
+          <div key={`${index}-${item}`} className="mb-2">
             <div className="row form-group">
               <div className="col-md-8">
                 <input
                   type="text"
                   className="form-control "
+                  id="findings"
+                  name="findings"
+                  value={item.item}
+                  onChange={(event) => handleFindingsChange(index, event)}
+                />
+              </div>
+              <div className="col-md-4 d-flex align-items-end">
+                {findings.length > 1 ? (
+                  <>
+                    <button
+                      className="btn btn-outline-secondary btn-sm m-1"
+                      type="button"
+                      onClick={() => handleAddFindings()}
+                    >
+                      +
+                    </button>
+                    <button
+                      className="btn btn-outline-secondary btn-sm m-1"
+                      type="button"
+                      onClick={() => handleRemoveFindings(index)}
+                    >
+                      -
+                    </button>
+                  </>
+                ) : (
+                  <button
+                    className="btn btn-outline-secondary btn-sm m-1"
+                    type="button"
+                    onClick={() => handleAddFindings()}
+                  >
+                    +
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+        ))}
+
+        <p className="pt-2 mb-0">Treatment Given:</p>
+        {treatmentGiven.map((given, index) => (
+          <div key={`${index}-${given}`} className="mb-2">
+            <div className="row form-group">
+              <div className="col-md-2">
+                <select
+                  className="form-select"
+                  id="givenType"
+                  name="givenType"
+                  value={given.type}
+                  onChange={(event) => handleTreatmentGivenChange(index, event)}
+                >
+                  <option value="">-</option>
+                  <option value="Inj">Injection</option>
+                  <option value="Tab">Tablet</option>
+                  <option value="Cap">Capsule</option>
+                  <option value="Syrup">Syrup</option>
+                </select>
+              </div>
+              <div className="col-md-6">
+                <input
+                  type="text"
+                  className="form-control "
                   id="treatmentGiven"
                   name="treatmentGiven"
-                  value={given.treatmentGiven}
+                  value={given.item}
                   onChange={(event) => handleTreatmentGivenChange(index, event)}
                 />
               </div>
@@ -394,19 +516,87 @@ const InputForm = ({ passedData }) => {
         {treatmentAdviced.map((advice, index) => (
           <div key={`${index}-${advice}`} className="mb-2">
             <div className="row form-group">
-              <div className="col-md-8">
+              <div className="col-md-2">
+                <select
+                  className="form-select"
+                  id="adviceType"
+                  name="adviceType"
+                  value={advice.type}
+                  onChange={(event) =>
+                    handletreatmentAdvicedChange(index, event)
+                  }
+                >
+                  <option value="">-</option>
+                  <option value="Inj">Injection</option>
+                  <option value="Tab">Tablet</option>
+                  <option value="Cap">Capsule</option>
+                  <option value="Syrup">Syrup</option>
+                </select>
+              </div>
+              <div className="col-md-4">
                 <input
                   type="text"
                   className="form-control "
                   id="treatmentAdviced"
                   name="treatmentAdviced"
-                  value={advice.treatmentAdviced}
+                  value={advice.item}
                   onChange={(event) =>
                     handletreatmentAdvicedChange(index, event)
                   }
                 />
               </div>
-              <div className="col-md-4 d-flex align-items-end">
+              <div className="col-md-2">
+                <select
+                  className="form-select"
+                  id="adviceFreq"
+                  name="adviceFreq"
+                  value={advice.freq}
+                  onChange={(event) =>
+                    handletreatmentAdvicedChange(index, event)
+                  }
+                >
+                  <option value="">-</option>
+                  <option value="1-0-1">1-0-1</option>
+                  <option value="1-0-0">1-0-0</option>
+                  <option value="1-1-1">1-1-1</option>
+                  <option value="0-0-1">0-0-1</option>
+                  <option value="0-1-0">0-1-0</option>
+                </select>
+              </div>
+              <div className="col-md-2">
+                <input
+                  type="number"
+                  className="form-control "
+                  id="advicedInterval"
+                  name="advicedInterval"
+                  placeholder="For (in days)"
+                  value={advice.interval}
+                  onChange={(event) =>
+                    handletreatmentAdvicedChange(index, event)
+                  }
+                />
+              </div>
+              <div className="col-md-2 my-auto">
+                <div className="form-check">
+                  <label
+                    className="form-check-label"
+                    htmlFor="flexCheckDefault"
+                  >
+                    Before?
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      name="adviceWhen"
+                      onChange={(event) =>
+                        handletreatmentAdvicedChange(index, event)
+                      }
+                      id="flexCheckDefault"
+                    />
+                  </label>
+                </div>
+              </div>
+
+              <div className="col-md-2 d-flex align-items-end">
                 {treatmentAdviced.length > 1 ? (
                   <>
                     <button

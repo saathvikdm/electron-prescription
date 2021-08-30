@@ -5,8 +5,8 @@ import { ReactHeight } from 'react-height';
 
 import PrintHeader from '../components/PrintHeader';
 import HeaderNames from '../components/HeaderNames';
+import DynamicFormElement from '../components/DynamicFormElement';
 import Footer from '../components/Footer';
-import DynamicFormInput from '../components/DynamicFormInput';
 
 import GetDate from '../utils/GetDate';
 
@@ -34,6 +34,8 @@ export default function Template({ data, back, saveData }) {
   window.onafterprint = function () {
     saveData(data);
   };
+
+  console.log(data);
 
   return data ? (
     <div className="container d-flex align-items-center flex-column mb-3">
@@ -84,7 +86,7 @@ export default function Template({ data, back, saveData }) {
         </ReactHeight> */}
         <div
           className="prescription"
-          style={{ height: '61cm', border: '2px solid black' }}
+          style={{ height: '60.5cm', border: '2px solid black' }}
         >
           <ReactHeight
             onHeightReady={(height) => {
@@ -160,24 +162,19 @@ export default function Template({ data, back, saveData }) {
                   padding: '3px',
                   margin: '3px',
                   fontSize: '0.9rem',
-                  textDecoration: 'underline',
+                  fontWeight: 700,
                 }}
               >
                 Clinical / Provisional / Differential Diagnosis:{' '}
               </h5>
-              <ol>
-                {data.diagnosis ? (
-                  data.diagnosis.map((diag, i) => {
-                    return (
-                      <li key={i} style={{ fontSize: '0.9em' }}>
-                        {diag.diagnosis}
-                      </li>
-                    );
-                  })
-                ) : (
-                  <p>N/A</p>
-                )}
-              </ol>
+              <p
+                style={{
+                  padding: '3px',
+                  margin: '3px',
+                }}
+              >
+                {data.diagnosis ? data.diagnosis : 'N/A'}
+              </p>
             </div>
 
             <div style={{ marginLeft: '0.5rem', marginRight: '0.5rem' }}>
@@ -186,24 +183,19 @@ export default function Template({ data, back, saveData }) {
                   padding: '3px',
                   margin: '3px',
                   fontSize: '0.9rem',
-                  textDecoration: 'underline',
+                  fontWeight: 700,
                 }}
               >
                 Co-Morbidities:
               </h5>
-              <ol>
-                {data.problems ? (
-                  data.problems.map((prob, i) => {
-                    return (
-                      <li key={i} style={{ fontSize: '0.9em' }}>
-                        {prob.knownProblem}
-                      </li>
-                    );
-                  })
-                ) : (
-                  <p>N/A</p>
-                )}
-              </ol>
+              <p
+                style={{
+                  padding: '3px',
+                  margin: '3px',
+                }}
+              >
+                {data.problems ? data.problems : 'N/A'}
+              </p>
             </div>
 
             <div style={{ marginLeft: '0.5rem', marginRight: '0.5rem' }}>
@@ -212,24 +204,19 @@ export default function Template({ data, back, saveData }) {
                   padding: '3px',
                   margin: '3px',
                   fontSize: '0.9rem',
-                  textDecoration: 'underline',
+                  fontWeight: 700,
                 }}
               >
                 Complaints:{' '}
               </h5>
-              <ol>
-                {data.complaints ? (
-                  data.complaints.map((complaint, i) => {
-                    return (
-                      <li key={i} style={{ fontSize: '0.9em' }}>
-                        {complaint.chiefComplaints}
-                      </li>
-                    );
-                  })
-                ) : (
-                  <p>N/A</p>
-                )}
-              </ol>
+              <p
+                style={{
+                  padding: '3px',
+                  margin: '3px',
+                }}
+              >
+                {data.complaints ? data.complaints : 'N/A'}
+              </p>
             </div>
 
             <div style={{ marginLeft: '0.5rem', marginRight: '0.5rem' }}>
@@ -238,7 +225,7 @@ export default function Template({ data, back, saveData }) {
                   padding: '3px',
                   margin: '3px',
                   fontSize: '0.9rem',
-                  textDecoration: 'underline',
+                  fontWeight: 700,
                 }}
               >
                 Vitals:{' '}
@@ -302,40 +289,44 @@ export default function Template({ data, back, saveData }) {
               </div>
             </div>
 
-            <DynamicFormInput inputName="Findings" data={data.treatment} />
+            <DynamicFormElement inputName="Findings" data={data.findings} />
 
-            <DynamicFormInput
+            <DynamicFormElement
               inputName="Treatment Given"
               data={data.treatment}
             />
 
-            <div style={{ marginLeft: '0.5rem', marginRight: '0.5rem' }}>
+            <div
+              style={{
+                marginRight: '0.5rem',
+                marginLeft: '0.5rem',
+              }}
+            >
               <h5
                 style={{
                   padding: '3px',
                   margin: '3px',
                   fontSize: '12pt',
-                  textDecoration: 'underline',
+                  fontWeight: 700,
+                  wordWrap: 'break-word',
                 }}
               >
                 Investigations Adviced:
               </h5>
-              <ol>
-                {data.advice ? (
-                  data.advice.map((adv, index) => {
-                    return (
-                      <li style={{ fontSize: '0.9em' }} key={index}>
-                        {adv.treatmentAdviced}
-                      </li>
-                    );
-                  })
-                ) : (
-                  <p>N/A</p>
-                )}
-              </ol>
+
+              <p
+                style={{
+                  padding: '3px',
+                  margin: '3px',
+                  paddingLeft: '0.5rem',
+                  fontSize: '12pt',
+                }}
+              >
+                {data.investigations ? data.investigations : 'N/A'}
+              </p>
             </div>
 
-            <DynamicFormInput inputName="Advice" data={data.treatment} />
+            <DynamicFormElement inputName="Advice" data={data.advice} />
 
             <div
               style={{
@@ -351,7 +342,7 @@ export default function Template({ data, back, saveData }) {
                   padding: '3px',
                   margin: '3px',
                   fontSize: '12pt',
-                  textDecoration: 'underline',
+                  fontWeight: 700,
                   wordWrap: 'break-word',
                 }}
               >

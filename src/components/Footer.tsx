@@ -7,7 +7,7 @@ export default function Footer({ sign, facilities, recovery, mrgn }) {
     <div
       style={{
         position: 'absolute',
-        top: '57cm',
+        top: '28cm',
         left: '0.9cm',
         right: '0.9cm',
       }}
@@ -75,23 +75,30 @@ export default function Footer({ sign, facilities, recovery, mrgn }) {
             paddingTop: '0.25rem',
             textAlign: 'center',
             margin: '5px',
+            lineHeight: '1.1',
           }}
         >
-          <h6 style={{ padding: '3px', margin: '3px', fontSize: '11pt' }}>
+          <h6
+            style={{
+              padding: '3px',
+              margin: '3px',
+              fontSize: '11pt',
+            }}
+          >
             <b>Facilities Available</b>
           </h6>
           <div style={{ textAlign: 'center' }}>
-            <p style={{ fontSize: '9pt', margin: '2px' }}>
+            <p style={{ fontSize: '10pt', margin: '2px' }}>
               Consultation & Counseling / ECG / Nebulization / Injections &
               Drips / Minor Procedures & Wound Dressing / Day Care treatment /
               Basic Laboratory.
             </p>
           </div>
           <div style={{ textAlign: 'center' }}>
-            <p style={{ fontSize: '8.5pt', fontWeight: 500, margin: '2px' }}>
-              Visiting time: 10:00 AM to 02:00 PM & 05:00 PM to 08:00 PM. ಭೇಟಿ
-              ಸಮಯ: ಬೆಳಿಗ್ಗೆ 10:00 ರಿಂದ ಮಧ್ಯಾಹ್ನ 02:00 ಮತ್ತು ಸಂಜೆ 05:00 ರಿಂದ
-              08:00 ರವರೆಗೆ
+            <p style={{ fontSize: '10pt', fontWeight: 500, margin: '2px' }}>
+              Visiting time: 10:00 AM to 02:00 PM & 05:00 PM to 08:00 PM. <br />{' '}
+              <b>ಭೇಟಿ ಸಮಯ</b>: ಬೆಳಿಗ್ಗೆ 10:00 ರಿಂದ ಮಧ್ಯಾಹ್ನ 02:00 ಮತ್ತು ಸಂಜೆ
+              05:00 ರಿಂದ 08:00 ರವರೆಗೆ
             </p>
           </div>
         </div>

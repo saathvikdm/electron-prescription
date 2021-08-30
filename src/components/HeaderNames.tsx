@@ -76,9 +76,9 @@ export default function HeaderNames() {
         <p style={{ padding: '3px', margin: '3px', fontSize: '0.9em' }}>
           ಜನರಲ್ ಪ್ರಾಕ್ಟೀಷನರ್,
           <br />
-          ಕೆ.ಎಂ.ಸಿ ರೆ.ಸಂ: 97237
+          ಕೆ.ಎಂ.ಸಿ ರಿ.ನಂ: 97237
           <br />
-          E-mail: drchethannaik@gmail.com
+          ಇ-ಮೇಲ್: drchethannaik@gmail.com
         </p>
       </div>
     </div>
