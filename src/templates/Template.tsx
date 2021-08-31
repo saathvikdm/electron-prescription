@@ -144,8 +144,8 @@ export default function Template({ data, back, saveData }) {
                 >
                   <b>Age / Sex :</b>{' '}
                   {data.age && data.sex
-                    ? `${data.age}y/${data.sex}`
-                    : '43 years / Male'}
+                    ? `${data.age} ${data.ageType} / ${data.sex}`
+                    : ''}
                   <br />
                   <b>Date:</b>{' '}
                   {date &&
@@ -328,6 +328,10 @@ export default function Template({ data, back, saveData }) {
 
             <DynamicFormElement inputName="Advice" data={data.advice} />
 
+            <h6 style={{ position: 'absolute', top: '27cm', right: '2cm' }}>
+              Doctor's Signature
+            </h6>
+
             <div
               style={{
                 marginBottom: '3rem',
@@ -365,8 +369,6 @@ export default function Template({ data, back, saveData }) {
             {/* Footer with sign is of 337px Height */}
             <Footer mrgn={pgHeight} />
           </div>
-
-          {/* <div className="credsfooter">Wishing you a speedy recovery!</div> */}
         </div>
       </div>
     </div>

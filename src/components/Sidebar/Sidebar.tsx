@@ -1,6 +1,8 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 
+import drLogo from '../../../assets/drlogonew.png';
+
 export default function SideBarAlt() {
   return (
     <div
@@ -12,6 +14,18 @@ export default function SideBarAlt() {
         height: '100%',
       }}
     >
+      <div
+        className="d-flex justify-content-center align-items-center"
+        style={{
+          marginBottom: '1em',
+          background: 'rgba(43, 43, 41, 0.6)',
+          borderRadius: '5px',
+          padding: '10px',
+        }}
+      >
+        <h4>VLCDCC</h4>
+        <img src={drLogo} alt="" height="40px" style={{ marginLeft: '1em' }} />
+      </div>
       <ul className="nav nav-pills flex-column mb-auto">
         <NavLink
           exact

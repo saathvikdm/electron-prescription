@@ -1,6 +1,5 @@
 import React from 'react';
 import drLogo from '../../assets/drlogonew.png';
-import clinicLogo from '../../assets/cliniclogo.png';
 
 export default function PrintHeader() {
   return (

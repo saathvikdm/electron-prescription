@@ -19,10 +19,12 @@ const InputForm = ({ passedData }) => {
     });
   };
 
+  const [title, setTitle] = useState('');
   const [name, setName] = useState('');
-  const [age, setAge] = useState();
-  const [sex, setSex] = useState('M');
-  const [opNumber, setOpNumber] = useState();
+  const [age, setAge] = useState('');
+  const [ageType, setAgeType] = useState('Years');
+  const [sex, setSex] = useState('Male');
+  const [opNumber, setOpNumber] = useState('');
   const [diagnosis, setDiagnosis] = useState('');
   const [morbidities, setMorbidities] = useState('');
   const [complaints, setComplaints] = useState('');
@@ -163,8 +165,9 @@ const InputForm = ({ passedData }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const inputData = {
-      paitentName: name,
+      paitentName: `${title} ${name}`,
       age,
+      ageType,
       sex,
       opNumber,
       problems: morbidities,
@@ -195,7 +198,24 @@ const InputForm = ({ passedData }) => {
   ) : (
     <form onSubmit={handleSubmit}>
       <div className="row g-3 mb-2">
-        <div className="col-md-6">
+        <div className="col-md-2">
+          <label htmlFor="PaitentSex" className="form-label mx-1">
+            Title
+            <select
+              className="form-select"
+              id="inputGroupSelect01"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            >
+              <option value="Mr.">Mr.</option>
+              <option value="Mrs.">Mrs.</option>
+              <option value="Miss.">Miss.</option>
+              <option value="Master.">Master.</option>
+            </select>
+          </label>
+        </div>
+
+        <div className="col-md-4">
           <label
             htmlFor="PaitentName"
             className="form-label mx-1"
@@ -219,6 +239,23 @@ const InputForm = ({ passedData }) => {
               value={age}
               onChange={(e) => setAge(e.target.value)}
             />
+          </label>
+        </div>
+        <div className="col-md-2">
+          <label htmlFor="inputGroupSelect01" className="form-label mx-1">
+            Y/M/D
+            <select
+              className="form-select"
+              id="inputGroupSelect01"
+              value={ageType}
+              onChange={(e) => {
+                setAgeType(e.target.value);
+              }}
+            >
+              <option value="Years">Years</option>
+              <option value="Months">Months</option>
+              <option value="Days">Days</option>
+            </select>
           </label>
         </div>
 
