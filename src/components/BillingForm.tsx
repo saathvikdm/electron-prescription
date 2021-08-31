@@ -4,7 +4,6 @@ import Billing from '../templates/Billing';
 
 import GetDate from '../utils/GetDate';
 
-const path = require('path');
 const storage = require('electron-json-storage');
 
 const BillingForm = ({ passedData }) => {
@@ -18,9 +17,11 @@ const BillingForm = ({ passedData }) => {
     });
   };
 
+  const [title, setTitle] = useState('');
   const [name, setName] = useState('');
   const [age, setAge] = useState('');
-  const [sex, setSex] = useState('M');
+  const [ageType, setAgeType] = useState('Years');
+  const [sex, setSex] = useState('Male');
   const [opNumber, setOpNumber] = useState('');
   const [medicine, setMedicine] = useState([
     { med: '', quantity: '', rate: '', total: 0 },
@@ -38,6 +39,19 @@ const BillingForm = ({ passedData }) => {
       // console.log(passedData);
     }
   }, [passedData]);
+
+  useEffect(() => {
+    storage.keys(function (error, keys) {
+      if (error) throw error;
+      let count = 1;
+      keys.forEach((key) => {
+        if (key.split('_')[0] === date) {
+          count += 1;
+        }
+      });
+      setOpNumber(count);
+    });
+  }, []);
 
   // handling medicine fields
 
@@ -84,8 +98,9 @@ const BillingForm = ({ passedData }) => {
     });
 
     const inputData = {
-      paitentName: name,
+      paitentName: `${title} ${name}`,
       age,
+      ageType,
       sex,
       opNumber,
       medicine,
@@ -110,7 +125,24 @@ const BillingForm = ({ passedData }) => {
   ) : (
     <form onSubmit={handleSubmit}>
       <div className="row g-3 mb-2">
-        <div className="col-md-6">
+        <div className="col-md-2">
+          <label htmlFor="PaitentSex" className="form-label mx-1">
+            Title
+            <select
+              className="form-select"
+              id="inputGroupSelect01"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            >
+              <option value="Mr.">Mr.</option>
+              <option value="Mrs.">Mrs.</option>
+              <option value="Miss.">Miss.</option>
+              <option value="Master.">Master.</option>
+            </select>
+          </label>
+        </div>
+
+        <div className="col-md-4">
           <label
             htmlFor="PaitentName"
             className="form-label mx-1"
@@ -136,6 +168,23 @@ const BillingForm = ({ passedData }) => {
             />
           </label>
         </div>
+        <div className="col-md-2">
+          <label htmlFor="inputGroupSelect01" className="form-label mx-1">
+            Y/M/D
+            <select
+              className="form-select"
+              id="inputGroupSelect01"
+              value={ageType}
+              onChange={(e) => {
+                setAgeType(e.target.value);
+              }}
+            >
+              <option value="Years">Years</option>
+              <option value="Months">Months</option>
+              <option value="Days">Days</option>
+            </select>
+          </label>
+        </div>
 
         <div className="col-md-2">
           <label htmlFor="PaitentSex" className="form-label mx-1">
@@ -146,8 +195,9 @@ const BillingForm = ({ passedData }) => {
               value={sex}
               onChange={(e) => setSex(e.target.value)}
             >
-              <option value="M">Male</option>
-              <option value="F">Female</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="T">TG</option>
             </select>
           </label>
         </div>

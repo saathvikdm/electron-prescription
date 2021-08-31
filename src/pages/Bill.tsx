@@ -13,7 +13,7 @@ export default function Bill() {
       style={{ paddingLeft: '200px' }}
     >
       <Header />
-      <div className="alert billing-color mb-4" role="alert">
+      <div className="alert billing-color mb-4" role="alert" id="hidden">
         <i className="fas fa-marker me-2 " /> Generate Bill
       </div>
       {location.state ? (
