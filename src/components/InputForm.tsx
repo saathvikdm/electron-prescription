@@ -484,7 +484,7 @@ const InputForm = ({ passedData }) => {
                   value={given.type}
                   onChange={(event) => handleTreatmentGivenChange(index, event)}
                 >
-                  <option value="">-</option>
+                  <option value="">Type</option>
                   <option value="Inj">Injection</option>
                   <option value="Tab">Tablet</option>
                   <option value="Cap">Capsule</option>
@@ -563,7 +563,7 @@ const InputForm = ({ passedData }) => {
                     handletreatmentAdvicedChange(index, event)
                   }
                 >
-                  <option value="">-</option>
+                  <option value="">Type</option>
                   <option value="Inj">Injection</option>
                   <option value="Tab">Tablet</option>
                   <option value="Cap">Capsule</option>
@@ -592,7 +592,7 @@ const InputForm = ({ passedData }) => {
                     handletreatmentAdvicedChange(index, event)
                   }
                 >
-                  <option value="">-</option>
+                  <option value="">Freq</option>
                   <option value="1-0-1">1-0-1</option>
                   <option value="1-0-0">1-0-0</option>
                   <option value="1-1-1">1-1-1</option>

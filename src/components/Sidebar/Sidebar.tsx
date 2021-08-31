@@ -18,7 +18,6 @@ export default function SideBarAlt() {
         className="d-flex justify-content-center align-items-center"
         style={{
           marginBottom: '1em',
-          background: 'rgba(43, 43, 41, 0.6)',
           borderRadius: '5px',
           padding: '10px',
         }}

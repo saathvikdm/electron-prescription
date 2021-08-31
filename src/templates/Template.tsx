@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 
 import ReactToPrint from 'react-to-print';
 import { ReactHeight } from 'react-height';
@@ -10,7 +10,7 @@ import Footer from '../components/Footer';
 
 import GetDate from '../utils/GetDate';
 
-const ref = React.createRef();
+// const ref = React.createRef();
 
 export default function Template({ data, back, saveData }) {
   const DEFAULT_PAGE_HEIGHT = 717; // 19cm Page Height in pixels
@@ -18,9 +18,11 @@ export default function Template({ data, back, saveData }) {
 
   let pageHeight = 0;
 
+  const pageRef = useRef();
+
   const date = GetDate();
 
-  const [pgHeight, setpgHeight] = useState(330);
+  const [pgHeight, setpgHeight] = useState(0);
 
   // const printFunc = useReactToPrint({
   //   copyStyles: true,
@@ -36,6 +38,13 @@ export default function Template({ data, back, saveData }) {
   };
 
   console.log(data);
+
+  useEffect(() => {
+    console.log(pageRef.current.getBoundingClientRect().height);
+    setpgHeight(pageRef.current.getBoundingClientRect().height);
+  }, []);
+
+  // console.log(pageRef.current);
 
   return data ? (
     <div className="container d-flex align-items-center flex-column mb-3">
@@ -71,12 +80,11 @@ export default function Template({ data, back, saveData }) {
 
       <div
         className="prescription-container bg-white"
-        ref={ref}
         style={{
           padding: '2em',
           margin: '0',
           width: '21cm',
-          height: '62cm',
+          // height: '30.5cm',
           position: 'relative',
           zIndex: -1,
         }}
@@ -86,22 +94,36 @@ export default function Template({ data, back, saveData }) {
         </ReactHeight> */}
         <div
           className="prescription"
-          style={{ height: '60.5cm', border: '2px solid black' }}
+          style={{
+            // height: '60.5cm',
+            height: '30.5cm',
+            border: '2px solid black',
+          }}
         >
-          <ReactHeight
+          {/* <ReactHeight
             onHeightReady={(height) => {
-              console.log('height', height);
-              console.log('Calc', height - DEFAULT_PAGE_HEIGHT);
               pageHeight = height;
-              let calc = (
-                (height + FOOTER_HEIGHT) /
-                DEFAULT_PAGE_HEIGHT
-              ).toFixed(0);
-              console.log('No. of pages: ', calc);
+              console.log('height', height);
 
-              setpgHeight(pgHeight - (height - DEFAULT_PAGE_HEIGHT));
-              console.log(pgHeight - (pageHeight - DEFAULT_PAGE_HEIGHT));
+              // console.log('Calc', height - DEFAULT_PAGE_HEIGHT);
+              // pageHeight = height;
+              // let calc = (
+              //   (height + FOOTER_HEIGHT) /
+              //   DEFAULT_PAGE_HEIGHT
+              // ).toFixed(0);
+              // console.log('No. of pages: ', calc);
+
+              // setpgHeight(pgHeight - (height - DEFAULT_PAGE_HEIGHT));
+              // console.log(pgHeight - (pageHeight - DEFAULT_PAGE_HEIGHT));
             }}
+          > */}
+          <div
+            id="presContainer"
+            // ref={(el) => {
+            //   if (!el) return;
+            //   pageHeight = el.getBoundingClientRect().height;
+            // }}
+            ref={pageRef}
           >
             <PrintHeader />
             <HeaderNames />
@@ -266,7 +288,7 @@ export default function Template({ data, back, saveData }) {
                     fontSize: '11pt',
                   }}
                 >
-                  SpO2: {data.vitals ? data.vitals.spo2 : '50'}%
+                  SpO2: {data.vitals ? data.vitals.sp02 : '50'}%
                 </div>
                 <div
                   style={{
@@ -326,19 +348,87 @@ export default function Template({ data, back, saveData }) {
               </p>
             </div>
 
-            <DynamicFormElement inputName="Advice" data={data.advice} />
+            {pgHeight > 990 ? (
+              <>
+                {' '}
+                <div
+                  style={{
+                    position: 'absolute',
+                    top: '33cm',
+                  }}
+                >
+                  <DynamicFormElement inputName="Advice" data={data.advice} />
+                </div>
+                <h6 style={{ position: 'absolute', top: '60cm', right: '2cm' }}>
+                  Doctor's Signature
+                </h6>
+              </>
+            ) : (
+              <>
+                {' '}
+                <DynamicFormElement inputName="Advice" data={data.advice} />
+                <h6
+                  style={{ position: 'absolute', top: '26.5cm', right: '2cm' }}
+                >
+                  Doctor's Signature
+                </h6>{' '}
+              </>
+            )}
+          </div>
+          {/* </ReactHeight> */}
+          <div>
+            {/* Footer with sign is of 337px Height */}
+            <Footer mrgn={pgHeight} />
+          </div>
+        </div>
 
-            <h6 style={{ position: 'absolute', top: '27cm', right: '2cm' }}>
-              Doctor's Signature
-            </h6>
+        {pgHeight > 990 ? (
+          <div
+            style={{
+              padding: '1.25cm 0',
+              margin: '0',
+              height: '30.5cm',
+              position: 'relative',
+              zIndex: -1,
+            }}
+          >
+            <div
+              className="prescription"
+              style={{
+                // height: '60.5cm',
+                height: '30.5cm',
+                border: '2px solid black',
+              }}
+            >
+              <span />
+            </div>
+          </div>
+        ) : (
+          ''
+        )}
 
+        <div
+          style={{
+            padding: `${pgHeight > 990 ? '1.6cm 0' : '0.6cm 0'}`,
+            margin: `${pgHeight > 990 ? '1.6cm 0' : '0.6cm 0'}`,
+            height: '30.5cm',
+            position: 'relative',
+            zIndex: -1,
+          }}
+        >
+          <div
+            className="prescription"
+            style={{
+              // height: '60.5cm',
+              height: '30.5cm',
+              border: '2px solid black',
+            }}
+          >
             <div
               style={{
-                marginBottom: '3rem',
+                marginTop: '1rem',
                 marginRight: '0.5rem',
                 marginLeft: '0.5rem',
-                position: 'absolute',
-                top: '31.5cm',
               }}
             >
               <h5
@@ -363,11 +453,16 @@ export default function Template({ data, back, saveData }) {
               >
                 {data.followUp ? data.followUp : 'Review after 3 days.'}
               </p>
+              <h6
+                style={{
+                  position: 'absolute',
+                  bottom: '0.5cm',
+                  right: '2cm',
+                }}
+              >
+                Doctor's Signature
+              </h6>
             </div>
-          </ReactHeight>
-          <div>
-            {/* Footer with sign is of 337px Height */}
-            <Footer mrgn={pgHeight} />
           </div>
         </div>
       </div>

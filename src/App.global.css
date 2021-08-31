@@ -131,7 +131,7 @@ body {
 @page {
   size: A4;
   margin: 0;
-  margin-bottom: 1cm;
+  /* margin-bottom: 1cm;*/
   margin-top: 1cm;
 }
 
