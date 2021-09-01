@@ -88,7 +88,7 @@ export default function Footer({ sign, facilities, recovery, mrgn }) {
             <b>Facilities Available</b>
           </h6>
           <div style={{ textAlign: 'center' }}>
-            <p style={{ fontSize: '10pt', margin: '2px' }}>
+            <p style={{ fontSize: '10pt', fontWeight: 500, margin: '2px' }}>
               Consultation & Counseling / ECG / Nebulization / Injections &
               Drips / Minor Procedures & Wound Dressing / Day Care treatment /
               Basic Laboratory.

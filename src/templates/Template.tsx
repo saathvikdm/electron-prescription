@@ -1,8 +1,5 @@
 import React, { useRef, useState, useEffect } from 'react';
 
-import ReactToPrint from 'react-to-print';
-import { ReactHeight } from 'react-height';
-
 import PrintHeader from '../components/PrintHeader';
 import HeaderNames from '../components/HeaderNames';
 import DynamicFormElement from '../components/DynamicFormElement';
@@ -12,26 +9,12 @@ import GetDate from '../utils/GetDate';
 
 // const ref = React.createRef();
 
-export default function Template({ data, back, saveData }) {
-  const DEFAULT_PAGE_HEIGHT = 717; // 19cm Page Height in pixels
-  const FOOTER_HEIGHT = 337; //height of footer in px
-
-  let pageHeight = 0;
-
+export default function Template({ data, back, saveData, followUp }) {
   const pageRef = useRef();
 
   const date = GetDate();
 
   const [pgHeight, setpgHeight] = useState(0);
-
-  // const printFunc = useReactToPrint({
-  //   copyStyles: true,
-  //   pageStyle: () => 'size: 14.8cm 21cm',
-  //   content: () => ref.current,
-  //   onAfterPrint: () => {
-  //     saveData(data);
-  //   },
-  // });
 
   window.onafterprint = function () {
     saveData(data);
@@ -40,7 +23,6 @@ export default function Template({ data, back, saveData }) {
   console.log(data);
 
   useEffect(() => {
-    console.log(pageRef.current.getBoundingClientRect().height);
     setpgHeight(pageRef.current.getBoundingClientRect().height);
   }, []);
 
@@ -57,15 +39,6 @@ export default function Template({ data, back, saveData }) {
         >
           Go Back
         </button>
-        {/* <ReactToPrint
-        trigger={() => (
-          <button className="btn btn-success mx-1 my-3" type="button">
-            Print Prescription
-          </button>
-        )}
-        content={() => ref.current}
-        onAfterPrint={() => saveData(data)}
-      /> */}
 
         <button
           className="btn btn-success mx-1 my-3 no-print"
@@ -75,6 +48,14 @@ export default function Template({ data, back, saveData }) {
           }}
         >
           Print Prescription
+        </button>
+
+        <button
+          className="btn btn-primary mx-1 my-3 no-print"
+          type="button"
+          onClick={(e) => followUp(data)}
+        >
+          Follow Up
         </button>
       </div>
 
@@ -100,31 +81,7 @@ export default function Template({ data, back, saveData }) {
             border: '2px solid black',
           }}
         >
-          {/* <ReactHeight
-            onHeightReady={(height) => {
-              pageHeight = height;
-              console.log('height', height);
-
-              // console.log('Calc', height - DEFAULT_PAGE_HEIGHT);
-              // pageHeight = height;
-              // let calc = (
-              //   (height + FOOTER_HEIGHT) /
-              //   DEFAULT_PAGE_HEIGHT
-              // ).toFixed(0);
-              // console.log('No. of pages: ', calc);
-
-              // setpgHeight(pgHeight - (height - DEFAULT_PAGE_HEIGHT));
-              // console.log(pgHeight - (pageHeight - DEFAULT_PAGE_HEIGHT));
-            }}
-          > */}
-          <div
-            id="presContainer"
-            // ref={(el) => {
-            //   if (!el) return;
-            //   pageHeight = el.getBoundingClientRect().height;
-            // }}
-            ref={pageRef}
-          >
+          <div id="presContainer" ref={pageRef}>
             <PrintHeader />
             <HeaderNames />
 
@@ -407,64 +364,68 @@ export default function Template({ data, back, saveData }) {
           ''
         )}
 
-        <div
-          style={{
-            padding: `${pgHeight > 990 ? '1.6cm 0' : '0.6cm 0'}`,
-            margin: `${pgHeight > 990 ? '1.6cm 0' : '0.6cm 0'}`,
-            height: '30.5cm',
-            position: 'relative',
-            zIndex: -1,
-          }}
-        >
+        {data.followUp ? (
           <div
-            className="prescription"
             style={{
-              // height: '60.5cm',
+              padding: `${pgHeight > 990 ? '1.6cm 0' : '0.6cm 0'}`,
+              margin: `${pgHeight > 990 ? '1.6cm 0' : '0.6cm 0'}`,
               height: '30.5cm',
-              border: '2px solid black',
+              position: 'relative',
+              zIndex: -1,
             }}
           >
             <div
+              className="prescription"
               style={{
-                marginTop: '1rem',
-                marginRight: '0.5rem',
-                marginLeft: '0.5rem',
+                // height: '60.5cm',
+                height: '30.5cm',
+                border: '2px solid black',
               }}
             >
-              <h5
+              <div
                 style={{
-                  padding: '3px',
-                  margin: '3px',
-                  fontSize: '12pt',
-                  fontWeight: 700,
-                  wordWrap: 'break-word',
+                  marginTop: '1rem',
+                  marginRight: '0.5rem',
+                  marginLeft: '0.5rem',
                 }}
               >
-                Follow Up:
-              </h5>
+                <h5
+                  style={{
+                    padding: '3px',
+                    margin: '3px',
+                    fontSize: '12pt',
+                    fontWeight: 700,
+                    wordWrap: 'break-word',
+                  }}
+                >
+                  Follow Up:
+                </h5>
 
-              <p
-                style={{
-                  padding: '3px',
-                  margin: '3px',
-                  paddingLeft: '0.5rem',
-                  fontSize: '12pt',
-                }}
-              >
-                {data.followUp ? data.followUp : 'Review after 3 days.'}
-              </p>
-              <h6
-                style={{
-                  position: 'absolute',
-                  bottom: '0.5cm',
-                  right: '2cm',
-                }}
-              >
-                Doctor's Signature
-              </h6>
+                <p
+                  style={{
+                    padding: '3px',
+                    margin: '3px',
+                    paddingLeft: '0.5rem',
+                    fontSize: '12pt',
+                  }}
+                >
+                  {data.followUp ? data.followUp : 'Review after 3 days.'}
+                </p>
+                <h6
+                  style={{
+                    position: 'absolute',
+                    bottom: '0.5cm',
+                    right: '2cm',
+                  }}
+                >
+                  Doctor's Signature
+                </h6>
+              </div>
             </div>
           </div>
-        </div>
+        ) : (
+          ''
+        )}
       </div>
     </div>
   ) : (

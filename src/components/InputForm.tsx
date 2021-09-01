@@ -1,10 +1,10 @@
+/* eslint-disable no-nested-ternary */
 import React, { useState, useEffect } from 'react';
 
 import Template from '../templates/Template';
 import GetDate from '../utils/GetDate';
 
 const storage = require('electron-json-storage');
-const path = require('path');
 
 const InputForm = ({ passedData }) => {
   storage.setDataPath();
@@ -12,11 +12,13 @@ const InputForm = ({ passedData }) => {
   const date = GetDate();
 
   const saveData = (inputData) => {
-    storage.set(`${date}_${opNumber}_prescription`, { inputData }, function (
-      error
-    ) {
-      if (error) throw error;
-    });
+    storage.set(
+      `${Date.now()}_${date}_${opNumber}_prescription`,
+      { inputData },
+      function (error) {
+        if (error) throw error;
+      }
+    );
   };
 
   const [title, setTitle] = useState('');
@@ -54,12 +56,14 @@ const InputForm = ({ passedData }) => {
 
   const [toggle, setToggle] = useState(false);
 
+  const [followUpToggle, setFollowUpToggle] = useState(false);
+
   useEffect(() => {
     storage.keys(function (error, keys) {
       if (error) throw error;
       let count = 1;
       keys.forEach((key) => {
-        if (key.split('_')[0] === date) {
+        if (key.split('_')[1] === date) {
           count += 1;
         }
       });
@@ -177,7 +181,6 @@ const InputForm = ({ passedData }) => {
       vitals,
       treatment: treatmentGiven,
       advice: treatmentAdviced,
-      followUp,
       findings,
       idNumber: `${date}_${opNumber}`,
     };
@@ -189,12 +192,54 @@ const InputForm = ({ passedData }) => {
     // console.log(inputData);
   };
 
+  const handleFollowUpSubmit = (e) => {
+    e.preventDefault();
+
+    data.followUp = followUp;
+
+    setData(data);
+    setToggle(!toggle);
+  };
+
   function handleGoBack() {
     setToggle(!toggle);
   }
 
+  function handleFollowUp(d) {
+    setData(d);
+    setToggle(!toggle);
+    setFollowUpToggle(!followUpToggle);
+  }
+
   return toggle ? (
-    <Template data={data} back={handleGoBack} saveData={saveData} />
+    <Template
+      data={data}
+      back={handleGoBack}
+      saveData={saveData}
+      followUp={handleFollowUp}
+    />
+  ) : followUpToggle ? (
+    <form>
+      <div className="input-group" style={{ maxWidth: '100%' }}>
+        <label htmlFor="FollowUp" className="col-md-12 form-label">
+          Follow Up:
+          <textarea
+            className="form-control"
+            aria-label="With textarea"
+            value={followUp}
+            placeholder="Dr.'s Recomendation"
+            onChange={(e) => setFollowUp(e.target.value)}
+          />
+        </label>
+      </div>
+      <button
+        type="submit"
+        className="btn btn-primary my-3 mx-1"
+        onClick={handleFollowUpSubmit}
+      >
+        Generate Prescription
+      </button>
+    </form>
   ) : (
     <form onSubmit={handleSubmit}>
       <div className="row g-3 mb-2">
@@ -221,7 +266,7 @@ const InputForm = ({ passedData }) => {
             className="form-label mx-1"
             style={{ width: '100%' }}
           >
-            Paitent Name
+            Patient Name
             <input
               type="text"
               className="form-control"
@@ -666,34 +711,6 @@ const InputForm = ({ passedData }) => {
         ))}
       </div>
 
-      {/* <div className="col-md-12 my-1">
-        <label
-          htmlFor="FollowUp"
-          className="form-label mx-1"
-          style={{ width: '100%' }}
-        >
-          Follow Up:
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Dr.'s Recomendation"
-            value={followUp}
-            onChange={(e) => setFollowUp(e.target.value)}
-          />
-        </label>
-      </div> */}
-      <div className="input-group" style={{ maxWidth: '100%' }}>
-        <label htmlFor="FollowUp" className="col-md-12 form-label">
-          Follow Up:
-          <textarea
-            className="form-control"
-            aria-label="With textarea"
-            value={followUp}
-            placeholder="Dr.'s Recomendation"
-            onChange={(e) => setFollowUp(e.target.value)}
-          />
-        </label>
-      </div>
       <button
         type="submit"
         className="btn btn-primary my-3 mx-1"

@@ -25,6 +25,7 @@ export default function Issue() {
 
   useEffect(() => {
     let list = [...separateObject(data)];
+
     setlistData(list.sort().reverse().slice(0, 25));
   }, [data]);
 

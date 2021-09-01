@@ -14,11 +14,13 @@ const CertificateForm = ({ passedData }) => {
   const date = GetDate();
 
   const saveData = (inputData) => {
-    storage.set(`${date}_${refNo}_certificate`, { inputData }, function (
-      error
-    ) {
-      if (error) throw error;
-    });
+    storage.set(
+      `${Date.now()}_${date}_${refNo}_certificate`,
+      { inputData },
+      function (error) {
+        if (error) throw error;
+      }
+    );
   };
 
   const [paitentName, setname] = useState('');

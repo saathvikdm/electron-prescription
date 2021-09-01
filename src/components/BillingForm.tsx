@@ -12,9 +12,13 @@ const BillingForm = ({ passedData }) => {
   const date = GetDate();
 
   const saveData = (inputData) => {
-    storage.set(`${date}_${opNumber}_bill`, { inputData }, function (error) {
-      if (error) throw error;
-    });
+    storage.set(
+      `${Date.now()}_${date}_${opNumber}_bill`,
+      { inputData },
+      function (error) {
+        if (error) throw error;
+      }
+    );
   };
 
   const [title, setTitle] = useState('');
@@ -45,7 +49,7 @@ const BillingForm = ({ passedData }) => {
       if (error) throw error;
       let count = 1;
       keys.forEach((key) => {
-        if (key.split('_')[0] === date) {
+        if (key.split('_')[1] === date) {
           count += 1;
         }
       });
