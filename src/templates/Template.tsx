@@ -411,6 +411,7 @@ export default function Template({ data, back, saveData, followUp }) {
                     margin: '3px',
                     paddingLeft: '0.5rem',
                     fontSize: '12pt',
+                    whiteSpace: 'pre-wrap',
                   }}
                 >
                   {data.followUp ? data.followUp : 'Review after 3 days.'}
