@@ -7,7 +7,7 @@ export default function Footer({ sign, facilities, recovery, mrgn }) {
     <div
       style={{
         position: 'absolute',
-        top: '27.25cm',
+        top: '27.55cm',
         left: '0.9cm',
         right: '0.9cm',
       }}

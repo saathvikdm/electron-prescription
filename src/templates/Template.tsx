@@ -6,6 +6,7 @@ import DynamicFormElement from '../components/DynamicFormElement';
 import Footer from '../components/Footer';
 
 import GetDate from '../utils/GetDate';
+import Watermark from '../components/Watermark';
 
 // const ref = React.createRef();
 
@@ -332,13 +333,14 @@ export default function Template({ data, back, saveData, followUp }) {
               </>
             )}
           </div>
-          {/* </ReactHeight> */}
           <div>
             {/* Footer with sign is of 337px Height */}
             <Footer mrgn={pgHeight} />
           </div>
+          <Watermark />
         </div>
 
+        {/*Page 2 */}
         {pgHeight > 990 ? (
           <div
             style={{
@@ -359,11 +361,13 @@ export default function Template({ data, back, saveData, followUp }) {
             >
               <span />
             </div>
+            <Watermark />
           </div>
         ) : (
           ''
         )}
 
+        {/*Follow up page */}
         {data.followUp ? (
           <div
             style={{
@@ -422,6 +426,7 @@ export default function Template({ data, back, saveData, followUp }) {
                 </h6>
               </div>
             </div>
+            <Watermark />
           </div>
         ) : (
           ''
