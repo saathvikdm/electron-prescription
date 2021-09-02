@@ -110,6 +110,7 @@ export default function Certificate({ data, back, saveData }) {
                 margin: '1.5em 1em',
                 fontSize: '12pt',
                 textAlign: 'justify',
+                whiteSpace: 'pre-wrap',
               }}
             >
               {data.content ? data.content : 'Certificate content here'}
