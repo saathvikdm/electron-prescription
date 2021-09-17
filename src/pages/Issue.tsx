@@ -13,7 +13,7 @@ export default function Issue() {
       style={{ paddingLeft: '200px' }}
     >
       <Header />
-      <div className="alert alert-success mb-4" role="alert">
+      <div className="alert alert-success mb-4" role="alert" id="hidden">
         <i className="fas fa-marker me-2" /> Generate Prescription
       </div>
       {location.state ? (

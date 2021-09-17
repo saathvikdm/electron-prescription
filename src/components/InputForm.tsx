@@ -1,10 +1,10 @@
+/* eslint-disable no-nested-ternary */
 import React, { useState, useEffect } from 'react';
 
 import Template from '../templates/Template';
 import GetDate from '../utils/GetDate';
 
 const storage = require('electron-json-storage');
-const path = require('path');
 
 const InputForm = ({ passedData }) => {
   storage.setDataPath();
@@ -12,42 +12,42 @@ const InputForm = ({ passedData }) => {
   const date = GetDate();
 
   const saveData = (inputData) => {
-    storage.set(`${date}_${opNumber}_prescription`, { inputData }, function (
-      error
-    ) {
-      if (error) throw error;
-    });
+    storage.set(
+      `${Date.now()}_${date}_${opNumber}_prescription`,
+      { inputData },
+      function (error) {
+        if (error) throw error;
+      }
+    );
   };
 
+  const [title, setTitle] = useState('');
   const [name, setName] = useState('');
-  const [age, setAge] = useState();
-  const [sex, setSex] = useState('M');
-  const [opNumber, setOpNumber] = useState();
-  const [diagnosis, setDiagnosis] = useState([{ diagnosis: '' }]);
-  const [problemsFields, setProblemsFields] = useState([{ knownProblem: '' }]);
-  const [chiefComplaints, setChiefComplaints] = useState([
-    { chiefComplaints: '' },
-  ]);
+  const [age, setAge] = useState('');
+  const [ageType, setAgeType] = useState('Years');
+  const [sex, setSex] = useState('Male');
+  const [opNumber, setOpNumber] = useState('');
+  const [diagnosis, setDiagnosis] = useState('');
+  const [morbidities, setMorbidities] = useState('');
+  const [complaints, setComplaints] = useState('');
+  const [investigations, setInvestigations] = useState('');
 
   const [treatmentGiven, setTreatmentGiven] = useState([
-    { treatmentGiven: '' },
+    { item: '', type: '' },
   ]);
 
   const [treatmentAdviced, setTreatmentAdviced] = useState([
-    { treatmentAdviced: '' },
+    { item: '', type: '', freq: '', when: false, interval: '' },
   ]);
+
+  const [findings, setFindings] = useState([{ item: '' }]);
 
   const [vitals, setVitals] = useState({
     bp: '',
     pr: '',
     sp02: '',
     temp: '',
-    gpe: '',
-    cvs: '',
-    rs: '',
-    pa: '',
-    cns: '',
-    le: '',
+    grbs: '',
   });
 
   const [followUp, setFollowUp] = useState('');
@@ -56,6 +56,21 @@ const InputForm = ({ passedData }) => {
 
   const [toggle, setToggle] = useState(false);
 
+  const [followUpToggle, setFollowUpToggle] = useState(false);
+
+  useEffect(() => {
+    storage.keys(function (error, keys) {
+      if (error) throw error;
+      let count = 1;
+      keys.forEach((key) => {
+        if (key.split('_')[1] === date) {
+          count += 1;
+        }
+      });
+      setOpNumber(count);
+    });
+  }, []);
+
   useEffect(() => {
     if (passedData) {
       setToggle(!toggle);
@@ -63,70 +78,26 @@ const InputForm = ({ passedData }) => {
     }
   }, [passedData]);
 
-  // Handling Diagnosis form inputs
+  // handling findings
 
-  const handleInputChange = (index, event) => {
-    const values = [...diagnosis];
-    if (event.target.name === 'diagnosis') {
-      values[index].diagnosis = event.target.value;
+  const handleFindingsChange = (index, event) => {
+    const values = [...findings];
+    if (event.target.name === 'findings') {
+      values[index].item = event.target.value;
     }
-    setDiagnosis(values);
+    setFindings(values);
   };
 
-  const handleAddFields = () => {
-    const values = [...diagnosis];
-    values.push({ diagnosis: '' });
-    setDiagnosis(values);
+  const handleAddFindings = () => {
+    const values = [...findings];
+    values.push({ item: '' });
+    setFindings(values);
   };
 
-  const handleRemoveFields = (index) => {
-    const values = [...diagnosis];
+  const handleRemoveFindings = (index) => {
+    const values = [...findings];
     values.splice(index, 1);
-    setDiagnosis(values);
-  };
-
-  // Handling Chief Complaints form inputs
-
-  const handleComplaintsChange = (index, event) => {
-    const values = [...chiefComplaints];
-    if (event.target.name === 'chiefComplaints') {
-      values[index].chiefComplaints = event.target.value;
-    }
-    setChiefComplaints(values);
-  };
-
-  const handleAddComplaints = () => {
-    const values = [...chiefComplaints];
-    values.push({ chiefComplaints: '' });
-    setChiefComplaints(values);
-  };
-
-  const handleRemoveComplaintsFields = (index) => {
-    const values = [...chiefComplaints];
-    values.splice(index, 1);
-    setChiefComplaints(values);
-  };
-
-  // handling problems fields
-
-  const handleProblemsChange = (index, event) => {
-    const values = [...problemsFields];
-    if (event.target.name === 'problemsField') {
-      values[index].knownProblem = event.target.value;
-    }
-    setProblemsFields(values);
-  };
-
-  const handleAddProblems = () => {
-    const values = [...problemsFields];
-    values.push({ knownProblem: '' });
-    setProblemsFields(values);
-  };
-
-  const handleRemoveProblemsFields = (index) => {
-    const values = [...problemsFields];
-    values.splice(index, 1);
-    setProblemsFields(values);
+    setFindings(values);
   };
 
   // handling treatment given field
@@ -134,14 +105,19 @@ const InputForm = ({ passedData }) => {
   const handleTreatmentGivenChange = (index, event) => {
     const values = [...treatmentGiven];
     if (event.target.name === 'treatmentGiven') {
-      values[index].treatmentGiven = event.target.value;
+      values[index].item = event.target.value;
     }
+
+    if (event.target.name === 'givenType') {
+      values[index].type = event.target.value;
+    }
+
     setTreatmentGiven(values);
   };
 
   const handleAddTreatmentGiven = () => {
     const values = [...treatmentGiven];
-    values.push({ treatmentGiven: '' });
+    values.push({ item: '', type: '' });
     setTreatmentGiven(values);
   };
 
@@ -156,14 +132,31 @@ const InputForm = ({ passedData }) => {
   const handletreatmentAdvicedChange = (index, event) => {
     const values = [...treatmentAdviced];
     if (event.target.name === 'treatmentAdviced') {
-      values[index].treatmentAdviced = event.target.value;
+      values[index].item = event.target.value;
     }
+
+    if (event.target.name === 'adviceType') {
+      values[index].type = event.target.value;
+    }
+
+    if (event.target.name === 'adviceFreq') {
+      values[index].freq = event.target.value;
+    }
+
+    if (event.target.name === 'adviceWhen') {
+      values[index].when = event.target.checked;
+    }
+
+    if (event.target.name === 'advicedInterval') {
+      values[index].interval = event.target.value;
+    }
+
     setTreatmentAdviced(values);
   };
 
   const handleAddtreatmentAdviced = () => {
     const values = [...treatmentAdviced];
-    values.push({ treatmentAdviced: '' });
+    values.push({ item: '', type: '', freq: '', when: false, interval: '' });
     setTreatmentAdviced(values);
   };
 
@@ -176,17 +169,19 @@ const InputForm = ({ passedData }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const inputData = {
-      paitentName: name,
+      paitentName: `${title} ${name}`,
       age,
+      ageType,
       sex,
       opNumber,
-      problems: problemsFields,
-      complaints: chiefComplaints,
+      problems: morbidities,
+      complaints,
       diagnosis,
+      investigations,
       vitals,
       treatment: treatmentGiven,
       advice: treatmentAdviced,
-      followUp,
+      findings,
       idNumber: `${date}_${opNumber}`,
     };
 
@@ -197,22 +192,81 @@ const InputForm = ({ passedData }) => {
     // console.log(inputData);
   };
 
+  const handleFollowUpSubmit = (e) => {
+    e.preventDefault();
+
+    data.followUp = followUp;
+
+    setData(data);
+    setToggle(!toggle);
+  };
+
   function handleGoBack() {
     setToggle(!toggle);
   }
 
+  function handleFollowUp(d) {
+    setData(d);
+    setToggle(!toggle);
+    setFollowUpToggle(!followUpToggle);
+  }
+
   return toggle ? (
-    <Template data={data} back={handleGoBack} saveData={saveData} />
+    <Template
+      data={data}
+      back={handleGoBack}
+      saveData={saveData}
+      followUp={handleFollowUp}
+    />
+  ) : followUpToggle ? (
+    <form>
+      <div className="input-group" style={{ maxWidth: '100%' }}>
+        <label htmlFor="FollowUp" className="col-md-12 form-label">
+          Follow Up:
+          <textarea
+            className="form-control"
+            aria-label="With textarea"
+            value={followUp}
+            placeholder="Dr.'s Recomendation"
+            onChange={(e) => setFollowUp(e.target.value)}
+          />
+        </label>
+      </div>
+      <button
+        type="submit"
+        className="btn btn-primary my-3 mx-1"
+        onClick={handleFollowUpSubmit}
+      >
+        Generate Prescription
+      </button>
+    </form>
   ) : (
     <form onSubmit={handleSubmit}>
       <div className="row g-3 mb-2">
-        <div className="col-md-6">
+        <div className="col-md-2">
+          <label htmlFor="PaitentSex" className="form-label mx-1">
+            Title
+            <select
+              className="form-select"
+              id="inputGroupSelect01"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            >
+              <option value="Mr.">Mr.</option>
+              <option value="Mrs.">Mrs.</option>
+              <option value="Miss.">Miss.</option>
+              <option value="Master.">Master.</option>
+            </select>
+          </label>
+        </div>
+
+        <div className="col-md-4">
           <label
             htmlFor="PaitentName"
             className="form-label mx-1"
             style={{ width: '100%' }}
           >
-            Paitent Name
+            Patient Name
             <input
               type="text"
               className="form-control"
@@ -232,6 +286,23 @@ const InputForm = ({ passedData }) => {
             />
           </label>
         </div>
+        <div className="col-md-2">
+          <label htmlFor="inputGroupSelect01" className="form-label mx-1">
+            Y/M/D
+            <select
+              className="form-select"
+              id="inputGroupSelect01"
+              value={ageType}
+              onChange={(e) => {
+                setAgeType(e.target.value);
+              }}
+            >
+              <option value="Years">Years</option>
+              <option value="Months">Months</option>
+              <option value="Days">Days</option>
+            </select>
+          </label>
+        </div>
 
         <div className="col-md-2">
           <label htmlFor="PaitentSex" className="form-label mx-1">
@@ -242,8 +313,9 @@ const InputForm = ({ passedData }) => {
               value={sex}
               onChange={(e) => setSex(e.target.value)}
             >
-              <option value="M">Male</option>
-              <option value="F">Female</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="T">TG</option>
             </select>
           </label>
         </div>
@@ -261,148 +333,59 @@ const InputForm = ({ passedData }) => {
         </div>
       </div>
       <div className="mb-2 mx-1">
-        <p className="pt-2 mb-0">Previous Known Problems:</p>
-        {problemsFields.map((problemsField, index) => (
-          <div key={index} className="mb-2">
-            <div className="row form-group">
-              <div className="col-md-8">
-                <input
-                  type="text"
-                  className="form-control "
-                  id="problemsField"
-                  name="problemsField"
-                  value={problemsField.knownProblem}
-                  onChange={(event) => handleProblemsChange(index, event)}
-                />
-              </div>
-
-              <div className="col-md-4 d-flex align-items-end">
-                {problemsFields.length > 1 ? (
-                  <>
-                    <button
-                      className="btn btn-outline-secondary btn-sm m-1"
-                      type="button"
-                      onClick={() => handleAddProblems()}
-                    >
-                      +
-                    </button>
-                    <button
-                      className="btn btn-outline-secondary btn-sm m-1"
-                      type="button"
-                      onClick={() => handleRemoveProblemsFields(index)}
-                    >
-                      -
-                    </button>
-                  </>
-                ) : (
-                  <button
-                    className="btn btn-outline-secondary btn-sm m-1"
-                    type="button"
-                    onClick={() => handleAddProblems()}
-                  >
-                    +
-                  </button>
-                )}
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-      <div className="mb-2 mx-1">
-        <p className="pt-2 mb-0">Chief Complaints:</p>
-        {chiefComplaints.map((complaint, index) => (
-          <div key={`${index}-${complaint}`} className="mb-2">
-            <div className="row form-group">
-              <div className="col-md-8">
-                <input
-                  type="text"
-                  className="form-control "
-                  id="chiefComplaints"
-                  name="chiefComplaints"
-                  value={complaint.chiefComplaints}
-                  onChange={(event) => handleComplaintsChange(index, event)}
-                />
-              </div>
-              <div className="col-md-4 d-flex align-items-end">
-                {chiefComplaints.length > 1 ? (
-                  <>
-                    <button
-                      className="btn btn-outline-secondary btn-sm m-1"
-                      type="button"
-                      onClick={() => handleAddComplaints()}
-                    >
-                      +
-                    </button>
-                    <button
-                      className="btn btn-outline-secondary btn-sm m-1"
-                      type="button"
-                      onClick={() => handleRemoveComplaintsFields(index)}
-                    >
-                      -
-                    </button>
-                  </>
-                ) : (
-                  <button
-                    className="btn btn-outline-secondary btn-sm m-1"
-                    type="button"
-                    onClick={() => handleAddComplaints()}
-                  >
-                    +
-                  </button>
-                )}
-              </div>
-            </div>
-          </div>
-        ))}
-      </div>
-      <div className="mb-2 mx-1">
         <p className="pt-2 mb-0">
-          Clinical / Provisional / Differential Diagnosis:
+          Clinical / Provisional / Differential Diagnosis:{' '}
         </p>
-        {diagnosis.map((diag, index) => (
-          <div key={`${index}-${diagnosis}`} className="mb-2">
-            <div className="row form-group">
-              <div className="col-md-8">
-                <input
-                  type="text"
-                  className="form-control "
-                  id="diagnosis"
-                  name="diagnosis"
-                  value={diag.diagnosis}
-                  onChange={(event) => handleInputChange(index, event)}
-                />
-              </div>
-              <div className="col-md-4 d-flex align-items-end">
-                {diagnosis.length > 1 ? (
-                  <>
-                    <button
-                      className="btn btn-outline-secondary btn-sm m-1"
-                      type="button"
-                      onClick={() => handleAddFields()}
-                    >
-                      +
-                    </button>
-                    <button
-                      className="btn btn-outline-secondary btn-sm m-1"
-                      type="button"
-                      onClick={() => handleRemoveFields(index)}
-                    >
-                      -
-                    </button>
-                  </>
-                ) : (
-                  <button
-                    className="btn btn-outline-secondary btn-sm m-1"
-                    type="button"
-                    onClick={() => handleAddFields()}
-                  >
-                    +
-                  </button>
-                )}
-              </div>
+        <div className="mb-2">
+          <div className="row form-group">
+            <div className="col-md-12">
+              <input
+                type="text"
+                className="form-control "
+                id="problemsField"
+                name="problemsField"
+                value={diagnosis}
+                onChange={(e) => setDiagnosis(e.target.value)}
+              />
             </div>
           </div>
-        ))}
+        </div>
+      </div>
+
+      <div className="mb-2 mx-1">
+        <p className="pt-2 mb-0">Co-Morbidities:</p>
+        <div className="mb-2">
+          <div className="row form-group">
+            <div className="col-md-12">
+              <input
+                type="text"
+                className="form-control "
+                id="morbidities"
+                name="morbidities"
+                value={morbidities}
+                onChange={(e) => setMorbidities(e.target.value)}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="mb-2 mx-1">
+        <p className="pt-2 mb-0">Complaints:</p>
+        <div className="mb-2">
+          <div className="row form-group">
+            <div className="col-md-12">
+              <input
+                type="text"
+                className="form-control "
+                id="complaints"
+                name="complaints"
+                value={complaints}
+                onChange={(e) => setComplaints(e.target.value)}
+              />
+            </div>
+          </div>
+        </div>
       </div>
 
       <h4 className="pt-2 mx-1">Vitals</h4>
@@ -471,135 +454,101 @@ const InputForm = ({ passedData }) => {
             </span>
           </div>
         </div>
-      </div>
-      <div className="row">
-        <div className="col-md-6 my-1">
-          <label
-            htmlFor="PaitentAge"
-            className="form-label mx-1"
-            style={{ width: '100%' }}
-          >
-            GPE
+        <div className="col-md-3">
+          <div className="input-group mb-3">
             <input
               type="text"
               className="form-control"
-              value={vitals.gpe}
-              onChange={(e) => setVitals({ ...vitals, gpe: e.target.value })}
+              placeholder="GRBS"
+              aria-label="Paitents GRBS"
+              aria-describedby="basic-addon2"
+              value={vitals.grbs}
+              onChange={(e) => setVitals({ ...vitals, grbs: e.target.value })}
             />
-          </label>
-        </div>
-        <div className="col-md-6 my-1">
-          <label
-            htmlFor="PaitentAge"
-            className="form-label mx-1"
-            style={{ width: '100%' }}
-          >
-            CVS
-            <input
-              type="text"
-              className="form-control"
-              value={vitals.cvs}
-              onChange={(e) => setVitals({ ...vitals, cvs: e.target.value })}
-            />
-          </label>
-        </div>
-        <div className="col-md-6 my-1">
-          <label
-            htmlFor="PaitentAge"
-            className="form-label mx-1"
-            style={{ width: '100%' }}
-          >
-            RS
-            <input
-              type="text"
-              className="form-control"
-              value={vitals.rs}
-              onChange={(e) => setVitals({ ...vitals, rs: e.target.value })}
-            />
-          </label>
-        </div>
-        <div className="col-md-6 my-1">
-          <label
-            htmlFor="PaitentAge"
-            className="form-label mx-1"
-            style={{ width: '100%' }}
-          >
-            P/A
-            <input
-              type="text"
-              className="form-control"
-              value={vitals.pa}
-              onChange={(e) => setVitals({ ...vitals, pa: e.target.value })}
-            />
-          </label>
-        </div>
-        <div className="col-md-6 my-1">
-          <label
-            htmlFor="PaitentAge"
-            className="form-label mx-1"
-            style={{ width: '100%' }}
-          >
-            CNS
-            <input
-              type="text"
-              className="form-control"
-              value={vitals.cns}
-              onChange={(e) => setVitals({ ...vitals, cns: e.target.value })}
-            />
-          </label>
-        </div>
-        <div className="col-md-6 my-1">
-          <label
-            htmlFor="PaitentAge"
-            className="form-label mx-1"
-            style={{ width: '100%' }}
-          >
-            L/E
-            <input
-              type="text"
-              className="form-control"
-              value={vitals.le}
-              onChange={(e) => setVitals({ ...vitals, le: e.target.value })}
-            />
-          </label>
+            <span className="input-group-text" id="basic-addon2">
+              mg/dl
+            </span>
+          </div>
         </div>
 
-        <div className="mb-2 mx-1">
-          <p className="pt-2 mb-0">Treatment Given:</p>
-          {treatmentGiven.map((given, index) => (
-            <div key={`${index}-${given}`} className="mb-2">
-              <div className="row form-group">
-                <div className="col-md-8">
-                  <input
-                    type="text"
-                    className="form-control "
-                    id="treatmentGiven"
-                    name="treatmentGiven"
-                    value={given.treatmentGiven}
-                    onChange={(event) =>
-                      handleTreatmentGivenChange(index, event)
-                    }
-                  />
-                </div>
-                <div className="col-md-4 d-flex align-items-end">
-                  {treatmentGiven.length > 1 ? (
-                    <>
-                      <button
-                        className="btn btn-outline-secondary btn-sm m-1"
-                        type="button"
-                        onClick={() => handleAddTreatmentGiven()}
-                      >
-                        +
-                      </button>
-                      <button
-                        className="btn btn-outline-secondary btn-sm m-1"
-                        type="button"
-                        onClick={() => handleRemoveTreatmentGiven(index)}
-                      >
-                        -
-                      </button>
-                    </>
-                  ) : (
+        <p className="pt-2 mb-0">Findings:</p>
+        {findings.map((item, index) => (
+          <div key={`${index}-${item}`} className="mb-2">
+            <div className="row form-group">
+              <div className="col-md-8">
+                <input
+                  type="text"
+                  className="form-control "
+                  id="findings"
+                  name="findings"
+                  value={item.item}
+                  onChange={(event) => handleFindingsChange(index, event)}
+                />
+              </div>
+              <div className="col-md-4 d-flex align-items-end">
+                {findings.length > 1 ? (
+                  <>
+                    <button
+                      className="btn btn-outline-secondary btn-sm m-1"
+                      type="button"
+                      onClick={() => handleAddFindings()}
+                    >
+                      +
+                    </button>
+                    <button
+                      className="btn btn-outline-secondary btn-sm m-1"
+                      type="button"
+                      onClick={() => handleRemoveFindings(index)}
+                    >
+                      -
+                    </button>
+                  </>
+                ) : (
+                  <button
+                    className="btn btn-outline-secondary btn-sm m-1"
+                    type="button"
+                    onClick={() => handleAddFindings()}
+                  >
+                    +
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+        ))}
+
+        <p className="pt-2 mb-0">Treatment Given:</p>
+        {treatmentGiven.map((given, index) => (
+          <div key={`${index}-${given}`} className="mb-2">
+            <div className="row form-group">
+              <div className="col-md-2">
+                <select
+                  className="form-select"
+                  id="givenType"
+                  name="givenType"
+                  value={given.type}
+                  onChange={(event) => handleTreatmentGivenChange(index, event)}
+                >
+                  <option value="">Type</option>
+                  <option value="Inj">Injection</option>
+                  <option value="Tab">Tablet</option>
+                  <option value="Cap">Capsule</option>
+                  <option value="Syrup">Syrup</option>
+                </select>
+              </div>
+              <div className="col-md-6">
+                <input
+                  type="text"
+                  className="form-control "
+                  id="treatmentGiven"
+                  name="treatmentGiven"
+                  value={given.item}
+                  onChange={(event) => handleTreatmentGivenChange(index, event)}
+                />
+              </div>
+              <div className="col-md-4 d-flex align-items-end">
+                {treatmentGiven.length > 1 ? (
+                  <>
                     <button
                       className="btn btn-outline-secondary btn-sm m-1"
                       type="button"
@@ -607,49 +556,131 @@ const InputForm = ({ passedData }) => {
                     >
                       +
                     </button>
-                  )}
-                </div>
+                    <button
+                      className="btn btn-outline-secondary btn-sm m-1"
+                      type="button"
+                      onClick={() => handleRemoveTreatmentGiven(index)}
+                    >
+                      -
+                    </button>
+                  </>
+                ) : (
+                  <button
+                    className="btn btn-outline-secondary btn-sm m-1"
+                    type="button"
+                    onClick={() => handleAddTreatmentGiven()}
+                  >
+                    +
+                  </button>
+                )}
               </div>
             </div>
-          ))}
+          </div>
+        ))}
+
+        <p className="pt-2 mb-0">Investigations adviced:</p>
+        <div className="mb-2">
+          <div className="row form-group">
+            <div className="col-md-12">
+              <input
+                type="text"
+                className="form-control "
+                id="investigations"
+                name="investigations"
+                value={investigations}
+                onChange={(e) => setInvestigations(e.target.value)}
+              />
+            </div>
+          </div>
         </div>
 
-        <div className="mb-2 mx-1">
-          <p className="pt-2 mb-0">Treatment Adviced:</p>
-          {treatmentAdviced.map((advice, index) => (
-            <div key={`${index}-${advice}`} className="mb-2">
-              <div className="row form-group">
-                <div className="col-md-8">
-                  <input
-                    type="text"
-                    className="form-control "
-                    id="treatmentAdviced"
-                    name="treatmentAdviced"
-                    value={advice.treatmentAdviced}
-                    onChange={(event) =>
-                      handletreatmentAdvicedChange(index, event)
-                    }
-                  />
+        <p className="pt-2 mb-0">Advice:</p>
+        {treatmentAdviced.map((advice, index) => (
+          <div key={`${index}-${advice}`} className="mb-2">
+            <div className="row form-group">
+              <div className="col-md-2">
+                <select
+                  className="form-select"
+                  id="adviceType"
+                  name="adviceType"
+                  value={advice.type}
+                  onChange={(event) =>
+                    handletreatmentAdvicedChange(index, event)
+                  }
+                >
+                  <option value="">Type</option>
+                  <option value="Inj">Injection</option>
+                  <option value="Tab">Tablet</option>
+                  <option value="Cap">Capsule</option>
+                  <option value="Syrup">Syrup</option>
+                </select>
+              </div>
+              <div className="col-md-4">
+                <input
+                  type="text"
+                  className="form-control "
+                  id="treatmentAdviced"
+                  name="treatmentAdviced"
+                  value={advice.item}
+                  onChange={(event) =>
+                    handletreatmentAdvicedChange(index, event)
+                  }
+                />
+              </div>
+              <div className="col-md-2">
+                <select
+                  className="form-select"
+                  id="adviceFreq"
+                  name="adviceFreq"
+                  value={advice.freq}
+                  onChange={(event) =>
+                    handletreatmentAdvicedChange(index, event)
+                  }
+                >
+                  <option value="">Freq</option>
+                  <option value="1-0-1">1-0-1</option>
+                  <option value="1-0-0">1-0-0</option>
+                  <option value="1-1-1">1-1-1</option>
+                  <option value="0-0-1">0-0-1</option>
+                  <option value="0-1-0">0-1-0</option>
+                </select>
+              </div>
+              <div className="col-md-2">
+                <input
+                  type="number"
+                  className="form-control "
+                  id="advicedInterval"
+                  name="advicedInterval"
+                  placeholder="For (in days)"
+                  value={advice.interval}
+                  onChange={(event) =>
+                    handletreatmentAdvicedChange(index, event)
+                  }
+                />
+              </div>
+              <div className="col-md-2 my-auto">
+                <div className="form-check">
+                  <label
+                    className="form-check-label"
+                    htmlFor="flexCheckDefault"
+                  >
+                    Before?
+                    <input
+                      className="form-check-input"
+                      type="checkbox"
+                      name="adviceWhen"
+                      onChange={(event) =>
+                        handletreatmentAdvicedChange(index, event)
+                      }
+                      id="flexCheckDefault"
+                    />
+                  </label>
                 </div>
-                <div className="col-md-4 d-flex align-items-end">
-                  {treatmentAdviced.length > 1 ? (
-                    <>
-                      <button
-                        className="btn btn-outline-secondary btn-sm m-1"
-                        type="button"
-                        onClick={() => handleAddtreatmentAdviced()}
-                      >
-                        +
-                      </button>
-                      <button
-                        className="btn btn-outline-secondary btn-sm m-1"
-                        type="button"
-                        onClick={() => handleRemovetreatmentAdviced(index)}
-                      >
-                        -
-                      </button>
-                    </>
-                  ) : (
+              </div>
+
+              <div className="col-md-2 d-flex align-items-end">
+                {treatmentAdviced.length > 1 ? (
+                  <>
                     <button
                       className="btn btn-outline-secondary btn-sm m-1"
                       type="button"
@@ -657,41 +688,29 @@ const InputForm = ({ passedData }) => {
                     >
                       +
                     </button>
-                  )}
-                </div>
+                    <button
+                      className="btn btn-outline-secondary btn-sm m-1"
+                      type="button"
+                      onClick={() => handleRemovetreatmentAdviced(index)}
+                    >
+                      -
+                    </button>
+                  </>
+                ) : (
+                  <button
+                    className="btn btn-outline-secondary btn-sm m-1"
+                    type="button"
+                    onClick={() => handleAddtreatmentAdviced()}
+                  >
+                    +
+                  </button>
+                )}
               </div>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
-      {/* <div className="col-md-12 my-1">
-        <label
-          htmlFor="FollowUp"
-          className="form-label mx-1"
-          style={{ width: '100%' }}
-        >
-          Follow Up:
-          <input
-            type="text"
-            className="form-control"
-            placeholder="Dr.'s Recomendation"
-            value={followUp}
-            onChange={(e) => setFollowUp(e.target.value)}
-          />
-        </label>
-      </div> */}
-      <div className="input-group" style={{ maxWidth: '100%' }}>
-        <label htmlFor="FollowUp" className="col-md-12 form-label">
-          Follow Up:
-          <textarea
-            className="form-control"
-            aria-label="With textarea"
-            value={followUp}
-            placeholder="Dr.'s Recomendation"
-            onChange={(e) => setFollowUp(e.target.value)}
-          />
-        </label>
-      </div>
+
       <button
         type="submit"
         className="btn btn-primary my-3 mx-1"

@@ -5,6 +5,18 @@
 
 @import './bootstrap.css';
 @import './font-awesome/css/fontawesome.css';
+@font-face {
+  font-family: copperplate;
+  src: url('./fonts/OPTICopperplate.otf');
+}
+@font-face {
+  font-family: brillian;
+  src: url('./fonts/BrillianCyrillicSerb-Regular.ttf');
+}
+
+* {
+  user-select: none;
+}
 
 body {
   background: #f8f9fa;
@@ -29,8 +41,23 @@ body {
   background: rgb(117, 117, 117);
 }
 
+.header-text {
+  font-family: copperplate;
+}
+
+.header-name {
+  font-family: brillian;
+}
+
 .credsfooter {
   display: none;
+}
+
+#watermark {
+  position: absolute;
+  width: 19.15cm;
+  display: flex;
+  justify-content: center;
 }
 
 @media all {
@@ -61,6 +88,14 @@ body {
     float: none;
   }
 
+  #hidden {
+    display: none !important;
+  }
+
+  #sidebar {
+    display: none !important;
+  }
+
   .prescription {
     display: flex;
     flex-direction: column;
@@ -87,6 +122,13 @@ body {
     bottom: 0;
     left: 4cm;
   }
+
+  .prescription-container {
+    position: absolute !important;
+    top: 0px !important;
+    left: 0cm !important;
+    width: 23cm !important;
+  }
 }
 
 @page :first {
@@ -94,11 +136,10 @@ body {
 }
 
 @page {
-  size: A5;
+  size: A4;
   margin: 0;
-  margin-bottom: 1cm;
+  /* margin-bottom: 1cm;*/
   margin-top: 1cm;
-  padding-bottom: 1cm;
 }
 
 .billing-color {

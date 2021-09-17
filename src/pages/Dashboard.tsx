@@ -33,7 +33,7 @@ const Dashboard = () => {
       if (error) throw error;
       let count = 0;
       keys.forEach((key) => {
-        if (key.split('_')[0] === date) {
+        if (key.split('_')[1] === date) {
           count += 1;
         }
       });

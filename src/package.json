@@ -1,13 +1,13 @@
 {
-  "name": "electron-react-boilerplate",
-  "productName": "electron-react-boilerplate",
-  "version": "2.3.0",
-  "description": "Electron application boilerplate based on React, React Router, Webpack, React Hot Loader for rapid application development",
+  "name": "vlcdcc-clinic-management",
+  "productName": "VLCDCC Clinic Management",
+  "version": "1.0.0",
+  "description": "Clinic Management Application for Vijayalaxmi Clinic, Diagnostics And Counseling Centre.",
   "main": "./main.prod.js",
   "author": {
-    "name": "Electron React Boilerplate Maintainers",
-    "email": "electronreactboilerplate@gmail.com",
-    "url": "https://github.com/electron-react-boilerplate"
+    "name": "MiraiBytes",
+    "email": "saathvikdm@outlook.com",
+    "url": "https://github.com/saathvikdm"
   },
   "scripts": {
     "electron-rebuild": "node -r ../.erb/scripts/BabelRegister.js ../.erb/scripts/ElectronRebuild.js",
