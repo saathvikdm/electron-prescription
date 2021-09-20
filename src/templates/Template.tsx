@@ -69,7 +69,6 @@ export default function Template({ data, back, saveData, followUp }) {
           // height: '30.5cm',
           position: 'relative',
           zIndex: -1,
-          boxShadow: '1px 5px 11px 4px #0e0d0d1f',
         }}
       >
         {/* <ReactHeight onHeightReady={(height) => console.log(height)}>
