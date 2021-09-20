@@ -42,6 +42,7 @@ export default function Billing({ data, back, saveData }) {
           // height: '30.5cm',
           position: 'relative',
           zIndex: -1,
+          boxShadow: '1px 5px 11px 4px #0e0d0d1f',
         }}
       >
         <div
@@ -63,6 +64,7 @@ export default function Billing({ data, back, saveData }) {
               paddingTop: '0.25em',
               margin: '5px',
               border: '1px solid black',
+
               borderRadius: '8px',
             }}
           >
@@ -256,6 +258,9 @@ export default function Billing({ data, back, saveData }) {
               </tr>
             </tbody>
           </table>
+          <h6 style={{ position: 'absolute', top: '26cm', right: '3cm' }}>
+            Doctor's Signature
+          </h6>
           <Footer facilities recovery />
         </div>
       </div>

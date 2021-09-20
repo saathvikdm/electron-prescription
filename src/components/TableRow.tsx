@@ -8,6 +8,7 @@ export default function TableRow({ item, index }) {
       <th scope="row">{index + 1}</th>
       <td>{item.data.inputData.paitentName}</td>
       <td>{item.date}</td>
+      <td>{item.data.inputData.timeStamp}</td>
       <td>
         <span className={`badge bg-${item.type}`}>{item.type}</span>
       </td>

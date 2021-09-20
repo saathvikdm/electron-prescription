@@ -1,7 +1,6 @@
 import React from 'react';
 
 export default function DynamicFormElement({ inputName, data }) {
-  console.log('dfe', data);
   return (
     <div style={{ marginLeft: '0.5rem', marginRight: '0.5rem' }}>
       <h5

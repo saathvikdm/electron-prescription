@@ -60,6 +60,7 @@ export default function Issue() {
             <th scope="col">#</th>
             <th scope="col">Paitent Name</th>
             <th scope="col">Issue Date</th>
+            <th scope="col">Time</th>
             <th scope="col">Type</th>
             <th scope="col">View</th>
           </tr>

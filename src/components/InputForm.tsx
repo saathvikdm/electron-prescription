@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 
 import Template from '../templates/Template';
+import formatTime from '../utils/FormatTime';
 import GetDate from '../utils/GetDate';
 
 const storage = require('electron-json-storage');
@@ -11,17 +12,28 @@ const InputForm = ({ passedData }) => {
 
   const date = GetDate();
 
+  const [saveType, setSaveType] = useState('prescription');
+
   const saveData = (inputData) => {
+    const time = new Date();
+
+    inputData.timeStamp = formatTime([
+      time.getHours(),
+      time.getMinutes(),
+      time.getSeconds(),
+    ]);
+
     storage.set(
-      `${Date.now()}_${date}_${opNumber}_prescription`,
+      `${Date.now()}_${date}_${opNumber}_${saveType}`,
       { inputData },
       function (error) {
+        console.log(inputData);
         if (error) throw error;
       }
     );
   };
 
-  const [title, setTitle] = useState('');
+  const [title, setTitle] = useState('Mr.');
   const [name, setName] = useState('');
   const [age, setAge] = useState('');
   const [ageType, setAgeType] = useState('Years');
@@ -57,6 +69,11 @@ const InputForm = ({ passedData }) => {
   const [toggle, setToggle] = useState(false);
 
   const [followUpToggle, setFollowUpToggle] = useState(false);
+
+  useEffect(() => {
+    if (!followUp) return;
+    setSaveType('FollowUp');
+  }, [followUp]);
 
   useEffect(() => {
     storage.keys(function (error, keys) {
@@ -252,10 +269,14 @@ const InputForm = ({ passedData }) => {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
             >
-              <option value="Mr.">Mr.</option>
+              <option value="Mr." selected>
+                Mr.
+              </option>
               <option value="Mrs.">Mrs.</option>
               <option value="Miss.">Miss.</option>
               <option value="Master.">Master.</option>
+              <option value="Baby.">Baby.</option>
+              <option value="">-</option>
             </select>
           </label>
         </div>
@@ -353,7 +374,7 @@ const InputForm = ({ passedData }) => {
       </div>
 
       <div className="mb-2 mx-1">
-        <p className="pt-2 mb-0">Co-Morbidities:</p>
+        <p className="pt-2 mb-0">Co-Morbidities / Other Information:</p>
         <div className="mb-2">
           <div className="row form-group">
             <div className="col-md-12">

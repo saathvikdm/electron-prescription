@@ -69,6 +69,7 @@ export default function Template({ data, back, saveData, followUp }) {
           // height: '30.5cm',
           position: 'relative',
           zIndex: -1,
+          boxShadow: '1px 5px 11px 4px #0e0d0d1f',
         }}
       >
         {/* <ReactHeight onHeightReady={(height) => console.log(height)}>
@@ -108,9 +109,9 @@ export default function Template({ data, back, saveData, followUp }) {
                   }}
                 >
                   <b>Patient Name:</b>{' '}
-                  {data.paitentName ? data.paitentName : 'Mr. Chethan'}
+                  {data.paitentName ? data.paitentName : ''}
                   <br />
-                  <b>ID No:</b> {data.idNumber ? data.idNumber : '20210801'}
+                  <b>ID No:</b> {data.idNumber ? data.idNumber : ''}
                 </p>
               </div>
               <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -166,7 +167,7 @@ export default function Template({ data, back, saveData, followUp }) {
                   fontWeight: 700,
                 }}
               >
-                Co-Morbidities:
+                Co-Morbidities / Other Information:
               </h5>
               <p
                 style={{
@@ -264,7 +265,7 @@ export default function Template({ data, back, saveData, followUp }) {
                     fontSize: '11pt',
                   }}
                 >
-                  GRBS: {data.vitals ? data.vitals.temp : '50'} mg/dl
+                  GRBS: {data.vitals ? data.vitals.grbs : '50'} mg/dl
                 </div>
               </div>
             </div>

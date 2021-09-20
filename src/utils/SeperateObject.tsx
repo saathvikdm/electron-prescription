@@ -2,9 +2,9 @@ const separateObject = (obj) => {
   const res = [];
   const keys = Object.keys(obj);
   keys.forEach((key) => {
-    let subKeys = key.split('_');
+    const subKeys = key.split('_');
+
     res.push({
-      timeStamp: subKeys[0],
       date: `${subKeys[1].slice(0, 2)}/${subKeys[1].slice(
         2,
         4

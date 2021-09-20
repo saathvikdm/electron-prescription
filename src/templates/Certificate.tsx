@@ -43,6 +43,7 @@ export default function Certificate({ data, back, saveData }) {
           // height: '30.5cm',
           position: 'relative',
           zIndex: -1,
+          boxShadow: '1px 5px 11px 4px #0e0d0d1f',
         }}
       >
         <div
@@ -98,7 +99,7 @@ export default function Certificate({ data, back, saveData }) {
           <div style={{ textAlign: 'center' }}>
             <h1
               style={{
-                fontSize: '1.2rem',
+                fontSize: '18pt',
                 marginTop: '1.5em',
                 marginBottom: '1.5em',
               }}
@@ -108,7 +109,7 @@ export default function Certificate({ data, back, saveData }) {
             <p
               style={{
                 margin: '1.5em 1em',
-                fontSize: '12pt',
+                fontSize: '13pt',
                 textAlign: 'justify',
                 whiteSpace: 'pre-wrap',
               }}
